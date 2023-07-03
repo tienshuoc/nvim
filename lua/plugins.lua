@@ -45,7 +45,11 @@ return require('packer').startup(function(use)
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
-    require('lualine').setup()
+    require('lualine').setup {
+        sections = {
+            lualine_z = {{ 'datetime', style='%H:%M:%S | %b-%d' }}
+        }
+    }
 
     -- Color brackets.
     use 'p00f/nvim-ts-rainbow'
