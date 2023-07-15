@@ -10,3 +10,7 @@ require('options')
 require('keymaps')
 require('plugins')
 require('colorscheme')
+
+-- Plugin Settings
+require('plugin_options/comment')
+require('plugin_options/treesitter')
