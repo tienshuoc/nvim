@@ -17,6 +17,14 @@ vim.keymap.set('n', '<leader>nn', ':set nonumber norelativenumber<CR>:set signco
 vim.keymap.set('n', '<leader>sn', ':set number relativenumber<CR>:set signcolumn=yes<CR>', opts)
 vim.keymap.set('n', '<leader>san', ':set number norelativenumber<CR>:set signcolumn=yes<CR>', opts)
 
+vim.keymap.set('n', '<leader>sb', ':split<CR><Cmd>BufferPick<CR>', opts)               -- Horizontal split and pick buffer.
+vim.keymap.set('n', '<leader>vsb', ':vertical split<CR><Cmd>BufferPick<CR>', opts)     -- Vertical split and pick buffer.
+
+vim.keymap.set('n', '<c-h>', ':wincmd h<CR>', opts)            -- Switch panes left.
+vim.keymap.set('n', '<c-j>', ':wincmd j<CR>', opts)            -- Switch panes down.
+vim.keymap.set('n', '<c-k>', ':wincmd k<CR>', opts)            -- Switch panes up.
+vim.keymap.set('n', '<c-l>', ':wincmd l<CR>', opts)            -- Switch panes right.
+
 -----------------
 -- Insert mode --
 -----------------

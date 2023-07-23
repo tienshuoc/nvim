@@ -29,4 +29,11 @@
         "enumMember": "  "
     },
     "snippets.ultisnips.pythonPrompt": false,
+
+    // coc-git
+    "git.showCommitInFloating": true,
+    "git.floatConfig": {   // Configure floating window.
+        "border": true,    // Border
+        "winblend": 5      // Transparency
+    }
 }

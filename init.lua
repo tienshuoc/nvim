@@ -14,3 +14,5 @@ require('colorscheme')
 -- Plugin Settings
 require('plugin_options/comment')
 require('plugin_options/treesitter')
+require('plugin_options/indent_blankline')
+require('plugin_options/telescope')

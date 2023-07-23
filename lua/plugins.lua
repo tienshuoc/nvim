@@ -38,6 +38,8 @@ return require('packer').startup(function(use)
     --------------------------- Colorschemes ---------------------------
     use 'tanvirtin/monokai.nvim'
     use "EdenEast/nightfox.nvim"
+    use 'projekt0n/github-nvim-theme'
+    use 'ellisonleao/gruvbox.nvim'
 
     ------------------------------- UI ---------------------------------
     --lualine
@@ -76,7 +78,6 @@ return require('packer').startup(function(use)
     ------------------ Editor Versioning & File Navigation ------------------
     -- Git
     use 'tpope/vim-fugitive'
-    use 'rhysd/git-messenger.vim'           -- Reveal message from git under cursor.
     use "sindrets/diffview.nvim"            -- Git diff page.
     use 'whiteinge/diffconflicts'           -- Git diff conflicts.
 
@@ -87,10 +88,6 @@ return require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     }
     local builtin = require('telescope.builtin')
-    vim.keymap.set('n', '<leader>ff', builtin.find_files, {})      -- Find files.
-    vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})       -- Grep amongst files.
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, {})         -- Find file in buffer list.
-    vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
     -- Buffer explorer.
     use 'jlanzarotta/bufexplorer'
@@ -242,6 +239,12 @@ return require('packer').startup(function(use)
 
 
     --------------------------------------------- COC Code completion. (end) ------------------------------------------------
+
+    --------------------------------------------------- Filetypes (begin) ---------------------------------------------------
+    use('neoclide/jsonc.vim')
+    use('mtdl9/vim-log-highlighting')                                   -- Generic log file highlighting.
+
+    --------------------------------------------------- Filetypes (end) -----------------------------------------------------
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
