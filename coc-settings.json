@@ -1,39 +1,42 @@
 {
-    "suggest.noselect": true,
+  "suggest.noselect": true,
 
-    "suggest.completionItemKindLabels": {
-        "method": "  ",
-        "function": "  ",
-        "variable": "[]",
-        "field": "  ",
-        "typeParameter": "<>",
-        "constant": "  ",
-        "class": " פּ ",
-        "interface": " 蘒",
-        "struct": "  ",
-        "event": "  ",
-        "operator": "  ",
-        "module": "  ",
-        "property": "  ",
-        "enum": " 練",
-        "reference": "  ",
-        "keyword": "  ",
-        "file": "  ",
-        "folder": " ﱮ ",
-        "color": "  ",
-        "unit": " 塞 ",
-        "snippet": "  ",
-        "text": "  ",
-        "constructor": "  ",
-        "value": "  ",
-        "enumMember": "  "
-    },
-    "snippets.ultisnips.pythonPrompt": false,
+  "suggest.completionItemKindLabels": {
+    "method": "  ",
+    "function": "  ",
+    "variable": "[]",
+    "field": "  ",
+    "typeParameter": "<>",
+    "constant": "  ",
+    "class": " פּ ",
+    "interface": " 蘒",
+    "struct": "  ",
+    "event": "  ",
+    "operator": "  ",
+    "module": "  ",
+    "property": "  ",
+    "enum": " 練",
+    "reference": "  ",
+    "keyword": "  ",
+    "file": "  ",
+    "folder": " ﱮ ",
+    "color": "  ",
+    "unit": " 塞 ",
+    "snippet": "  ",
+    "text": "  ",
+    "constructor": "  ",
+    "value": "  ",
+    "enumMember": "  "
+  },
+  "snippets.ultisnips.pythonPrompt": false,
 
-    // coc-git
-    "git.showCommitInFloating": true,
-    "git.floatConfig": {   // Configure floating window.
-        "border": true,    // Border
-        "winblend": 5      // Transparency
-    }
+  // coc-git
+  "git.showCommitInFloating": true,
+  "git.floatConfig": {
+      // Configure floating window.
+      "border": true,   // Border
+      "winblend": 5     // Transparency
+  },
+
+  "coc.preferences.formatOnSaveFiletypes": ["typescript", "javascript"]
 }

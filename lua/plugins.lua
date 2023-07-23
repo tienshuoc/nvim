@@ -40,6 +40,7 @@ return require('packer').startup(function(use)
     use "EdenEast/nightfox.nvim"
     use 'projekt0n/github-nvim-theme'
     use 'ellisonleao/gruvbox.nvim'
+    use 'Mofiqul/dracula.nvim'
 
     ------------------------------- UI ---------------------------------
     --lualine
@@ -68,6 +69,9 @@ return require('packer').startup(function(use)
 
     -- Zen mode.
     use 'folke/zen-mode.nvim'
+
+    -- Search > 99
+    use 'google/vim-searchindex'
 
     ----------------------------- Terminal ----------------------------------
     use {"akinsho/toggleterm.nvim", tag = '*', config = function()
