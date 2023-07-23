@@ -2,9 +2,9 @@
 -- Hint: string concatenation is done by `..`
 local ensure_packer = function()
     local fn = vim.fn
-    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
         vim.cmd [[packadd packer.nvim]]
         return true
     end
@@ -28,7 +28,7 @@ vim.cmd([[
 -- Packer.nvim hints
 --     after = string or list,           -- Specifies plugins to load before this plugin. See "sequencing" below
 --     config = string or function,      -- Specifies code to run after this plugin is loaded
---     requires = string or list,        -- Specifies plugin dependencies. See "dependencies". 
+--     requires = string or list,        -- Specifies plugin dependencies. See "dependencies".
 --     ft = string or list,              -- Specifies filetypes which load this plugin.
 --     run = string, function, or table, -- Specify operations to be run after successful installs/updates of a plugin
 return require('packer').startup(function(use)
@@ -50,7 +50,7 @@ return require('packer').startup(function(use)
     }
     require('lualine').setup {
         sections = {
-            lualine_z = {{ 'datetime', style='%H:%M:%S | %b-%d' }}
+            lualine_z = { { 'datetime', style = '%H:%M:%S | %b-%d' } }
         }
     }
 
@@ -74,34 +74,33 @@ return require('packer').startup(function(use)
     use 'google/vim-searchindex'
 
     ----------------------------- Terminal ----------------------------------
-    use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+    use { "akinsho/toggleterm.nvim", tag = '*', config = function()
         require("toggleterm").setup()
-    end}
+    end }
 
 
     ------------------ Editor Versioning & File Navigation ------------------
     -- Git
     use 'tpope/vim-fugitive'
-    use "sindrets/diffview.nvim"            -- Git diff page.
-    use 'whiteinge/diffconflicts'           -- Git diff conflicts.
+    use "sindrets/diffview.nvim"  -- Git diff page.
+    use 'whiteinge/diffconflicts' -- Git diff conflicts.
 
     -- Fuzzy finder.
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
         -- or                            , branch = '0.1.x',
-        requires = { {'nvim-lua/plenary.nvim'} }
+        requires = { { 'nvim-lua/plenary.nvim' } }
     }
-    local builtin = require('telescope.builtin')
 
     -- Buffer explorer.
     use 'jlanzarotta/bufexplorer'
     vim.keymap.set('n', '<leader>F', ':BufExplorer<CR>', { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>vsF', '<CR>:vs<CR>:BufExplorer<CR>', { noremap = true, silent = true })
-    vim.keymap.set('n', '<leader>sF', '<CR>:split<CR>:BufExplorer<CR>', { noremap = true, silent = true }) 
+    vim.keymap.set('n', '<leader>sF', '<CR>:split<CR>:BufExplorer<CR>', { noremap = true, silent = true })
 
     -- File explorer.
     use 'nvim-tree/nvim-tree.lua'
-    use 'nvim-tree/nvim-web-devicons'       -- Icons.
+    use 'nvim-tree/nvim-web-devicons' -- Icons.
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
     require("nvim-tree").setup()
@@ -155,7 +154,7 @@ return require('packer').startup(function(use)
         branch = 'v2', -- optional but strongly recommended
         config = function()
             -- you can configure Hop the way you like here; see :h hop-config
-            require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+            require 'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
         end
     }
     -- place this in one of your configuration file(s)
@@ -163,25 +162,25 @@ return require('packer').startup(function(use)
     local directions = require('hop.hint').HintDirection
     vim.keymap.set('', 'f', function()
         hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-    end, {remap=true})
+    end, { remap = true })
     vim.keymap.set('', 'F', function()
         hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-    end, {remap=true})
+    end, { remap = true })
     vim.keymap.set('', 't', function()
         hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-    end, {remap=true})
+    end, { remap = true })
     vim.keymap.set('', 'T', function()
         hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-    end, {remap=true})
+    end, { remap = true })
     vim.keymap.set('n', '<leader>hw', ':HopWord<CR>', { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>hv', ':HopVertical<CR>', { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>hls', ':HopLineStart<CR>', { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>hp', ':HopPattern<CR>', { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>ha', ':HopAnywhere<CR>', { noremap = true, silent = true })
-    
+
 
     --------------------------------------------- COC Code completion. (begin) ------------------------------------------------
-    use {'neoclide/coc.nvim', branch = 'release'}
+    use { 'neoclide/coc.nvim', branch = 'release' }
     -- use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'} -- Build from source.
     -- Some servers have issues with backup files, see #649
     vim.opt.backup = false
@@ -203,7 +202,7 @@ return require('packer').startup(function(use)
     end
 
     -- Use Tab for trigger completion with characters ahead and navigate
-    local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
+    local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
 
     keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
     keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
@@ -214,24 +213,24 @@ return require('packer').startup(function(use)
     -- Use <c-j> to trigger snippets
     keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
     -- Use <c-space> to trigger completion
-    keyset("i", "<c-space>", "coc#refresh()", {silent = true, expr = true})
+    keyset("i", "<c-space>", "coc#refresh()", { silent = true, expr = true })
 
     -- Use `[g` and `]g` to navigate diagnostics
     -- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
-    keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
-    keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
+    keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", { silent = true })
+    keyset("n", "]g", "<Plug>(coc-diagnostic-next)", { silent = true })
 
     -- GoTo code navigation
-    keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
-    keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-    keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-    keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+    keyset("n", "gd", "<Plug>(coc-definition)", { silent = true })
+    keyset("n", "gy", "<Plug>(coc-type-definition)", { silent = true })
+    keyset("n", "gi", "<Plug>(coc-implementation)", { silent = true })
+    keyset("n", "gr", "<Plug>(coc-references)", { silent = true })
 
 
     -- Use K to show documentation in preview window
     function _G.show_docs()
         local cw = vim.fn.expand('<cword>')
-        if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
+        if vim.fn.index({ 'vim', 'help' }, vim.bo.filetype) >= 0 then
             vim.api.nvim_command('h ' .. cw)
         elseif vim.api.nvim_eval('coc#rpc#ready()') then
             vim.fn.CocActionAsync('doHover')
@@ -239,14 +238,15 @@ return require('packer').startup(function(use)
             vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
         end
     end
-    keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
+
+    keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', { silent = true })
 
 
     --------------------------------------------- COC Code completion. (end) ------------------------------------------------
 
     --------------------------------------------------- Filetypes (begin) ---------------------------------------------------
     use('neoclide/jsonc.vim')
-    use('mtdl9/vim-log-highlighting')                                   -- Generic log file highlighting.
+    use('mtdl9/vim-log-highlighting') -- Generic log file highlighting.
 
     --------------------------------------------------- Filetypes (end) -----------------------------------------------------
 
