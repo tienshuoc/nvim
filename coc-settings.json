@@ -38,5 +38,5 @@
       "winblend": 5     // Transparency
   },
 
-  "coc.preferences.formatOnSaveFiletypes": ["typescript", "javascript"]
+  "coc.preferences.formatOnSaveFiletypes": ["typescript", "javascript", "typescriptreact", "javascripteract"]
 }
