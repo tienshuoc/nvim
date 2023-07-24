@@ -47,9 +47,7 @@ comment.setup {
         ---Function to call after (un)comment
         post_hook = nil,
     },
-    -- For self-defined syntax. Add these two lines. E.g '.list', commentstring = '#'
-    --local ft = require('Comment.ft')
-    --ft.set('list', {'#%s'})
+
 
     pre_hook = function(ctx)
         local U = require "Comment.utils"
@@ -66,3 +64,6 @@ comment.setup {
         }
     end,
 }
+-- For self-defined syntax. Add these two lines. E.g '.list', commentstring = '#'
+--local ft = require('Comment.ft')
+--ft.set('list', {'#%s'})
