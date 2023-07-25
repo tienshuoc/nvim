@@ -41,6 +41,7 @@ return require('packer').startup(function(use)
     use 'projekt0n/github-nvim-theme'
     use 'ellisonleao/gruvbox.nvim'
     use 'Mofiqul/dracula.nvim'
+    use { "catppuccin/nvim", as = "catppuccin" }
 
     ------------------------------- UI ---------------------------------
     --lualine
