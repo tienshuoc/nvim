@@ -4,6 +4,7 @@ local colorscheme = 'dracula'
 -- nightfox, dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
 -- dracula, dracula-soft
 -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+-- onehalflight, onehalfdark
 
 local is_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not is_ok then
