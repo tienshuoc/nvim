@@ -42,7 +42,11 @@ return require('packer').startup(function(use)
     use 'ellisonleao/gruvbox.nvim'
     use 'Mofiqul/dracula.nvim'
     use { "catppuccin/nvim", as = "catppuccin" }
-    use { 'sonph/onehalf', rtp = 'vim'}
+    use {
+        "sonph/onehalf",
+        rtp = "vim/",
+        config = function() vim.cmd("colorscheme onehalflight") end       -- Comment out this line if not using this as the default theme.
+    }
 
     ------------------------------- UI ---------------------------------
     --lualine
