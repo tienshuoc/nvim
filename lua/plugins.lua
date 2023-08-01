@@ -42,6 +42,7 @@ return require('packer').startup(function(use)
     use 'ellisonleao/gruvbox.nvim'
     use 'Mofiqul/dracula.nvim'
     use { "catppuccin/nvim", as = "catppuccin" }
+    use { 'sonph/onehalf', rtp = 'vim'}
 
     ------------------------------- UI ---------------------------------
     --lualine
