@@ -17,5 +17,10 @@ telescope.setup {
             }
         },
         wrap_results = true, -- Enable wrap around.
+        mappings = {         -- Allow Ctrl-U to clear in insert mode.
+          i = {
+            ["<C-u>"] = false
+          },
+        },
     }
 }
