@@ -10,6 +10,11 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})    -- Find file in buffer
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 telescope.setup {
+    pickers = {
+        colorscheme = {
+            enable_preview = true  -- Preview colorschemes with `:Telescope colorscheme`
+        }
+    },
     defaults = {
         path_display = {
             shorten = {
