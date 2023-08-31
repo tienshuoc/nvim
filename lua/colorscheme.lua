@@ -5,6 +5,7 @@ local colorscheme = 'dracula'
 -- dracula, dracula-soft
 -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 -- onehalflight, onehalfdark
+-- kanagawa, kanagawa-wave, kanagawa-lotus, kanagawa-dragon
 
 local is_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not is_ok then
