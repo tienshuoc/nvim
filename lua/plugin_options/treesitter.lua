@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 configs.setup {
-    ensure_installed = {"typescript", "cpp", "jsonc", "markdown", "gitcommit"},
+    ensure_installed = {"typescript", "cpp", "jsonc", "markdown", "gitcommit", "bash"},
 
     -- Color brackets
     rainbow = {
