@@ -6,6 +6,7 @@ local colorscheme = 'dracula'
 -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 -- onehalflight, onehalfdark
 -- kanagawa, kanagawa-wave, kanagawa-lotus, kanagawa-dragon
+-- PaperColor (:set background=dark/light)
 
 local is_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not is_ok then
