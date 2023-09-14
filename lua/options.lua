@@ -31,7 +31,8 @@ vim.cmd('set shortmess-=S')          -- Show search match counts.
 ------------------------------- Text Rendering Options ----------------------------
 vim.opt.encoding = 'utf-8'
 vim.opt.linebreak = true             -- Avoid wrapping a line in the middle of a word.
-vim.opt.scrolloff = 3                -- The number of screen lines to keep above and below the cursor (a large value causes the cursor to stay in the middle line when possible.
+vim.opt.scrolloff = 1                -- The number of screen lines to keep above and below the cursor (a large value causes the cursor to stay in the middle line when possible.
+
 
 
 ------------------------------- User Interface Options ----------------------------
