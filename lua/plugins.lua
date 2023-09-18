@@ -44,6 +44,7 @@ return require('packer').startup(function(use)
     use { "catppuccin/nvim", as = "catppuccin" }
     use "rebelot/kanagawa.nvim"
     use "NLKNguyen/papercolor-theme"
+    use 'Mofiqul/vscode.nvim'
     use {
         "sonph/onehalf",
         rtp = "vim/",
