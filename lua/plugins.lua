@@ -124,11 +124,6 @@ return require('packer').startup(function(use)
 
 
     ----------------------------- Editing ------------------------------
-    -- -- Autopairs (use 'coc-pairs' for now)
-    -- use {
-    --     "windwp/nvim-autopairs",
-    --     config = function() require("nvim-autopairs").setup {} end
-    -- }
 
     -- Comment
     use 'numToStr/Comment.nvim'
