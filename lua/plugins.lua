@@ -48,8 +48,11 @@ return require('packer').startup(function(use)
     use {
         "sonph/onehalf",
         rtp = "vim/",
-        config = function() vim.cmd("colorscheme onehalflight") end       -- Comment out this line if not using this as the default theme.
+        --[[ config = function() vim.cmd("colorscheme onehalflight") end       -- Comment out this line if not using this as the default theme. ]]
     }
+    require('packer').startup(function(use)
+        use({ 'rose-pine/neovim', as = 'rose-pine' })
+    end)
 
     ------------------------------- UI ---------------------------------
     --lualine
