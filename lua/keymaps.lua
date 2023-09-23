@@ -4,8 +4,6 @@ local opts = {
     silent = true,       -- do not show message
 }
 
---- Map Leader ---
-vim.g.mapleader = ';';
 
 -----------------
 -- Normal mode --

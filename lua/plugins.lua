@@ -44,6 +44,7 @@ return require('packer').startup(function(use)
     use { "catppuccin/nvim", as = "catppuccin" }
     use "rebelot/kanagawa.nvim"
     use "NLKNguyen/papercolor-theme"
+    use 'Mofiqul/vscode.nvim'
     use {
         "sonph/onehalf",
         rtp = "vim/",
@@ -175,7 +176,7 @@ return require('packer').startup(function(use)
     vim.keymap.set('', 'T', function()
         hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
     end, { remap = true })
-    vim.keymap.set('n', '<leader>hw', ':HopWord<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<leader>hw', ':HopWordMW<CR>', { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>hv', ':HopVertical<CR>', { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>hls', ':HopLineStart<CR>', { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>hp', ':HopPattern<CR>', { noremap = true, silent = true })
