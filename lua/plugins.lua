@@ -90,6 +90,17 @@ return require('packer').startup(function(use)
         require("toggleterm").setup()
     end }
 
+    ------------------------------- WTF -------------------------------------
+    use({
+        "piersolenski/wtf.nvim",
+        config = function()
+            require("wtf").setup()
+        end,
+        requires = {
+            "MunifTanjim/nui.nvim",
+        }
+    })
+    -------------------------------------------------------------------------
 
     ------------------ Editor Versioning & File Navigation ------------------
     -- Git

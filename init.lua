@@ -22,6 +22,7 @@ require('plugin_options/comment')
 require('plugin_options/treesitter')
 require('plugin_options/indent_blankline')
 require('plugin_options/telescope')
+require('plugin_options.wtf')
 
 -- Filetype Settings
 require('ftplugin/typescript')
