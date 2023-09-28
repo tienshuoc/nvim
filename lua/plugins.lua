@@ -55,6 +55,11 @@ return require('packer').startup(function(use)
     end)
 
     ------------------------------- UI ---------------------------------
+     -- hlargs (Highlight function arguments' definition and usages)
+     use { 'm-demare/hlargs.nvim' }
+     require('hlargs').setup()
+     require('hlargs').enable()
+    
     --lualine
     use {
         'nvim-lualine/lualine.nvim',
