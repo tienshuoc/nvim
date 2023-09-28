@@ -141,6 +141,7 @@ return require('packer').startup(function(use)
     -- Buffer tabs
     use 'romgrk/barbar.nvim'
     vim.api.nvim_set_keymap('n', '<leader>G', '<Cmd>BufferPick<CR>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<leader>D', '<Cmd>BufferPickDelete<CR>', { noremap = true, silent = true })
 
 
     ----------------------------- Editing ------------------------------
