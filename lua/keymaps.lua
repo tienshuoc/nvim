@@ -38,3 +38,8 @@ vim.keymap.set('i', 'jj', '<Esc>', opts)
 -----------------
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", opts)
+
+-------------------
+-- Terminal mode --
+-------------------
+vim.keymap.set('t', "jj", "<C-\\><C-n>", opts)
