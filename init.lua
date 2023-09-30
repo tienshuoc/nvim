@@ -16,6 +16,8 @@ require('keymaps')
 require('plugins')
 require('colorscheme')
 
+require('sn_options') -- SN options
+
 -- Plugin Settings
 require('plugin_options/coc')
 require('plugin_options/comment')
