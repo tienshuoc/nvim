@@ -38,5 +38,14 @@
       "winblend": 5     // Transparency
   },
 
-  "coc.preferences.formatOnSaveFiletypes": ["typescript", "javascript", "typescriptreact", "javascripteract"]
+  "coc.preferences.formatOnSaveFiletypes": ["typescript", "javascript", "typescriptreact", "javascripteract"],
+  "languageserver": {
+  "jsonnet": {
+    "command": "jsonnet-language-server",
+    "args": ["-t"],
+    "rootPatterns": [".git/", "jsonnetfile.json"],
+    "filetypes": ["jsonnet","libsonnet"]
+  }
+}
+
 }
