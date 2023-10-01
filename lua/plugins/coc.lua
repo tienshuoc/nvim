@@ -1,25 +1,14 @@
--- coc-git
-vim.keymap.set('n', '<leader>g', "<Plug>(coc-git-commit)", {})             -- Git commit info under cursor.
+local M = {
+    'neoclide/coc.nvim',
+    branch = 'release',
+    build = "yarn install --frozen-lockfile",
+}
 
--- Command for Prettier formatting.
-vim.api.nvim_create_user_command("Prettier", "call CocActionAsync('runCommand', 'prettier.formatFile')", {})
+M.config = function()
 
-
-
-
-
-
-
-
-
-
-
-
-
-    -- {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'} -- Build from source.
     -- Some servers have issues with backup files, see #649
-    vim.opt.backup = false,
-    vim.opt.writebackup = false,
+    vim.opt.backup = false
+    vim.opt.writebackup = false
 
     -- Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
     -- delays and poor user experience
@@ -28,6 +17,7 @@ vim.api.nvim_create_user_command("Prettier", "call CocActionAsync('runCommand', 
     -- Always show the signcolumn, otherwise it would shift the text each time
     -- diagnostics appeared/became resolved
     vim.opt.signcolumn = "yes"
+
 
     local keyset = vim.keymap.set
     -- Autocomplete
@@ -61,7 +51,6 @@ vim.api.nvim_create_user_command("Prettier", "call CocActionAsync('runCommand', 
     keyset("n", "gi", "<Plug>(coc-implementation)", { silent = true })
     keyset("n", "gr", "<Plug>(coc-references)", { silent = true })
 
-
     -- Use K to show documentation in preview window
     function _G.show_docs()
         local cw = vim.fn.expand('<cword>')
@@ -75,3 +64,17 @@ vim.api.nvim_create_user_command("Prettier", "call CocActionAsync('runCommand', 
     end
 
     keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', { silent = true })
+
+    -- coc-git
+    keyset('n', '<leader>g', '<Plug>(coc-git-commit)', { noremap = true, silent = true })
+
+    -- Command for Prettier formatting.
+    -- vim.api.nvim_create_user_command("Prettier", "call CocActionAsync('runCommand', 'prettier.formatFile')", {})
+
+
+      -- coc-git
+      --{ '<leader>g', '<Plug>(coc-git-commit)', mode = 'n', { noremap = true, silent = true } },  -- Git commit info under cursor.
+
+  end
+
+  return M
