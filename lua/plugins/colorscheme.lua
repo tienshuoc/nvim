@@ -57,6 +57,15 @@ return {
             -- vim.cmd([[ colorscheme rose-pine ]])
         end,
     },
+    {
+      -- Oceanic, Deep Ocean, Palenight, Lighter, Darker
+      'marko-cerovac/material.nvim',
+      config = function()
+          vim.g.material_style = 'Palenight'
+          -- vim.cmd([[ colorscheme material ]])
+      end,
+    },
+
 
 
 }
