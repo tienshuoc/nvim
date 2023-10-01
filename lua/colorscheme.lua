@@ -1,4 +1,4 @@
-local colorscheme = 'rose-pine-moon'
+local colorscheme = 'gruvbox'
 
 -- monokai_pro
 -- nightfox, dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
