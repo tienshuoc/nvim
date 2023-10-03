@@ -10,6 +10,7 @@ return {
 
         { '<leader>hw', ':HopWordMW<CR>', mode = 'n', { noremap = true, silent = true } },
         { '<leader>ha', ':HopAnywhere<CR>', mode = 'n', { noremap = true, silent = true } },
+        { '<leader>hp', ':HopPattern<CR>', mode = 'n', { noremap = true, silent = true } },
 
     },
     config = function()
