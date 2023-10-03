@@ -2,7 +2,7 @@
 return {
     "lukas-reineke/indent-blankline.nvim",
     keys = {
-        { '<leader>iblt', ':IBLToggle<CR>', mode = 'n', { noremap = true } },
+        { '<leader>tibl', ':IBLToggle<CR>', mode = 'n', { noremap = true } },
     },
     config = function()
         require("ibl").setup()
