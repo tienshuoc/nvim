@@ -5,9 +5,7 @@ return {
         { '<leader>iblt', ':IBLToggle<CR>', mode = 'n', { noremap = true } },
     },
     config = function()
-        local ibl = require("indent-blankline")
-
-        ibl.setup({})
+        require("ibl").setup()
     end,
 }
 
