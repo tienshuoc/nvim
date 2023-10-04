@@ -9,17 +9,54 @@ return {
     },
     {'projekt0n/github-nvim-theme'},
     {
-        'ellisonleao/gruvbox.nvim',
-        priority = 1000,
-        config = function()
-            require('gruvbox').setup({
-                undercurl = true,
-                underline = true,
-                contrast = "hard",
-            })
-            vim.o.background = "dark" -- or "light" for light mode
-            vim.cmd([[ colorscheme gruvbox ]])
-        end,
+      'sainnhe/gruvbox-material',
+      config = function()
+        vim.g.gruvbox_material_dim_inactive_windows = 1
+        vim.g.gruvbox_material_background = 'soft' -- 'hard', 'medium', 'soft'
+        vim.g.gruvbox_material_foreground = 'material' -- 'material', 'mix', 'original'
+        vim.g.gruvbox_material_statusline_style = 'original' -- 'default', 'mix', 'original'
+        vim.g.gruvbox_material_transparent_background = 0 -- 0, 1, 2 (statsline also transparent)
+        vim.g.gruvbox_material_ui_contrast = 'high' -- 'low', 'high' (contrast of line numbers, indent lines, etc)
+
+        vim.g.gruvbox_material_enable_bold = 1
+        vim.g.gruvbox_material_enable_italic = 1
+
+        vim.g.gruvbox_material_diagnostic_text_highlight = 1
+
+        vim.o.background = "dark"
+        vim.cmd([[ colorscheme gruvbox-material ]])
+      end,
+
+    },
+    -- {
+    --     'ellisonleao/gruvbox.nvim',
+    --     priority = 1000,
+    --     config = function()
+    --         require('gruvbox').setup({
+    --             undercurl = true,
+    --             underline = true,
+    --             contrast = "hard",
+    --         })
+    --         vim.o.background = "dark"
+    --         vim.cmd([[ colorscheme gruvbox ]])
+    --     end,
+    -- },
+    {
+      -- Edge Dark (default, aura, neon), Edge Light
+      'sainnhe/edge',
+      dependencies = {
+        'nvim-treesitter/nvim-treesitter'
+      },
+      config = function()
+        vim.g.edge_dim_inactive_windows = 1
+        vim.g.edge_enable_italic = 1
+        vim.o.background = "dark"
+        vim.g.edge_style = 'aura'
+        vim.g.edge_transparent_background = 1
+        -- vim.cmd([[ colorscheme edge ]])
+
+      end,
+
     },
     {
         -- dracula, dracula-soft
