@@ -3,7 +3,7 @@ return {
     {
         'tpope/vim-fugitive',
         keys = {
-            { '<leader>dt', ':Git difftool -y', mode = 'n', { noremap = true, silent = true }}
+            { '<leader>dt', ':Git difftool -y<CR>', mode = 'n', { noremap = true, silent = true }}
         }
     },
     {

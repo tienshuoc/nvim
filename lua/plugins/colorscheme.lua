@@ -52,11 +52,21 @@ return {
         vim.g.edge_enable_italic = 1
         vim.o.background = "dark"
         vim.g.edge_style = 'aura'
-        vim.g.edge_transparent_background = 1
+        vim.g.edge_transparent_background = 0
         -- vim.cmd([[ colorscheme edge ]])
 
       end,
 
+    },
+    {
+        'sainnhe/sonokai',
+        config = function()
+            vim.g.sonokai_enable_italics = 1
+            vim.g.sonokai_dim_ianctive_windows = 1
+            vim.g.sonokai_diagnostic_text_hightlight = 1
+            vim.g.sonokai_style = 'default' -- 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
+            -- vim.cmd([[ colorscheme sonokai ]])
+        end,
     },
     {
         -- dracula, dracula-soft
