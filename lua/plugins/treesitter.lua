@@ -2,11 +2,26 @@ return {
 
     -- Better syntax highlighting
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
+    dependencies = {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+    },
     build = ':TSUpdate',
     config = function()
         local treesitter = require('nvim-treesitter')
         treesitter.setup({
-            ensure_installed = {"typescript", "cpp", "jsonc", "markdown", "gitcommit", "bash"},
+            ensure_installed = {
+                "typescript", "typescriptreact", "cpp", "jsonc", "markdown", "gitcommit", "bash", "javascript", "python",
+                "lua", "tsx",
+            },
+            highlight = {
+                enable = true,
+            },
+            -- TSX Context Commentstring
+            context_commentstring = {
+                enable = true,
+                enable_autocmd = false,
+            },
 
             -- Color brackets
             rainbow = {
@@ -18,11 +33,6 @@ return {
                 -- termcolors = {} -- table of colour name strings
             },
 
-            -- JSX Context Commentstring
-            context_commentstring = {
-                enable = true,
-                enable_autocmd = false,
-            }
         })
     end,
 }
