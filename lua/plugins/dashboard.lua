@@ -15,7 +15,7 @@ return {
                     {
                         desc = ' NeoVim dotfiles',
                         group = 'Files',
-                        action = ':e ~/.config/nvim',
+                        action = ':cd ~/.config/nvim | :e ~/.config/nvim',
                         key = 'd',
                     },
                 },
