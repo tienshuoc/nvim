@@ -1,4 +1,4 @@
-{
+return {
   -- Dashboard during empty startup.
   'glepnir/dashboard-nvim',
   event = 'VimEnter',
@@ -7,5 +7,5 @@
       -- config
     }
   end,
-  dependencies = { {'nvim-tree/nvim-web-devicons'}}
+  dependencies = { { 'nvim-tree/nvim-web-devicons' } }
 }
