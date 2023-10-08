@@ -5,7 +5,6 @@ local M = {
 }
 
 M.config = function()
-
     -- Some servers have issues with backup files, see #649
     vim.opt.backup = false
     vim.opt.writebackup = false
@@ -72,9 +71,8 @@ M.config = function()
     -- vim.api.nvim_create_user_command("Prettier", "call CocActionAsync('runCommand', 'prettier.formatFile')", {})
 
 
-      -- coc-git
-      --{ '<leader>g', '<Plug>(coc-git-commit)', mode = 'n', { noremap = true, silent = true } },  -- Git commit info under cursor.
+    -- coc-git
+    --{ '<leader>g', '<Plug>(coc-git-commit)', mode = 'n', { noremap = true, silent = true } },  -- Git commit info under cursor.
+end
 
-  end
-
-  return M
+return M
