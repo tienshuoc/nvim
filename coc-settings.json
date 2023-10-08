@@ -38,7 +38,13 @@
       "winblend": 5     // Transparency
   },
 
-  "coc.preferences.formatOnSaveFiletypes": ["typescript", "javascript", "typescriptreact", "javascripteract"],
+  "coc.preferences.formatOnSaveFiletypes": [
+      "typescript",
+      "javascript",
+      "typescriptreact",
+      "javascripteract",
+      "lua",
+  ],
   "languageserver": {
   "jsonnet": {
     "command": "jsonnet-language-server",
