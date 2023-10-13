@@ -8,7 +8,6 @@ return {
                 lualine_z = { { 'datetime', style = '%H:%M:%S | %b-%d' } }
             }
         }
-    end,
     
     ------ Integration with `coc-nav` (begin) ------
     -- `CocInstall coc-nav`
@@ -36,5 +35,5 @@ return {
           },
       }
       ------ Integration with `coc-nav` (end) ------
-
+    end,
 }
