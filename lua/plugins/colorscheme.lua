@@ -81,6 +81,7 @@ return {
             require('kanagawa').setup({
                 dimInactive = true,
             })
+        end,
     },
     {
         -- PaperColor (:set background=dark/light)
