@@ -8,12 +8,13 @@ return {
     },
     build = ':TSUpdate',
     config = function()
-        local treesitter = require('nvim-treesitter')
-        treesitter.setup({
+        require('nvim-treesitter.configs').setup({
             ensure_installed = {
                 "typescript", "typescriptreact", "cpp", "jsonc", "markdown", "gitcommit", "bash", "javascript", "python",
                 "lua", "tsx",
             },
+            sync_install = true,
+            auto_install = true,
             highlight = {
                 enable = true,
             },
