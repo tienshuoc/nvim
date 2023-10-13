@@ -76,7 +76,11 @@ return {
     },
     {
         -- kanagawa, kanagawa-wave, kanagawa-lotus, kanagawa-dragon
-        'rebelot/kanagawa.nvim'
+        'rebelot/kanagawa.nvim',
+        config = function()
+            require('kanagawa').setup({
+                dimInactive = true,
+            })
     },
     {
         -- PaperColor (:set background=dark/light)
