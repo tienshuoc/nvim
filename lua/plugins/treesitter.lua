@@ -10,7 +10,7 @@ return {
     config = function()
         require('nvim-treesitter.configs').setup({
             ensure_installed = {
-                "typescript", "typescriptreact", "cpp", "jsonc", "markdown", "gitcommit", "bash", "javascript", "python",
+                "typescript", "cpp", "jsonc", "markdown", "gitcommit", "bash", "javascript", "python",
                 "lua", "tsx",
             },
             sync_install = true,
