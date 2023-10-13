@@ -6,7 +6,7 @@ return {
         { '<leader>ff', '<cmd>Telescope find_files<cr>', mode = 'n', { noremap = true }}, -- Find files.
         { '<leader>fg', '<cmd>Telescope live_grep<cr>', mode = 'n', { noremap = true }}, -- Grep amongst files.
         { '<leader>fb', '<cmd>Telescope buffers<cr>', mode = 'n', { noremap = true } }, -- Find files in buffer list.
-        { '<leader>fh',  '<cmd>Telescope help_tags<cr>', mode = 'n', { noremap = true } }, -- Find files in buffer list.
+        { '<leader>fh',  '<cmd>Telescope help_tags<cr>', mode = 'n', { noremap = true } }, -- Find help tags.
     },
     config = function()
         local telescope = require('telescope')
