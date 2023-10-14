@@ -1,5 +1,5 @@
 return {
     -- Color Brackets
-    'p00f/nvim-ts-rainbow',
+    'HiPhish/rainbow-delimiters.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' }
 }
