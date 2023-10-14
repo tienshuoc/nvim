@@ -71,9 +71,25 @@ M.config = function()
     -- Command for Prettier formatting.
     -- vim.api.nvim_create_user_command("Prettier", "call CocActionAsync('runCommand', 'prettier.formatFile')", {})
 
-
+    -------- COC extensions
+    -- coc-yank
+    -- coc-tabnine
+    -- coc-snippets
+    -- coc-prettier
+    -- coc-pairs
+    -- coc-nav
+    -- coc-lua
+    -- coc-html
+    -- coc-highlight
     -- coc-git
-    --{ '<leader>g', '<Plug>(coc-git-commit)', mode = 'n', { noremap = true, silent = true } },  -- Git commit info under cursor.
+    -- coc-eslint
+    -- coc-emmet
+    -- coc-tsserver
+    -- coc-tslint-plugin
+    -- coc-python
+    -- coc-markdownlint
+    -- coc-markdown-preview-enhanced
+    -- coc-json
 end
 
 return M
