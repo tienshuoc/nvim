@@ -72,7 +72,8 @@ M.config = function()
     -- vim.api.nvim_create_user_command("Prettier", "call CocActionAsync('runCommand', 'prettier.formatFile')", {})
 
     -------- COC extensions
-    -- coc-yank
+    -- coc-yank : Highlights yanked text, persists yank list across vim instances.
+    keyset("n", "<leader>yl", ":<C-u>CocList -A --normal yank<CR>", { silent = true })
     -- coc-tabnine
     -- coc-snippets
     -- coc-prettier
