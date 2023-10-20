@@ -74,6 +74,7 @@ M.config = function()
     -------- COC extensions
     -- coc-yank : Highlights yanked text, persists yank list across vim instances.
     keyset("n", "<leader>yl", ":<C-u>CocList -A --normal yank<CR>", { silent = true })
+    keyset("n", "<leader>ss", ":CocList outline<CR>", { noremap = true, silent = true }) -- Fuzzy search functions/methods.
     -- coc-tabnine
     -- coc-snippets
     -- coc-prettier
