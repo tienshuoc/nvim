@@ -25,7 +25,7 @@ return {
             vim.g.gruvbox_material_diagnostic_text_highlight = 1
 
             vim.o.background = "dark"
-            vim.cmd(" colorscheme gruvbox-material ")
+            -- vim.cmd(" colorscheme gruvbox-material ")
         end,
 
     },
@@ -49,10 +49,9 @@ return {
         config = function()
             vim.g.edge_dim_inactive_windows = 1
             vim.g.edge_enable_italic = 1
-            vim.o.background = "dark"
-            vim.g.edge_style = 'aura'
-            vim.g.edge_transparent_background = 0
-            -- vim.cmd(" colorscheme edge ")
+            vim.g.edge_style = 'neon'
+            vim.g.edge_transparent_background = 1
+            vim.cmd(" colorscheme edge ")
         end,
 
     },
