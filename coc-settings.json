@@ -1,35 +1,33 @@
 {
     "suggest.noselect": true,
-
     "suggest.completionItemKindLabels": {
-        "method": "  ",
-        "function": "  ",
-        "variable": "[]",
-        "field": "  ",
-        "typeParameter": "<>",
-        "constant": "  ",
-        "class": " פּ ",
-        "interface": " 蘒",
-        "struct": "  ",
-        "event": "  ",
-        "operator": "  ",
-        "module": "  ",
-        "property": "  ",
-        "enum": " 練",
-        "reference": "  ",
-        "keyword": "  ",
-        "file": "  ",
-        "folder": " ﱮ ",
-        "color": "  ",
-        "unit": " 塞 ",
-        "snippet": "  ",
-        "text": "  ",
-        "constructor": "  ",
-        "value": "  ",
-        "enumMember": "  "
+        "method": "\uea8c",  // 
+        "function": "\udb80\ude95", // 󰊕
+        "variable": "\udb80\udc2b",  // 󰀫
+        "field": "\udb81\udf22",  // 󰜢
+        "typeParameter": "\uea92",  // 
+        "constant": "\uf435",  // 
+        "class": "\udb82\udc31",  // 󰠱
+        "interface": "\ueb61",  // 
+        "struct": "\ueb5b",  // 
+        "event": "\uf0e7",  // 
+        "operator": "\ueb64",  // 
+        "module": "\udb81\udd73",  // 󰕳
+        "property": "\ueb65",  // 
+        "enum": "\uea95",  // 
+        "reference": "\uf481",  // 
+        "keyword": "\ueb62",  // 
+        "file": "\uf15c",  // 
+        "folder": "\ue5fe",  // 
+        "color": "\ue22b",  // 
+        "unit": "\ue21b",  // 
+        "snippet": "\ueac4",  // 
+        "text": "\udb82\udda8",  // 󰦨
+        "constructor": "\udb84\udc64",  // 󱁤
+        "value": "\udb80\udfa0",  // 󰎠
+        "enumMember": "\uf15d"  // 
     },
     "snippets.ultisnips.pythonPrompt": false,
-
     // coc-git
     "git.showCommitInFloating": true,
     "git.floatConfig": {
@@ -37,15 +35,9 @@
         "border": true,   // Border
         "winblend": 5     // Transparency
     },
-
-    "coc.preferences.formatOnSaveFiletypes": [
-        "typescript",
-        "javascript",
-        "typescriptreact",
-        "javascripteract",
-        "lua",
-        "json",
-    ],
+    "[typescipt][javascript][lua][json]": {
+        "coc.preferences.formatOnSave": true,
+    },
     "languageserver": {
         "jsonnet": {
             "command": "jsonnet-language-server",
