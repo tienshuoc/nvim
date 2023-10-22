@@ -41,6 +41,7 @@ vim.keymap.set('i', 'jj', '<Esc>', opts)
 -----------------
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", opts)
+vim.keymap.set('x', '/', "<Esc>/\\%V", opts) -- Search in visual range.
 
 -------------------
 -- Terminal mode --
