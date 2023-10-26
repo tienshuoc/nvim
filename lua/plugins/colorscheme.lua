@@ -67,7 +67,14 @@ return {
     },
     {
         -- dracula, dracula-soft
-        'Mofiqul/dracula.nvim'
+        'Mofiqul/dracula.nvim',
+        config = function()
+          require('dracula').setup({
+              transparent_bg = true,
+          })
+        end,
+
+        
     },
     {
         -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
