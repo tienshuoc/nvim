@@ -88,7 +88,7 @@ M.config = function()
     -- coc-emmet
     -- coc-tsserver
     -- coc-tslint-plugin
-    -- coc-python
+    -- coc-pyright
     -- coc-markdownlint
     -- coc-markdown-preview-enhanced
     -- coc-json
