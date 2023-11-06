@@ -1,5 +1,8 @@
 # nvim
+## Requirements
+Requires [Jet Brains Mono Nerd Font](https://www.nerdfonts.com/font-downloads) installment.
 
+## File Structure
 `lua/keymaps.lua`: Key mappings.
 `lua/options.lua`: Neovim option settings.
 
