@@ -31,6 +31,8 @@ vim.keymap.set('n', '<c-l>', ':wincmd l<CR>', opts)                             
 
 vim.keymap.set('n', '<leader>yrp', ':let @+=expand("%:p")<CR>', opts)              -- Yank current file's full path into system clipboard.
 
+vim.keymap.set('n', '<leader>tc', ':Telescope colorscheme<CR>', opts)              -- Shortcut to browsing colorschemes.
+
 -----------------
 -- Insert mode --
 -----------------
