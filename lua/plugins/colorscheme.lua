@@ -51,7 +51,7 @@ return {
             vim.g.edge_enable_italic = 1
             vim.g.edge_style = 'neon'
             vim.g.edge_transparent_background = 1
-            vim.cmd(" colorscheme edge ")
+            -- vim.cmd(" colorscheme edge ")
         end,
 
     },
@@ -138,8 +138,9 @@ return {
         -- Optional; default configuration will be used if setup isn't called.
         config = function()
             require("everforest").setup({
-            -- Your config here
+                transparent_background_level = 1,
             })
+            vim.cmd(" colorscheme everforest")
         end,
     }
 }
