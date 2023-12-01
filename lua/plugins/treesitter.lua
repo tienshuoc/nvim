@@ -18,11 +18,6 @@ return {
       highlight = {
         enable = true,
       },
-      -- TSX Context Commentstring
-      context_commentstring = {
-        enable = true,
-        enable_autocmd = false,
-      },
     })
   end,
 }
