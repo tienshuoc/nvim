@@ -22,3 +22,4 @@ require('sn_options') -- SN options
 
 -- Filetype Settings
 require('ftplugin/typescript')
+require('ftplugin/mlir')
