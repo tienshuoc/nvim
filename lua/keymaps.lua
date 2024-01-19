@@ -1,13 +1,12 @@
 -- define common options
 local opts = {
     noremap = true, -- non-recursive
-    silent = true, -- do not show message
+    silent = true,  -- do not show message
 }
 
-
------------------
--- Normal mode --
------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+-- ========================================================= Normal mode ===============================================================
+----------------------------------------------------------------------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>nv', ':e ~/.config/nvim/<CR>', opts) -- Edit neovim settings.
 
 vim.keymap.set('n', '<leader>w', ':w<CR>', opts)
@@ -16,6 +15,8 @@ vim.keymap.set('n', '<leader>qa', ':qa<CR>', opts)
 vim.keymap.set('n', '<leader>bd', ':bd<CR>', opts)
 
 vim.keymap.set('n', 'zZ', 'zszH', opts) -- Center cursor on middle of screen horizontal.
+vim.keymap.set('n', 'n', 'nzzzv', opts) -- Keeps next search term in middle of screen.
+vim.keymap.set('n', 'N', 'Nzzzv', opts) -- Keeps previous search term in middle of screen.
 
 vim.keymap.set('n', '<leader>nn', ':set nonumber norelativenumber<CR>:set signcolumn=no<CR>', opts)
 vim.keymap.set('n', '<leader>sn', ':set number relativenumber<CR>:set signcolumn=yes<CR>', opts)
@@ -31,19 +32,23 @@ vim.keymap.set('n', '<c-l>', ':wincmd l<CR>', opts)                             
 
 vim.keymap.set('n', '<leader>yrp', ':let @+=expand("%:p")<CR>', opts)              -- Yank current file's full path into system clipboard.
 
------------------
--- Insert mode --
------------------
+
+----------------------------------------------------------------------------------------------------------------------------------------
+-- ========================================================= Insert mode ===============================================================
+----------------------------------------------------------------------------------------------------------------------------------------
 vim.keymap.set('i', 'jj', '<Esc>', opts)
 
------------------
--- Visual mode --
------------------
+
+----------------------------------------------------------------------------------------------------------------------------------------
+-- ========================================================= Visual mode ===============================================================
+----------------------------------------------------------------------------------------------------------------------------------------
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", opts)
 vim.keymap.set('x', '/', "<Esc>/\\%V", opts) -- Search in visual range.
+vim.keymap.set('x', '<leader>p', "\"_dP")    -- Paste without yanking replaced text into register.
 
--------------------
--- Terminal mode --
--------------------
+
+----------------------------------------------------------------------------------------------------------------------------------------
+-- ========================================================= Terminal mode ===============================================================
+----------------------------------------------------------------------------------------------------------------------------------------
 vim.keymap.set('t', "jj", "<C-\\><C-n>", opts)
