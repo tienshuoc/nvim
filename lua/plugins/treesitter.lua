@@ -13,8 +13,8 @@ return {
                 "typescript", "cpp", "jsonc", "markdown",
                 "gitcommit", "bash", "javascript", "python", "lua",
             },
-            -- sync_install = true,
-            -- auto_install = true,
+            sync_install = false,
+            auto_install = true,
             highlight = {
                 enable = true,
             },
