@@ -1,14 +1,14 @@
 -- define common options
 local opts = {
-    noremap = true, -- non-recursive
-    silent = true,  -- do not show message
+  noremap = true,   -- non-recursive
+  silent = true,    -- do not show message
 }
 
 
 -----------------
 -- Normal mode --
 -----------------
-vim.keymap.set('n', '<leader>en', ':e ~/.config/nvim/<CR>', opts) -- Edit neovim settings.
+vim.keymap.set('n', '<leader>nv', ':e ~/.config/nvim/<CR>', opts) -- Edit neovim settings.
 
 vim.keymap.set('n', '<leader>w', ':w<CR>', opts)
 vim.keymap.set('n', '<leader>q', ':q<CR>', opts)
