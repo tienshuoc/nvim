@@ -66,7 +66,7 @@ M.config = function()
     keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', { silent = true })
 
     -- coc-git
-    keyset('n', '<leader>g', '<Plug>(coc-git-commit)', { noremap = true, silent = true })
+    keyset('n', '<leader>gb', '<Plug>(coc-git-commit)', { noremap = true, silent = true })
 
     -- Command for Prettier formatting.
     -- vim.api.nvim_create_user_command("Prettier", "call CocActionAsync('runCommand', 'prettier.formatFile')", {})
