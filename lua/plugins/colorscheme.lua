@@ -99,7 +99,11 @@ return {
     },
     {
         -- PaperColor (:set background=dark/light)
-        'NLKNguyen/papercolor-theme'
+        'NLKNguyen/papercolor-theme',
+        lazy = false,
+        config = function()
+          vim.cmd.colorscheme("PaperColor")
+        end
     },
     {
         -- vscode (:set background=dark/light)
@@ -140,7 +144,7 @@ return {
             require("everforest").setup({
                 transparent_background_level = 1,
             })
-            vim.cmd.colorscheme("everforest")
+            -- vim.cmd.colorscheme("everforest")
         end,
     }
 }
