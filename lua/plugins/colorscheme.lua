@@ -25,7 +25,7 @@ return {
             vim.g.gruvbox_material_diagnostic_text_highlight = 1
 
             vim.o.background = "dark"
-            -- vim.cmd(" colorscheme gruvbox-material ")
+            -- vim.cmd.colorscheme("gruvbox-material")
         end,
 
     },
@@ -36,7 +36,7 @@ return {
             require('onedark').setup({
                 style = 'cool' -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer'
             })
-            -- vim.cmd("colorscheme onedark")
+            -- vim.cmd.colorscheme("onedark")
         end,
 
     },
@@ -51,7 +51,7 @@ return {
             vim.g.edge_enable_italic = 1
             vim.g.edge_style = 'neon'
             vim.g.edge_transparent_background = 1
-            -- vim.cmd(" colorscheme edge ")
+            -- vim.cmd.colorscheme(" edge")
         end,
 
     },
@@ -62,7 +62,7 @@ return {
             vim.g.sonokai_dim_ianctive_windows = 1
             vim.g.sonokai_diagnostic_text_hightlight = 1
             vim.g.sonokai_style = 'default' -- 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
-            -- vim.cmd(" colorscheme sonokai ")
+            -- vim.cmd.colorscheme("sonokai")
         end,
     },
     {
@@ -110,7 +110,7 @@ return {
         "sonph/onehalf",
         rtp = "vim/",
         config = function()
-            -- vim.cmd("colorscheme onehalflight")
+            -- vim.cmd.colorscheme("onehalflight")
         end,
     },
     {
@@ -119,7 +119,7 @@ return {
         name = 'rose-pine',
         config = function()
             -- vim.o.background = "light" -- or "light" for light mode
-            -- vim.cmd(" colorscheme rose-pine ")
+            -- vim.cmd.colorscheme("rose-pine")
         end,
     },
     {
@@ -127,7 +127,7 @@ return {
         'marko-cerovac/material.nvim',
         config = function()
             vim.g.material_style = 'Palenight'
-            -- vim.cmd(" colorscheme material ")
+            -- vim.cmd.colorscheme("material")
         end,
     },
     {
@@ -140,7 +140,7 @@ return {
             require("everforest").setup({
                 transparent_background_level = 1,
             })
-            vim.cmd(" colorscheme everforest")
+            vim.cmd.colorscheme("everforest")
         end,
     }
 }
