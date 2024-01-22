@@ -102,9 +102,6 @@ return {
         'NLKNguyen/papercolor-theme',
         lazy = false,
         config = function()
-           require('papercolor-theme').setup({
-                    transparent_background = 1,
-                })
           vim.cmd.colorscheme("PaperColor")
         end
     },
