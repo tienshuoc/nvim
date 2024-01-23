@@ -11,3 +11,5 @@ Requires [Jet Brains Mono Nerd Font](https://www.nerdfonts.com/font-downloads) i
 `lua/lazy_manager.lua`: Entry point for Lazy neovim plugin manager.
 `lua/plugins/`: Assortment of plugins where each file corresponds to a single plugin. (Apart from `g_` prefixed files, which are groups of plugins lightweight enough to occupy a single file.
 
+### TODO
+* Set keyboard to use OSC52 : https://neovim.io/doc/user/provider.html#provider-clipboard
