@@ -10,7 +10,7 @@ local opts = {
 vim.keymap.set('n', '<leader>nv', ':e ~/.config/nvim/<CR>', opts) -- Edit neovim settings.
 
 vim.keymap.set('n', '<leader>w', ':w<CR>', opts)
-vim.keymap.set('n', '<leader>q', ':qq<CR>', opts)
+vim.keymap.set('n', '<leader>qq', ':q<CR>', opts)
 vim.keymap.set('n', '<leader>qa', ':qa<CR>', opts)
 vim.keymap.set('n', '<leader>bd', ':bd<CR>', opts)
 
