@@ -27,6 +27,7 @@ vim.keymap.set('n', '<c-j>', ':wincmd j<CR>', opts)                             
 vim.keymap.set('n', '<c-k>', ':wincmd k<CR>', opts)                                -- Switch panes up.
 vim.keymap.set('n', '<c-l>', ':wincmd l<CR>', opts)                                -- Switch panes right.
 
+vim.keymap.set('n', '<leader>rp', '1<C-G>', opts)   -- Show file fullpath.
 vim.keymap.set('n', '<leader>yrp', ':let @+=expand("%:p")<CR>', opts)              -- Yank current file's full path into system clipboard.
 
 
