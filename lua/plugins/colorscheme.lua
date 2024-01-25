@@ -146,5 +146,14 @@ return {
             })
             -- vim.cmd.colorscheme("everforest")
         end,
+    },
+    {
+    -- "santos-gabriel-dario/darcula-solid.nvim",
+        "doums/darcula",
+        lazy = false,
+        config = function()
+          -- vim.cmd.colorscheme("darcula-solid")
+          vim.cmd.colorscheme("darcula")
+        end,
     }
 }
