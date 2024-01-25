@@ -153,7 +153,7 @@ return {
         lazy = false,
         config = function()
           -- vim.cmd.colorscheme("darcula-solid")
-          vim.cmd.colorscheme("darcula")
+          -- vim.cmd.colorscheme("darcula")
         end,
     }
 }
