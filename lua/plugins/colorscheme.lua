@@ -86,6 +86,7 @@ return {
                     enabled = true,
                 }
             })
+            vim.cmd.colorscheme("catppuccin-frappe")
         end,
     },
     {
@@ -102,7 +103,7 @@ return {
         'NLKNguyen/papercolor-theme',
         lazy = false,
         config = function()
-          vim.cmd.colorscheme("PaperColor")
+          -- vim.cmd.colorscheme("PaperColor")
         end
     },
     {
