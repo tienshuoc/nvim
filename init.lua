@@ -8,8 +8,8 @@
 
 
 --- Map Leader ---
-vim.g.mapleader = ';';
-vim.g.maplocalleader = ';';
+vim.g.mapleader = ' ';
+vim.g.maplocalleader = ' ';
 
 -- Requires
 require('options')
