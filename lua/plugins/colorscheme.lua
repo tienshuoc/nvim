@@ -36,7 +36,7 @@ return {
             require('onedark').setup({
                 style = 'cool' -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer'
             })
-            -- vim.cmd.colorscheme("onedark")
+            vim.cmd.colorscheme("onedark")
         end,
 
     },
@@ -86,7 +86,7 @@ return {
                     enabled = true,
                 }
             })
-            vim.cmd.colorscheme("catppuccin-frappe")
+            -- vim.cmd.colorscheme("catppuccin-frappe")
         end,
     },
     {
