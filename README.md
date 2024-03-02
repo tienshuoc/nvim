@@ -19,3 +19,4 @@ Requires Nerd Font compatible font ( e.g. [Jet Brains Mono Nerd Font](https://ww
 
 # TODO 👀
 * learn how to use `unimparied`
+* [neodev]](https://github.com/folke/neodev.nvim) - Dev setup for neovim lua.
