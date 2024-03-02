@@ -25,7 +25,6 @@ return {
             vim.g.gruvbox_material_diagnostic_text_highlight = 1
 
             vim.o.background = "dark"
-            -- vim.cmd.colorscheme("gruvbox-material")
         end,
 
     },
@@ -36,7 +35,6 @@ return {
             require('onedark').setup({
                 style = 'cool' -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer'
             })
-            vim.cmd.colorscheme("onedark")
         end,
 
     },
@@ -51,7 +49,6 @@ return {
             vim.g.edge_enable_italic = 1
             vim.g.edge_style = 'neon'
             vim.g.edge_transparent_background = 1
-            -- vim.cmd.colorscheme(" edge")
         end,
 
     },
@@ -62,33 +59,31 @@ return {
             vim.g.sonokai_dim_ianctive_windows = 1
             vim.g.sonokai_diagnostic_text_hightlight = 1
             vim.g.sonokai_style = 'default' -- 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
-            -- vim.cmd.colorscheme("sonokai")
         end,
     },
     {
         -- dracula, dracula-soft
         'Mofiqul/dracula.nvim',
         config = function()
-          require('dracula').setup({
-              transparent_bg = true,
-          })
+            require('dracula').setup({
+                transparent_bg = true,
+            })
         end,
 
-        
+
     },
-    {
-        -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-        'catppuccin/nvim',
-        config = function()
-            require('catppuccin').setup({
-                transparent_background = true,
-                dim_inactive = {
-                    enabled = true,
-                }
-            })
-            -- vim.cmd.colorscheme("catppuccin-frappe")
-        end,
-    },
+    -- {
+    --     -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+    --     'catppuccin/nvim',
+    --     config = function()
+    --         require('catppuccin').setup({
+    --             transparent_background = true,
+    --             dim_inactive = {
+    --                 enabled = true,
+    --             }
+    --         })
+    --     end,
+    -- },
     {
         -- kanagawa, kanagawa-wave, kanagawa-lotus, kanagawa-dragon
         'rebelot/kanagawa.nvim',
@@ -103,7 +98,6 @@ return {
         'NLKNguyen/papercolor-theme',
         lazy = false,
         config = function()
-          -- vim.cmd.colorscheme("PaperColor")
         end
     },
     {
@@ -115,7 +109,6 @@ return {
         "sonph/onehalf",
         rtp = "vim/",
         config = function()
-            -- vim.cmd.colorscheme("onehalflight")
         end,
     },
     {
@@ -124,7 +117,6 @@ return {
         name = 'rose-pine',
         config = function()
             -- vim.o.background = "light" -- or "light" for light mode
-            -- vim.cmd.colorscheme("rose-pine")
         end,
     },
     {
@@ -132,7 +124,6 @@ return {
         'marko-cerovac/material.nvim',
         config = function()
             vim.g.material_style = 'Palenight'
-            -- vim.cmd.colorscheme("material")
         end,
     },
     {
@@ -145,16 +136,13 @@ return {
             require("everforest").setup({
                 transparent_background_level = 1,
             })
-            -- vim.cmd.colorscheme("everforest")
         end,
     },
     {
-    -- "santos-gabriel-dario/darcula-solid.nvim",
+        -- "santos-gabriel-dario/darcula-solid.nvim",
         "doums/darcula",
         lazy = false,
         config = function()
-          -- vim.cmd.colorscheme("darcula-solid")
-          -- vim.cmd.colorscheme("darcula")
         end,
     }
 }
