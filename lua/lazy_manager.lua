@@ -14,5 +14,8 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
     { import = 'plugins' },
     { import = 'plugins.git' },
-    { import = 'plugins.filetypes' }
+    { import = 'plugins.filetypes' },
+    -- Debugger plugins.
+    { import = 'plugins.dbg' },
+    { import = 'plugins.dbg.lang' }
 })

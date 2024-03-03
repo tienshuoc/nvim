@@ -35,7 +35,7 @@
         "border": true,   // Border
         "winblend": 5     // Transparency
     },
-    "[typescipt][javascript][lua][json]": {
+    "[typescipt][javascript][typescriptreact][lua][json]": {
         "coc.preferences.formatOnSave": true,
     },
     "languageserver": {
