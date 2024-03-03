@@ -15,7 +15,8 @@ require('lazy').setup({
     { import = 'plugins' },
     { import = 'plugins.git' },
     { import = 'plugins.filetypes' },
+    { import = 'plugins.colorschemes' },
     -- Debugger plugins.
     { import = 'plugins.dbg' },
-    { import = 'plugins.dbg.lang' }
+    { import = 'plugins.dbg.lang' },
 })
