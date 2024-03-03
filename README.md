@@ -35,8 +35,21 @@ Requires Nerd Font compatible font ( e.g. [Jet Brains Mono Nerd Font](https://ww
     2. Overwrites the value in `colorscheme_value` everytime there is a colorscheme change.
 * `lua/plugins/dbg/` : All DAP ( Debugger Adapter Protocol ) settings.
 
+# Installation 🗺️
+📌 **WIP, currently just for UNIX/LINUX**
+1. [Install Neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md) ( I currently use [`NVIM v0.9.4`](https://github.com/neovim/neovim/releases/tag/v0.9.4)).
+2. Go to [`$XDG_CONFIG_HOME`](https://neovim.io/doc/user/starting.html#%24XDG_CONFIG_HOME). This is typically `~/.config` for Unix. <br>
+This'll be the base root of where your Neovim configuration folder will reside.
+```bash
+cd ~/.config
+```
+3. Clone this `nvim/` folder into your config directory.
+```bash
+git clone https://github.com/tienshuoc/nvim.git
+```
+4. (WIP)
 
 
 # TODO 👀
 * learn how to use `unimparied`
-* [neodev]](https://github.com/folke/neodev.nvim) - Dev setup for neovim lua.
+* [neodev](https://github.com/folke/neodev.nvim) - Dev setup for neovim lua.
