@@ -1,9 +1,12 @@
 return {
     -- Escape insert mode quickly with customized key combination without lag.
-    'jdhao/better-escape.vim',
-    event = 'InsertEnter',
+    "max397574/better-escape.nvim",
     config = function()
-        vim.g.better_escape_shortcut = 'yy'
-        vim.g.better_escape_interval = 150  -- default 150 (ms)
+        require("better_escape").setup {
+            mapping = { "yy", "jj" },  -- a table with mappings to use
+            timeout = 150,             -- the time in which the keys must be hit in ms. Use `vim.o.timeoutlen` by default
+            clear_empty_lines = false, -- clear line after escaping if there is only whitespace
+            keys = "<Esc>",            -- keys used for escaping, if it is a function will use the result everytime
+        }
     end,
 }

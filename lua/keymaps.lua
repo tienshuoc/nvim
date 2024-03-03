@@ -1,7 +1,7 @@
--- define common options
 local opts = {
-    noremap = true, -- non-recursive
-    silent = true,  -- do not show message
+  -- Define common options.
+  noremap = true, -- non-recursive
+  silent = true,  -- do not show message
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------
@@ -22,20 +22,20 @@ vim.keymap.set('n', '<leader>nn', ':set nonumber norelativenumber<CR>:set signco
 vim.keymap.set('n', '<leader>sn', ':set number relativenumber<CR>:set signcolumn=yes<CR>', opts)
 vim.keymap.set('n', '<leader>san', ':set number norelativenumber<CR>:set signcolumn=yes<CR>', opts)
 
-vim.keymap.set('n', '<c-h>', ':wincmd h<CR>', opts)                                -- Switch panes left.
-vim.keymap.set('n', '<c-j>', ':wincmd j<CR>', opts)                                -- Switch panes down.
-vim.keymap.set('n', '<c-k>', ':wincmd k<CR>', opts)                                -- Switch panes up.
-vim.keymap.set('n', '<c-l>', ':wincmd l<CR>', opts)                                -- Switch panes right.
+vim.keymap.set('n', '<c-h>', ':wincmd h<CR>', opts)                   -- Switch panes left.
+vim.keymap.set('n', '<c-j>', ':wincmd j<CR>', opts)                   -- Switch panes down.
+vim.keymap.set('n', '<c-k>', ':wincmd k<CR>', opts)                   -- Switch panes up.
+vim.keymap.set('n', '<c-l>', ':wincmd l<CR>', opts)                   -- Switch panes right.
 
-vim.keymap.set('n', '<leader>rp', '1<C-G>', opts)   -- Show file fullpath.
-vim.keymap.set('n', '<leader>yrp', ':let @+=expand("%:p")<CR>', opts)              -- Yank current file's full path into system clipboard.
+vim.keymap.set('n', '<leader>rp', '1<C-G>', opts)                     -- Show file fullpath.
+vim.keymap.set('n', '<leader>yrp', ':let @+=expand("%:p")<CR>', opts) -- Yank current file's full path into system clipboard.
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- ========================================================= Insert mode ===============================================================
 ----------------------------------------------------------------------------------------------------------------------------------------
+vim.keymap.set('i', 'jj', '<Esc>', opts)
 vim.keymap.set('i', 'yy', '<Esc>', opts)
-
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- ========================================================= Visual mode ===============================================================
