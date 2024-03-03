@@ -1,0 +1,3 @@
+return {
+    'neoclide/jsonc.vim',
+}
