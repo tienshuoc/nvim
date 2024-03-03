@@ -1,10 +1,15 @@
 # Requirements 🔨
-Requires Nerd Font compatible font ( e.g. [Jet Brains Mono Nerd Font](https://www.nerdfonts.com/font-downloads) ). Othewise, devicons used may not render properly.
+Requires Nerd Font compatible font ( e.g. [Jet Brains Mono Nerd Font](https://www.nerdfonts.com/font-downloads) ). Othewise, Devicons used may not render properly.
 
 # File Structure 🗂️
+## General Configs 🔧
 * `lua/keymaps.lua` : Key mappings.
 * `lua/options.lua` : Neovim option settings.
-* `colorscheme/` : Directory containing colorscheme plugins (one per file).
+* `lua/ftsettings`: Specific settings by file type.
+## Plugins 🔌
+* `lua/lazy_manager.lua` : Entry point for Lazy neovim plugin manager.
+* `lua/plugins/` : Assortment of plugins where each file corresponds to a single plugin and categorized plugins are grouped in folders.
+* `lua/plugins/colorschemes/` : Directory containing colorscheme plugins (one per file).
   * [`Catpuccin 🍨`](https://github.com/catppuccin/nvim)
   * [`Darcula (JetBrains IDE theme) 🧶`](https://github.com/doums/darcula)
   * [`Dracula 🧛‍♂️`](https://github.com/Mofiqul/dracula.nvim)
@@ -25,15 +30,12 @@ Requires Nerd Font compatible font ( e.g. [Jet Brains Mono Nerd Font](https://ww
 
 * `colorscheme_value`: Contains the current colorscheme value that's being used.
 (E.g. `gruvbox-material`)
-* `lua/manage_colorscheme.lua`: <br>
+* `lua/manage_colorscheme.lua`:
     1. Reads from and set the editor colorscheme with value in `colorscheme_value`.
     2. Overwrites the value in `colorscheme_value` everytime there is a colorscheme change.
-<br><br>
+* `lua/plugins/dbg/` : All DAP ( Debugger Adapter Protocol ) settings.
 
-* `lua/ftplugin`: Specific settings by file type.
 
-* `lua/lazy_manager.lua`: Entry point for Lazy neovim plugin manager.
-* `lua/plugins/`: Assortment of plugins where each file corresponds to a single plugin. (Apart from `g_` prefixed files, which are groups of plugins lightweight enough to occupy a single file. Also `colorscheme.lua` currently groups all colorscheme plugins in one file.)
 
 # TODO 👀
 * learn how to use `unimparied`
