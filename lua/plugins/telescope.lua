@@ -13,8 +13,6 @@ return {
   },
   config = function()
     local telescope = require('telescope')
-    local actions = require("telescope.actions")
-    local action_state = require("telescope.actions.state")
     telescope.setup({
       pickers = {
         colorscheme = {
@@ -33,6 +31,11 @@ return {
           i = {
             ["<C-u>"] = false
           },
+        },
+        file_ignore_patterns = {
+          "package%-lock.json",
+          "package.json",
+          "yarn.lock",
         },
       },
     })
