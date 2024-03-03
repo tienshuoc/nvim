@@ -1,5 +1,6 @@
 # Requirements 🔨
-Requires Nerd Font compatible font ( e.g. [Jet Brains Mono Nerd Font](https://www.nerdfonts.com/font-downloads) ). Othewise, Devicons used may not render properly.
+* Nerd Font compatible font ( e.g. [Jet Brains Mono Nerd Font](https://www.nerdfonts.com/font-downloads) ). Othewise, Devicons used may not render properly.
+* RipGrep for [full Telescope fuzzy-finding power](https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#required-dependencies).
 
 # File Structure 🗂️
 ## General Configs 🔧
