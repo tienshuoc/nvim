@@ -22,5 +22,5 @@ require('manage_colorscheme') -- Manage colorschemes.
 require('sn_options')         -- SN options
 
 -- Filetype Settings
-require('ftplugin/typescript')
-require('ftplugin/mlir')
+require('ftsettings.typescript')
+require('ftsettings.mlir')
