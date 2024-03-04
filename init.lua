@@ -20,7 +20,3 @@ require('lazy_manager')
 
 require('manage_colorscheme') -- Manage colorschemes.
 require('sn_options')         -- SN options
-
--- Filetype Settings
-require('ftsettings.typescript')
-require('ftsettings.mlir')
