@@ -1,4 +1,4 @@
--- return {
+return {
 --     -- Great tutorial: https://miguelcrespo.co/posts/debugging-javascript-applications-with-neovim/
 --     -- nvim-dap adapter for vscode-js-debug.
 --     'mxsdev/nvim-dap-vscode-js',
@@ -64,4 +64,4 @@
 --             }
 --         end
 --     end,
--- }
+}
