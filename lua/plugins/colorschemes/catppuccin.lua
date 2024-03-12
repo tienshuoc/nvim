@@ -5,7 +5,7 @@ return {
         require('catppuccin').setup({
             transparent_background = true,
             dim_inactive = {
-                enabled = true,
+                enabled = false,
             }
         })
     end,
