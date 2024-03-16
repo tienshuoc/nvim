@@ -3,9 +3,9 @@ return {
     'catppuccin/nvim',
     config = function()
         require('catppuccin').setup({
-            transparent_background = true,
+            transparent_background = false,
             dim_inactive = {
-                enabled = true,
+                enabled = false,
             }
         })
     end,
