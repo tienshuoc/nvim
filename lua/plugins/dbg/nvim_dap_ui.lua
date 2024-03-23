@@ -1,7 +1,7 @@
 return {
     -- A UI for nvim-dap.
     "rcarriga/nvim-dap-ui",
-    requires = { "mfussenegger/nvim-dap" },
+    requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     config = function()
         require('dapui').setup()
         local dap, dapui = require("dap"), require("dapui")
