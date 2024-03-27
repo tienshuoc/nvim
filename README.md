@@ -56,4 +56,5 @@ git clone https://github.com/tienshuoc/nvim.git
 * learn how to use `unimparied`
 * [neodev](https://github.com/folke/neodev.nvim) - Dev setup for neovim lua.
 * Use LSP (replace COC?)
-* [LazyGit](https://github.com/jesseduffield/lazygit)
+* https://github.com/folke/trouble.nvim
+* https://github.com/folke/noice.nvim
