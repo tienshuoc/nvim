@@ -58,3 +58,4 @@ git clone https://github.com/tienshuoc/nvim.git
 * Use LSP (replace COC?)
 * https://github.com/folke/trouble.nvim
 * https://github.com/folke/noice.nvim
+* https://www.lazyvim.org/plugins/ui#indent-blanklinenvim
