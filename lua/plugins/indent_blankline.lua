@@ -1,18 +1,27 @@
 --- Indent Blankline ---
 return {
     "lukas-reineke/indent-blankline.nvim",
-    keys = {
-        { '<leader>tibl', ':IBLToggle<CR>', mode = 'n', { noremap = true } },
+    opts = {
+        indent = {
+            char = "│",
+            tab_char = "│",
+        },
+        scope = { enabled = false },
+        exclude = {
+            filetypes = {
+                "help",
+                "alpha",
+                "dashboard",
+                "neo-tree",
+                "Trouble",
+                "trouble",
+                "lazy",
+                "mason",
+                "notify",
+                "toggleterm",
+                "lazyterm",
+            },
+        },
     },
-    config = function()
-        require("ibl").setup()
-    end,
+    main = "ibl",
 }
-
-    -- -- vim.opt.list = true
-    -- -- vim.opt.listchars:append "eol:↴"
-    -- --
-    -- require("indent_blankline").setup {
-    --     show_current_context = true,
-    --     -- show_end_of_line = true,
-    -- }
