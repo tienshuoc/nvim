@@ -40,8 +40,8 @@ vim.keymap.set('i', 'yy', '<Esc>', opts)
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- ========================================================= Visual mode ===============================================================
 ----------------------------------------------------------------------------------------------------------------------------------------
-vim.keymap.set('v', '<Down>', ":m '>+1<CR>gv=gv", opts)  -- For Colemak layout. This might ruin existing prev-word motion, but don't really use that for line visuals anyways.
-vim.keymap.set('v', '<Up>', ":m '<-2<CR>gv=gv", opts)  -- For Colemak layout. This might ruin existing prev-end-of-word motion, but don't really use that for line visuals anyways.
+vim.keymap.set('V', 'N', ":m '>+1<CR>gv=gv", opts)  -- For Colemak layout. This might ruin existing prev-word motion, but don't really use that for line visuals anyways.
+vim.keymap.set('V', 'E', ":m '<-2<CR>gv=gv", opts)  -- For Colemak layout. This might ruin existing prev-end-of-word motion, but don't really use that for line visuals anyways.
 vim.keymap.set('x', '/', "<Esc>/\\%V", opts) -- Search in visual range.
 vim.keymap.set('x', '<leader>p', "\"_dP")    -- Paste without yanking replaced text into register.
 
