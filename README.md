@@ -55,7 +55,6 @@ git clone https://github.com/tienshuoc/nvim.git
 * [Configure Hop.nvim](https://github.com/hadronized/hop.nvim/wiki/Configuration) to specifically hop to brackets and punctuations (, . " / ; [ = + ~ etc) and add key mapping for it.
 * learn how to use `unimparied`
 * [neodev](https://github.com/folke/neodev.nvim) - Dev setup for neovim lua.
-* Use LSP (replace COC?)
 * https://github.com/folke/trouble.nvim
 * https://github.com/folke/noice.nvim
-* https://www.lazyvim.org/plugins/ui#indent-blanklinenvim
+* icons : https://www.lazyvim.org/configuration#icons--colorscheme
