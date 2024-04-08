@@ -10,7 +10,7 @@ return {
     { "<leader>fb", "<cmd>Telescope buffers<cr>", mode = "n", { noremap = true } }, -- Find files in buffer list.
     { "<leader>fh", "<cmd>Telescope help_tags<cr>", mode = "n", { noremap = true } }, -- Find help tags.
     { "<leader>tc", "<cmd>Telescope colorscheme<cr>", mode = "n", { noremap = true } }, -- Shortcut to browsing colorschemes.
-    { "<leader>ss", "<cmd>Telescope lsp_document_symbols symbols='function'<cr>", mode = "n", { noremap = true } }, -- Search functions in current buffer.
+    { "<leader>ss", "<cmd>:Telescope lsp_document_symbols symbols={'function','method','constructor'}<cr>", mode = "n", { noremap = true } }, -- Search functions in current buffer.
   },
   config = function()
     local telescope = require("telescope")
