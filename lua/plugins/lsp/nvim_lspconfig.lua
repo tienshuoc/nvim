@@ -133,12 +133,6 @@ return {
             vim.toggle.inlay_hints(buffer, true)
           end
         end
-        vim.keymap.set(
-          "n",
-          "<leader>cR",
-          "<cmd>ClangdSwitchSourceHeader<cr>",
-          { desc = "Switch Source/Header (C/C++)" }
-        )
         navic.attach(client, bufnr)
       end, -- on_attach function()
       cmd = {
