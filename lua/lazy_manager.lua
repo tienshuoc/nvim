@@ -21,4 +21,12 @@ require("lazy").setup({
 	{ import = "plugins.dbg.lang" },
 	-- Lsp plugins.
 	{ import = "plugins.lsp" },
+},
+checker = {
+  enabled = true,
+  notify = false,
+},
+change_detection = {
+  notify = false,
+},
 })
