@@ -5,6 +5,10 @@ return {
     "hrsh7th/cmp-nvim-lsp", -- Source for Neovim's built-in language server client.
     "hrsh7th/cmp-buffer", -- Source for text in buffer.
     "hrsh7th/cmp-path", -- Source for file system paths.
+    {
+      "tzachar/cmp-tabnine", -- Source for tabnine.
+      build = "./install.sh",
+    },
     "hrsh7th/cmp-nvim-lsp-signature-help", -- Source for displaying function signatures with the current parameter emphasized.
     "rafamadriz/friendly-snippets", -- Snippets collection for a set of different programming languages.
     {
@@ -20,6 +24,23 @@ return {
   },
   config = function()
     local cmp = require("cmp")
+
+    local tabnine = require("cmp_tabnine.config")
+    tabnine:setup({
+      max_lines = 1000,
+      max_num_results = 20,
+      sort = true,
+      run_on_every_keystroke = true,
+      snippet_placeholder = "..",
+      ignored_file_types = {
+        -- default is not to ignore
+        -- uncomment to ignore in lua:
+        -- lua = true
+      },
+      show_prediction_strength = false,
+      min_percent = 0,
+    })
+
     local luasnip = require("luasnip")
 
     -- Loads vscode style snippets from installed plugins (e.g. friendly-snippets).
@@ -71,6 +92,7 @@ return {
         { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "path" },
+        { name = "cmp_tabnine" },
         { name = "luasnip" },
         { name = "nvim_lsp_signature_help" },
       }),
