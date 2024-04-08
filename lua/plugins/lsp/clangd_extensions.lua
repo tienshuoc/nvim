@@ -1,6 +1,8 @@
 return {
   "p00f/clangd_extensions.nvim",
-  config = function() end,
+  config = function()
+    vim.keymap.set("n", "<leader>cR", "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "Switch Source/Header (C/C++)" })
+  end,
   opts = {
     inlay_hints = {
       inline = false,
