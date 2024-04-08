@@ -2,7 +2,7 @@ return {
   "neovim/nvim-lspconfig",
   -- event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    -- "williamboman/mason.nvim",
+    "p00f/clangd_extensions.nvim",
     {
       "SmiteshP/nvim-navic",
       config = function()
