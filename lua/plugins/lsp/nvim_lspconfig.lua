@@ -127,13 +127,13 @@ return {
     lspconfig.clangd.setup({
       capabilities = capabilities,
       on_attach = function(client, bufnr)
+        navic.attach(client, bufnr)
         -- Inlay hints.
         if opts.inlay_hints.enabled then
           if client.supports_method("textDocument/inlayHint") then
             vim.toggle.inlay_hints(buffer, true)
           end
         end
-        navic.attach(client, bufnr)
       end, -- on_attach function()
       cmd = {
         "clangd",
