@@ -59,3 +59,4 @@ git clone https://github.com/tienshuoc/nvim.git
 * https://github.com/folke/noice.nvim
 * icons : https://www.lazyvim.org/configuration#icons--colorscheme
 * https://github.com/RRethy/vim-illuminate
+* https://github.com/j-hui/fidget.nvim
