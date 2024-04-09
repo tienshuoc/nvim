@@ -110,7 +110,7 @@ return {
         -- Inlay hints.
         if opts.inlay_hints.enabled then
           if client.supports_method("textDocument/inlayHint") then
-            vim.toggle.inlay_hints(buffer, true)
+            vim.toggle.inlay_hints(bufnr, true)
           end
         end
       end,
@@ -131,7 +131,7 @@ return {
         -- Inlay hints.
         if opts.inlay_hints.enabled then
           if client.supports_method("textDocument/inlayHint") then
-            vim.toggle.inlay_hints(buffer, true)
+            vim.toggle.inlay_hints(bufnr, true)
           end
         end
       end, -- on_attach function()
@@ -157,6 +157,11 @@ return {
           "lspconfig.util"
         ).find_git_ancestor(fname)
       end,
+      init_options = {
+        usePlaceholders = true,
+        completeUnimported = true,
+        clangdFileStatus = true,
+      },
     }) -- clangd.setup()
   end, -- config function()
 }
