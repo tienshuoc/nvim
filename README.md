@@ -60,3 +60,4 @@ git clone https://github.com/tienshuoc/nvim.git
 * icons : https://www.lazyvim.org/configuration#icons--colorscheme
 * https://github.com/RRethy/vim-illuminate
 * https://github.com/j-hui/fidget.nvim
+* https://github.com/SmiteshP/nvim-navbuddy
