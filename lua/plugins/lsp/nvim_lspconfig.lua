@@ -123,6 +123,7 @@ return {
     }) -- tsserver.setup()
 
     lspconfig.clangd.setup({
+      -- Make sure that there are no symlinks in `compile_command.json`. Otherwise GoTo Definition/Implementation wouldn't work until the file is opened once.
       capabilities = capabilities,
       on_attach = function(client, bufnr)
         navic.attach(client, bufnr)
