@@ -61,3 +61,4 @@ git clone https://github.com/tienshuoc/nvim.git
 * https://github.com/RRethy/vim-illuminate
 * https://github.com/j-hui/fidget.nvim
 * https://github.com/SmiteshP/nvim-navbuddy
+* https://github.com/alexander-born/bazel.nvim
