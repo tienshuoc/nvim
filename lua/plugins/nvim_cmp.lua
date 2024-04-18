@@ -21,6 +21,7 @@ return {
     },
     "saadparwaiz1/cmp_luasnip", -- LuaSnip completion source for `nvim-cmp`.
     "onsails/lspkind.nvim", -- VSCode-like pictograms.
+    "windwp/nvim-autopairs", -- For completion to include brackets.
   },
   config = function()
     local cmp = require("cmp")
@@ -40,6 +41,10 @@ return {
       show_prediction_strength = false,
       min_percent = 0,
     })
+
+    -- Insert `(` after select function or method item
+    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
     local luasnip = require("luasnip")
 
