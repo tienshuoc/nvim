@@ -30,7 +30,15 @@ vim.keymap.set("n", "<c-l>", ":wincmd l<CR>", opts) -- Switch panes right.
 vim.keymap.set("n", "<leader>rp", "1<C-G>", opts) -- Show file fullpath.
 vim.keymap.set("n", "<leader>yrp", ':let @+=expand("%:p")<CR>', opts) -- Yank current file's full path into system clipboard.
 
-vim.keymap.set("n", "<leader>ccl", ":ccl<CR>", ops) -- Close quickfix list.
+vim.keymap.set("n", "<leader>ccl", ":ccl<CR>", opts) -- Close quickfix list.
+
+-- Go to window by index.
+vim.keymap.set("n", "<leader>1", "1<C-W>w", { noremap = true, desc = "Move to window 1." })
+vim.keymap.set("n", "<leader>2", "2<C-W>w", { noremap = true, desc = "Move to window 2." })
+vim.keymap.set("n", "<leader>3", "3<C-W>w", { noremap = true, desc = "Move to window 3." })
+vim.keymap.set("n", "<leader>4", "4<C-W>w", { noremap = true, desc = "Move to window 4." })
+vim.keymap.set("n", "<leader>5", "5<C-W>w", { noremap = true, desc = "Move to window 5." })
+vim.keymap.set("n", "<leader>6", "6<C-W>w", { noremap = true, desc = "Move to window 6." })
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- ========================================================= Insert mode ===============================================================
