@@ -1,3 +1,7 @@
+local function curr_window_index()
+  return vim.api.nvim_win_get_number(0)
+end
+
 return {
   -- Lualine
   "nvim-lualine/lualine.nvim",
@@ -34,6 +38,15 @@ return {
         lualine_x = { "diff", "branch", "filetype", "encoding" },
         lualine_y = { "progress" },
         lualine_z = { { "datetime", style = "%H:%M:%S | %b-%d" } },
+      },
+      inactive_sections = {
+        -- lualine_a = { { "windows", show_filename_only = true, show_modified_status = true, mode = 1 } },
+        lualine_a = { curr_window_index },
+        lualine_b = {},
+        lualine_c = { "filename" },
+        lualine_x = { "location" },
+        lualine_y = {},
+        lualine_z = {},
       },
     })
     -- Listen lsp-progress event and refresh lualine.
