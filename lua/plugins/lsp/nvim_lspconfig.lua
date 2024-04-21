@@ -128,11 +128,11 @@ return {
       on_attach = function(client, bufnr)
         navic.attach(client, bufnr)
         -- Inlay hints.
-        if opts.inlay_hints.enabled then
-          if client.supports_method("textDocument/inlayHint") then
-            vim.toggle.inlay_hints(bufnr, true)
-          end
-        end
+        -- if opts.inlay_hints.enabled then
+        --   if client.supports_method("textDocument/inlayHint") then
+        --     vim.toggle.inlay_hints(bufnr, true)
+        --   end
+        -- end
       end, -- on_attach function()
       cmd = {
         "clangd",
