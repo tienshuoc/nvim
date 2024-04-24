@@ -72,7 +72,6 @@ return {
         ["<C-s>"] = cmp.mapping.complete(),
         ["<CR>"] = cmp.mapping.confirm({
           behavior = cmp.ConfirmBehavior.Replace, -- Replaces adjacent text w/ selected item.
-          select = true,
         }),
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
