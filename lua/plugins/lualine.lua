@@ -12,6 +12,7 @@ return {
         lualine_a = { "mode" },
         lualine_b = {
           "filename",
+          "searchcount",
           {
             "diagnosticss",
             sources = { "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic" }, -- Displays diagnostics for the defined severity types
