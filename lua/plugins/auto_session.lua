@@ -15,14 +15,13 @@ return {
         restore_upcoming_session = true, -- already the default, no need to specify like this, only here as an example
         pre_cwd_changed_hook = nil, -- already the default, no need to specify like this, only here as an example
       },
-          -- Restore NvimTreee session if there is one.
-    pre_save_cmds = {
-      "NvimTreeOpen",
-    },
-    post_restore_cmds = {
-      "NvimTreeOpen"
-    }
+      -- Restore NvimTreee session if there is one.
+      pre_save_cmds = {
+        "NvimTreeClose",
+      },
+      -- post_restore_cmds = {
+      --   "NvimTreeOpen",
+      -- },
     })
-
   end,
 }
