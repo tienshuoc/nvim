@@ -24,6 +24,13 @@ return {
         colorscheme = {
           enable_preview = true,
         },
+        help_tags = {
+          mappings = {
+            i = {
+              ["<CR>"] = "file_vsplit", -- Do vertical split by default.
+            },
+          },
+        },
       },
       defaults = {
         path_display = {
@@ -36,7 +43,6 @@ return {
         mappings = {
           i = {
             ["<C-u>"] = false, -- Allow Ctrl-U to clear in insert mode.
-            ["<CR>"] = "select_vertical", -- Do vertical split by default.
           },
         },
         file_ignore_patterns = {
