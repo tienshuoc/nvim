@@ -26,7 +26,7 @@ vim.opt.hlsearch = true -- Enable search highlighting.
 vim.opt.ignorecase = true -- Ignore case when searching.
 vim.opt.incsearch = true -- Incremental search that shows partial matches.
 vim.opt.smartcase = true -- Automatiaclly switch search to case-sensitive when search query contains uppercase.
-vim.opt.shortmess:append("S") -- Don't show search match counts. Rely on lualine plugin s/t display in a file-by-file window and don't have a max limit.
+vim.cmd("set shortmess-=S") -- Show search match counts.
 
 ------------------------------- Text Rendering Options ----------------------------
 vim.opt.encoding = "utf-8"
@@ -42,6 +42,10 @@ vim.opt.relativenumber = true
 vim.opt.number = true
 vim.opt.termguicolors = true -- Enables 24-bit RGB color in the terminal UI.
 vim.opt.pumblend = 25 -- Enables pseudo-transparency for the popup menu.
+
+------------------------------- Highlight Groups ----------------------------
+vim.api.nvim_set_hl(0, "VirtualTextWarning", { fg = "#e7c664" })
+vim.api.nvim_set_hl(0, "VirtualTextError", { fg = "#fc5d7c" })
 
 ------------------------------- Miscellaneous Options -----------------------------
 vim.opt.history = 1000 -- Increase the undo limit.
