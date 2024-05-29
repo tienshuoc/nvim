@@ -29,8 +29,8 @@ return {
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
     -- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open diagnostic in floating window." }) -- Conflicts with harpoon keymaps.
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic." })
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic." })
+    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic." }) -- This is native with NVIM0.10+
+    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic." }) -- This is native with NVIM0.10+
 
     -- Use LspAttach autocommand to only map the following keys
     -- after the language server attaches to the current buffer
@@ -53,7 +53,7 @@ return {
         vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, opts)
 
         opts.desc = "Show documentation for under cursor."
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts) -- This is native with NVIM0.10+
 
         opts.desc = "Go to implementation."
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
@@ -106,10 +106,8 @@ return {
       on_attach = function(client, bufnr)
         navic.attach(client, bufnr)
         -- Inlay hints.
-        if opts.inlay_hints.enabled then
-          if client.supports_method("textDocument/inlayHint") then
-            vim.toggle.inlay_hints(bufnr, true)
-          end
+        if client.server_capabilities.inlayHintProvider then
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
       end,
     }) -- lua_ls.setup()
@@ -128,11 +126,9 @@ return {
       on_attach = function(client, bufnr)
         navic.attach(client, bufnr)
         -- Inlay hints.
-        -- if opts.inlay_hints.enabled then
-        --   if client.supports_method("textDocument/inlayHint") then
-        --     vim.toggle.inlay_hints(bufnr, true)
-        --   end
-        -- end
+        if client.server_capabilities.inlayHintProvider then
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+        end
       end, -- on_attach function()
       cmd = {
         "clangd",
