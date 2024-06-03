@@ -62,3 +62,8 @@ git clone https://github.com/tienshuoc/nvim.git
 * https://github.com/alexander-born/bazel.nvim
 
 Vim in browser: https://github.com/glacambre/firenvim
+
+Clangd Generate compilation database:
+```bash
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
+```
