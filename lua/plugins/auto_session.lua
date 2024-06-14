@@ -1,6 +1,6 @@
 return {
   "rmagatti/auto-session",
-  dependencies = { "nvim-telescope/telescope.nvim", "nvim-tree/nvim-tree.lua" },
+  -- dependencies = { "nvim-telescope/telescope.nvim", "nvim-tree/nvim-tree.lua" },
   -- keys = {
   --   "n",
   --   "<leader>fs",
