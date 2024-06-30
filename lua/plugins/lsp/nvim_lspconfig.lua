@@ -150,6 +150,7 @@ return {
     }) -- tsserver.setup()
 
     lspconfig.clangd.setup({
+      -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
       -- Make sure that there are no symlinks in `compile_command.json`. Otherwise GoTo Definition/Implementation wouldn't work until the file is opened once.
       capabilities = capabilities,
       on_attach = function(client, bufnr)
