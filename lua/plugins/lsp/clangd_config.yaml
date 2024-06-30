@@ -1,0 +1,4 @@
+-- Softlink this to `$XDG_CONFIG_HOME/clangd/config.yaml`, typically `~/.config/clangd/config.yaml`
+-- More information on configuration: https://clangd.llvm.org/config.html#files
+CompileFlags:
+  Add: [-Wall, -Wextra, -Werror, -Wunused-variable]
