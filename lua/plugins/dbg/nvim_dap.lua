@@ -33,8 +33,10 @@ return {
     --       return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
     --     end,
     --     cwd = "${workspaceFolder}",
-    --     stopOnEntry = false,
-    --     args = {},
+    --     stopOnEntry = true,
+    --     args = function()
+    --       return vim.fn.input("Args to executable: ")
+    --     end,
     --
     --     -- 💀
     --     -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
