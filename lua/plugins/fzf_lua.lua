@@ -9,9 +9,16 @@ return {
       mode = "n",
       { noremap = true, desc = "Search document symbols." },
     },
+    {
+      "<leader>fh",
+      "<cmd> FzfLua helptags<cr>",
+      mode = "n",
+      { noremap = true, desc = "Search help documentation." },
+    },
   },
   config = function()
-    local actions = require("fzf-lua.actions")
-    require("fzf-lua").setup({})
+    require("fzf-lua").setup({
+      files = { formatter = "path.filename_first" },
+    })
   end,
 }
