@@ -15,6 +15,24 @@ return {
       mode = "n",
       { noremap = true, desc = "Search help documentation." },
     },
+    {
+      "<leader>fc",
+      "<cmd> FzfLua colorschemes<cr>",
+      mode = "n",
+      { noremap = true, desc = "Fuzzy search and apply colorschemes." },
+    },
+    {
+      "<leader>fm",
+      "<cmd> FzfLua builtin<cr>",
+      mode = "n",
+      { noremap = true, desc = "Fuzzy search builtin commands." },
+    },
+    {
+      "<leader>sh",
+      "<cmd> FzfLua search_history<cr>",
+      mode = "n",
+      { noremap = true, desc = "Fuzzy search search-history." },
+    },
   },
   config = function()
     require("fzf-lua").setup({
