@@ -3,19 +3,15 @@
 local colorscheme_fname = vim.fn.expand(vim.fn.stdpath("config") .. "/colorscheme_value")
 
 -- Read colorscheme from file.
-local cmd, err = vim.ui.open(colorscheme_fname)
-if cmd == nil then
-  vim.cmd.colorscheme("vscode")
-else
+if vim.fn.filereadable(colorscheme_fname) == 1 then
   vim.cmd.colorscheme(vim.fn.readfile(colorscheme_fname)[1])
+else
+  vim.cmd.colorscheme("vscode")
 end
 
 -- Define a function to write the current color scheme to a file
-function write_color_scheme()
+local function write_color_scheme()
   local colorscheme = vim.g.colors_name
-  -- local colorscheme_file = vim.fn.stdpath('config') .. '/last_colorscheme.vim'
-  -- local cmd = string.format('echo "let g:colors_name = \'%s\'" > %s', colorscheme, colorscheme_file)
-  -- vim.fn.system(cmd)
   vim.fn.writefile({ colorscheme }, colorscheme_fname)
 end
 
