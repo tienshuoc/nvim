@@ -14,7 +14,7 @@ return {
   config = function()
     -- Keymaps for debugger.
     vim.keymap.set("n", "<leader>dC", function()
-      dap.clear_breakpoints()
+      require("dap").clear_breakpoints()
       -- require("notify")("Breakpoints cleared", "warn")
     end, { desc = "Clear breakpoints." })
 
