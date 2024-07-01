@@ -25,7 +25,6 @@ return {
     { "<leader>ff", "<cmd>Telescope find_files<cr>", mode = "n", { noremap = true } }, -- Find files.
     { "<leader>fg", "<cmd>Telescope live_grep<cr>", mode = "n", { noremap = true } }, -- Grep amongst files.
     { "<leader>fb", "<cmd>Telescope buffers<cr>", mode = "n", { noremap = true } }, -- Find files in buffer list.
-    { "<leader>fc", "<cmd>Telescope colorscheme<cr>", mode = "n", { noremap = true } }, -- Shortcut to browsing colorschemes.
   },
   config = function()
     local telescope = require("telescope")
@@ -45,17 +44,13 @@ return {
         mappings = {
           i = {
             ["<C-u>"] = false, -- Allow Ctrl-U to clear in insert mode.
+            ["<C-h>"] = "which_key",
           },
         },
         file_ignore_patterns = {
           "package%-lock.json",
           "package.json",
           "yarn.lock",
-        },
-      },
-      pickers = { -- Default configuration for builtin pickers.
-        colorscheme = {
-          enable_preview = true,
         },
       },
     })
