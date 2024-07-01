@@ -27,12 +27,6 @@ return {
     { "<leader>fb", "<cmd>Telescope buffers<cr>", mode = "n", { noremap = true } }, -- Find files in buffer list.
     { "<leader>fh", "<cmd>Telescope help_tags<cr>", mode = "n", { noremap = true } }, -- Find help tags.
     { "<leader>fc", "<cmd>Telescope colorscheme<cr>", mode = "n", { noremap = true } }, -- Shortcut to browsing colorschemes.
-    {
-      "<leader>ss",
-      "<cmd>:Telescope lsp_document_symbols symbols={'function','method','constructor'}<cr>",
-      mode = "n",
-      { noremap = true },
-    }, -- Search functions in current buffer.
   },
   config = function()
     local telescope = require("telescope")
@@ -47,7 +41,7 @@ return {
         --     exclude = { 1, -1 }, -- Truncate to show 5 letters, except first and first to last.
         --   },
         -- },
-        path_display = filename_first,  -- This is going to be native soon in the Release, using a custom func for now to do this.
+        path_display = filename_first, -- This is going to be native soon in the Release, using a custom func for now to do this.
         wrap_results = true, -- Enable wrap around.
         mappings = {
           i = {
@@ -63,13 +57,6 @@ return {
       pickers = { -- Default configuration for builtin pickers.
         colorscheme = {
           enable_preview = true,
-        },
-        help_tags = {
-          mappings = {
-            i = {
-              ["<CR>"] = "file_vsplit", -- Do vertical split by default.
-            },
-          },
         },
       },
     })
