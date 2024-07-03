@@ -33,6 +33,12 @@ return {
       mode = "n",
       { noremap = true, desc = "Fuzzy search search-history." },
     },
+    {
+      "<leader>fl",
+      "<cmd> FzfLua lines<cr>",
+      mode = "n",
+      { noremap = true, desc = "Fzzy search lines." },
+    },
   },
   config = function()
     require("fzf-lua").setup({
