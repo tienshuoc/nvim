@@ -28,6 +28,12 @@ return {
       { noremap = true, desc = "Fuzzy search builtin commands." },
     },
     {
+      "<leader>fd",
+      "<cmd> FzfLua commands<cr>",
+      mode = "n",
+      { noremap = true, desc = "Fuzzy search commands." },
+    },
+    {
       "<leader>sh",
       "<cmd> FzfLua search_history<cr>",
       mode = "n",
