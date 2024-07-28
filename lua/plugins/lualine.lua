@@ -30,8 +30,8 @@ return {
             always_visible = true, -- Show diagnostics even if there are none.
           },
         },
-        lualine_c = {},
-        lualine_x = { "diff", "branch", "filetype", "encoding" },
+        lualine_c = { "diff" },
+        lualine_x = { "branch", "filetype", "encoding" },
         lualine_y = { "progress" },
         lualine_z = { { "datetime", style = "%H:%M:%S | %b-%d" } },
       },
