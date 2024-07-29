@@ -1,5 +1,6 @@
 return {
-  -- "santos-gabriel-dario/darcula-solid.nvim",
-  "doums/darcula",
-  lazy = false,
+  "xiantang/darcula-dark.nvim",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter",
+  },
 }
