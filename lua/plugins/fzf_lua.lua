@@ -48,6 +48,7 @@ return {
   },
   config = function()
     require("fzf-lua").setup({
+      fzf_opts = { ["--cycle"] = "" },
       files = { formatter = "path.filename_first" },
     })
   end,
