@@ -23,7 +23,6 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
     { "<leader>ff", "<cmd>Telescope find_files<cr>", mode = "n", { noremap = true } }, -- Find files.
-    { "<leader>fg", "<cmd>Telescope live_grep<cr>", mode = "n", { noremap = true } }, -- Grep amongst files.
     { "<leader>fb", "<cmd>Telescope buffers<cr>", mode = "n", { noremap = true } }, -- Find files in buffer list.
   },
   config = function()
