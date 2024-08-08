@@ -4,6 +4,12 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
     {
+      "<leader>fg",
+      "<cmd> FzfLua grep_project<cr>",
+      mode = "n",
+      { noremap = true, desc = "Search all project lines." },
+    },
+    {
       "<leader>ss",
       "<cmd> FzfLua lsp_document_symbols<cr>",
       mode = "n",
