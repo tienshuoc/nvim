@@ -53,6 +53,7 @@ return {
 
     local lspkind = require("lspkind")
     cmp.setup({
+      preselect = cmp.PreselectMode.None,
       completion = {
         completeopt = "menu,menuone,preview,noselect",
       },
@@ -62,10 +63,6 @@ return {
         end,
       },
       mapping = cmp.mapping.preset.insert({
-        -- ["<C-e>"] = cmp.mapping.select_prev_item(), -- Previous suggestion.
-
-        -- ["<C-n>"] = cmp.mapping.select_next_item(), -- Next suggestion.
-
         ["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Up
         ["<C-d>"] = cmp.mapping.scroll_docs(4), -- Down
         -- C-b (back) C-f (forward) for snippet placeholder navigation.
