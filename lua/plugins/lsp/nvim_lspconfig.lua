@@ -49,6 +49,8 @@ return {
     })
     -- These have to be setup beforehand in this order.
 
+    vim.lsp.set_log_level("off") -- Disable log level to prevent generating large log files. Set to `vim.lsp.set_log_level("debug")` if debugging is needed.
+
     -- Setup language servers.
     local navic = require("nvim-navic")
     local lspconfig = require("lspconfig")
