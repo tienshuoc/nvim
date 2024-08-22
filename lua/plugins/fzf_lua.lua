@@ -2,13 +2,12 @@ return {
   "ibhagwan/fzf-lua",
   lazy = false,
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  -- Do `:FzfLua profiles` and then select `telescope` to do all telescope key-mappings plus look and feel.
   keys = {
     {
       "<leader>fg",
-      "<cmd> FzfLua grep_project<cr>",
+      "<cmd> FzfLua live_grep<cr>",
       mode = "n",
-      { noremap = true, desc = "Search all project lines." },
+      { noremap = true, desc = "Live grep current project." },
     },
     {
       "<leader>ss",
