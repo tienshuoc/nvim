@@ -2,7 +2,7 @@ return {
   "ibhagwan/fzf-lua",
   lazy = false,
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  -- Do `:FzfLua profiles` and then select `telescope` to do all telescope key-mappings.
+  -- Do `:FzfLua profiles` and then select `telescope` to do all telescope key-mappings plus look and feel.
   keys = {
     {
       "<leader>fg",
