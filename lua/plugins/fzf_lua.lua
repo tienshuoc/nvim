@@ -54,6 +54,7 @@ return {
   },
   config = function()
     require("fzf-lua").setup({
+      "telescope", -- Give telescope-like keymaps and feel.
       fzf_opts = { ["--cycle"] = "" },
       files = { formatter = "path.filename_first" },
     })
