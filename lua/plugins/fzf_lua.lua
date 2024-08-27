@@ -51,6 +51,12 @@ return {
       mode = "n",
       { noremap = true, desc = "Fzzy search lines." },
     },
+    {
+      "<leader>fr",
+      "<cmd> FzfLua registers<cr>",
+      mode = "n",
+      { noremap = true, desc = "Fzzy search registers." },
+    },
   },
   config = function()
     require("fzf-lua").setup({
