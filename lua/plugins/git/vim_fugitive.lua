@@ -1,6 +1,6 @@
 -- Yank a shareable github permalink url for the current file + line to clipboard register.
 vim.keymap.set("n", "<leader>gU", function()
-  local url = "https://github.sambanovasystems.com/SambaNova/software/blob/" -- Add remote repository url here.
+  local url = "" -- Add remote repository url here.
     .. vim.fn["fugitive#RevParse"]("HEAD")
     .. "/"
     .. vim.fn.expand("%")
