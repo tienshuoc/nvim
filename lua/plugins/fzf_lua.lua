@@ -28,6 +28,12 @@ return {
       { noremap = true, desc = "Fuzzy search and apply colorschemes." },
     },
     {
+      "<leader>fj",
+      "<cmd> FzfLua jumps<cr>",
+      mode = "n",
+      { noremap = true, desc = "Fuzzy search jumps." },
+    },
+    {
       "<leader>fm",
       "<cmd> FzfLua builtin<cr>",
       mode = "n",
