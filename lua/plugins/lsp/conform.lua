@@ -26,18 +26,21 @@ return {
         -- Conform will run multiple formatters sequentially
         python = { "isort", "black" },
         -- Use a sub-list to run only the first available formatter
-        javascript = { { "prettierd", "prettier" } },
+        javascript = { "prettierd", "prettier" },
         cpp = { "clang_format" },
+        jsonnet = { "jsonnetfmt" },
       },
     })
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = "*",
       callback = function(args)
-        if vim.bo.filetype ~= "lua" then
-          -- Don't format any file on save other than lua.
+        if vim.bo.filetype ~= "lua" and vim.bo.filetype ~= "jsonnet" then
+          -- Don't format any file on save other than lua, jsonnet.
           return
         end
-        require("conform").format({ bufnr = args.buf, formatters = { "stylua" } })
+        require("conform").format({
+          bufnr = args.buf,
+        })
       end,
     })
   end,
