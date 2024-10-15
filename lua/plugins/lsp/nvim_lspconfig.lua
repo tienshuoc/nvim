@@ -147,7 +147,7 @@ return {
       capabilities = capabilities,
     }) -- pyright.setup()
 
-    lspconfig.tsserver.setup({
+    lspconfig.ts_ls.setup({
       capabilities = capabilities,
     }) -- tsserver.setup()
 
