@@ -8,10 +8,10 @@ return {
     {
       "<leader>cF",
       function()
-        require("conform").format({ formatters = { "injected" }, timeout_ms = 3000 })
+        require("conform").format({ timeout_ms = 3000 })
       end,
       mode = { "n", "v" },
-      desc = "Format Injected Langs",
+      desc = "Format current buffer.",
     },
   },
   config = function()
@@ -34,7 +34,9 @@ return {
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = "*",
       callback = function(args)
-        if vim.bo.filetype ~= "lua" and vim.bo.filetype ~= "jsonnet" then
+        if
+          vim.bo.filetype ~= "lua" --[[ and vim.bo.filetype ~= "jsonnet" ]]
+        then
           -- Don't format any file on save other than lua, jsonnet.
           return
         end
