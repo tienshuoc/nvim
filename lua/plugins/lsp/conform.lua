@@ -15,9 +15,9 @@ return {
     },
   },
   config = function()
-    -- These can also be set directly
     require("conform").setup({
       formatters = {
+        -- Self-defined formatters.
         jsonnet_indent4 = {
           command = "jsonnetfmt",
           args = {
