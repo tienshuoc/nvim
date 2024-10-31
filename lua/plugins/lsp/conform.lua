@@ -15,10 +15,16 @@ return {
     },
   },
   config = function()
+    -- These can also be set directly
     require("conform").setup({
       formatters = {
-        clang_format = {
-          command = "clang-format",
+        jsonnet_indent4 = {
+          command = "jsonnetfmt",
+          args = {
+            "--indent",
+            "4",
+            "-",
+          },
         },
       },
       formatters_by_ft = {
@@ -27,16 +33,14 @@ return {
         python = { "isort", "black" },
         -- Use a sub-list to run only the first available formatter
         javascript = { "prettierd", "prettier" },
-        cpp = { "clang_format" },
-        jsonnet = { "jsonnetfmt" },
+        cpp = { "clang-format" },
+        jsonnet = { "jsonnet_indent4" },
       },
     })
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = "*",
       callback = function(args)
-        if
-          vim.bo.filetype ~= "lua" --[[ and vim.bo.filetype ~= "jsonnet" ]]
-        then
+        if vim.bo.filetype ~= "lua" and vim.bo.filetype ~= "jsonnet" then
           -- Don't format any file on save other than lua, jsonnet.
           return
         end
