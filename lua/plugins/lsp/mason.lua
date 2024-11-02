@@ -25,7 +25,7 @@ return {
     mason_lspconfig.setup({
       -- List of servers for mason to install.
       ensure_installed = {
-        "ts_ls",
+        -- "ts_ls", -- Using 'typescript toold'
         "clangd",
         "lua_ls",
         "pyright",
