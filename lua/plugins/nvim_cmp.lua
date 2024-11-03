@@ -22,6 +22,7 @@ return {
     "saadparwaiz1/cmp_luasnip", -- LuaSnip completion source for `nvim-cmp`.
     "onsails/lspkind.nvim", -- VSCode-like pictograms.
     "windwp/nvim-autopairs", -- For completion to include brackets.
+    "alexander-born/cmp-bazel", -- bazel target completion and package files
   },
   config = function()
     local cmp = require("cmp")
@@ -96,6 +97,7 @@ return {
         { name = "cmp_tabnine" },
         { name = "luasnip" },
         { name = "nvim_lsp_signature_help" },
+        { name = "bazel" },
       }),
       -- Configure lspkind for VSCode-like pictograms in completion menu.
       formatting = {
