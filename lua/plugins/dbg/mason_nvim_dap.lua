@@ -6,26 +6,16 @@ return {
     "mfussenegger/nvim-dap",
   },
   opts = {
-    handlers = {
-      -- function(config)
-      --   -- all sources with no handler get passed here
-      --
-      --   -- Keep original functionality
-      --   require("mason-nvim-dap").default_setup(config)
-      -- end,
-      -- cpp = function(config)
-      --   config.adapters = {
-      --     type = "executable",
-      --     command = "/opt/sambanova/llvm16/bin/lldb",
-      --     args = function()
-      --       return vim.fn.input("Args to executable: ")
-      --     end,
-      --   }
-      --   require("mason-nvim-dap").default_setup(config)
-      -- end,
-    },
-    ensure_installed = {
-      "codelldb",
-    },
+    -- Makes a best effort to setup the various debuggers with
+    -- reasonable debug configurations
+    automatic_installation = true,
   },
+  -- mason-nvim-dap is loaded when nvim-dap loads
+  config = function()
+    require("mason-nvim-dap").setup({
+      ensure_installed = {
+        "codelldb",
+      },
+    })
+  end,
 }
