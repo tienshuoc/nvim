@@ -6,7 +6,7 @@ return {
   cmd = "ConformInfo",
   keys = {
     {
-      "<leader>cF",
+      "<leader>F",
       function()
         require("conform").format({ timeout_ms = 3000 })
       end,
