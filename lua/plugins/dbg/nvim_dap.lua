@@ -8,6 +8,7 @@ return {
       "theHamsta/nvim-dap-virtual-text",
       opts = {},
     },
+    "jay-babu/mason-nvim-dap.nvim",
   },
   keys = {
     { "<leader>dc", ":DapContinue<CR>", mode = "n", desc = "DapContinue", {} },
@@ -67,6 +68,9 @@ return {
         -- end,
         cwd = "${workspaceFolder}",
         stopOnEntry = true,
+        sourceMap = {
+          ["/proc/self/cwd"] = "${workspaceFolder}",
+        },
         -- iniCommands = "settings set target.disable-aslr false",
       },
     }
