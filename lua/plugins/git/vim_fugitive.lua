@@ -12,6 +12,6 @@ end, { desc = "Yank GitHub URL to clipboard (permalink)." })
 
 return {
   "tpope/vim-fugitive",
-  lazy = false,
+  lazy = true,
   keys = {},
 }
