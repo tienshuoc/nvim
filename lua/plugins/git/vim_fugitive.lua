@@ -13,8 +13,5 @@ end, { desc = "Yank GitHub URL to clipboard (permalink)." })
 return {
   "tpope/vim-fugitive",
   lazy = false,
-  keys = {
-    { "<leader>gg", ":Git difftool -y<CR>", mode = "n", { noremap = true, silent = true } },
-    { "<leader>gs", vim.cmd.Git, mode = "n", { noremap = true, silent = true } },
-  },
+  keys = {},
 }
