@@ -61,18 +61,18 @@ return {
         program = function()
           return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
         end,
-        -- args = function()
-        --   -- return vim.fn.input("Args to executable: ")
-        --   -- Prompt the user for arguments to pass to the program
-        --   local input = vim.fn.input("Program arguments: ")
-        --   return vim.split(input, " ") -- split the input string by spaces into a table
-        -- end,
+        args = function()
+          -- return vim.fn.input("Args to executable: ")
+          -- Prompt the user for arguments to pass to the program
+          local input = vim.fn.input("Program arguments: ")
+          return vim.split(input, " ") -- split the input string by spaces into a table
+        end,
         cwd = "${workspaceFolder}",
         stopOnEntry = true,
         sourceMap = {
           ["/proc/self/cwd"] = "${workspaceFolder}",
         },
-        -- iniCommands = "settings set target.disable-aslr false",
+        initCommands = { "settings set target.disable-aslr false" },
       },
     }
 
