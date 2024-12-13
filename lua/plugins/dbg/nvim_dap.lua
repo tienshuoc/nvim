@@ -3,13 +3,11 @@ return {
   "mfussenegger/nvim-dap",
   lazy = true,
   dependencies = {
-    "rcarriga/nvim-dap-ui", -- UI for nvim-dap.
     {
       -- Virtual text for the debugger.
       "theHamsta/nvim-dap-virtual-text",
       opts = {},
     },
-    "jay-babu/mason-nvim-dap.nvim",
   },
   keys = {
     { "<leader>dc", ":DapContinue<CR>", mode = "n", desc = "DapContinue", {} },
