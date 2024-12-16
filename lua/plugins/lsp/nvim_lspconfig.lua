@@ -147,9 +147,9 @@ return {
       capabilities = capabilities,
     }) -- pyright.setup()
 
-    lspconfig.ts_ls.setup({
-      capabilities = capabilities,
-    }) -- tsserver.setup()
+    -- lspconfig.ts_ls.setup({
+    --  capabilities = capabilities,
+    -- }) -- tsserver.setup()
 
     lspconfig.clangd.setup({
       -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
