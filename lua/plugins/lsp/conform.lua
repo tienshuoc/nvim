@@ -8,7 +8,7 @@ return {
     {
       "<leader>F",
       function()
-        require("conform").format({ timeout_ms = 3000 })
+        require("conform").format({ timeout_ms = 3000, lsp_fallback = true })
       end,
       mode = { "n", "v" },
       desc = "Format current buffer.",
