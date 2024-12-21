@@ -25,9 +25,18 @@ return {
           request = "launch",
           name = "Launch file",
           -- program = "${file}",
+          program = function()
+            -- Get the current file's name and replace .ts with .js
+            local filename = vim.fn.expand("%:t:r") -- Get the current file name without extension
+            local extension = vim.fn.expand("%:e") -- Get the current file's extension
+            if extension == "ts" then
+              return vim.fn.expand("%:p:h") .. "/dist/" .. filename .. ".js" -- Expecting the compiled js to be under /dist
+            else
+              return vim.fn.expand("%:p") -- Use the current file's full path if not a .ts file
+            end
+          end,
           outFiles = { "${workspaceFolder}/**/dist/*.js" },
           stopOnEntry = true,
-          program = "dist/day2.js",
           cwd = "${workspaceFolder}",
         },
         -- {
