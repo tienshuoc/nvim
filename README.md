@@ -56,11 +56,8 @@ git clone https://github.com/tienshuoc/nvim.git
 * https://github.com/folke/trouble.nvim
 * https://github.com/folke/noice.nvim
 * icons : https://www.lazyvim.org/configuration#icons--colorscheme
-* https://github.com/RRethy/vim-illuminate
-* https://github.com/j-hui/fidget.nvim
 * https://github.com/SmiteshP/nvim-navbuddy
-* https://github.com/alexander-born/bazel.nvim
-
+* https://github.com/folke/snacks.nvim : Collection of small quality of life plugins
 Vim in browser: https://github.com/glacambre/firenvim
 
 Clangd Generate compilation database:
