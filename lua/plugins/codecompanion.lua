@@ -47,10 +47,16 @@ return {
           })
         end,
         sambacloud = function()
+          -- Remember to add "$XDG_CONFIG_HOME/shh_my_api_keys.lua" with :
+          -- return {
+          --           sambacloud_api_key = "some_api_key",
+          --       }
+          local ok, api_keys = pcall(require, "shh_my_api_keys")
+          local api_key = ok and api_keys.sambacloud_api_key or nil
           return require("codecompanion.adapters").extend("openai_compatible", {
             env = {
               url = "https://api.sambanova.ai",
-              api_key = "MY_API_KEY",
+              api_key = api_key,
               chat_url = "/v1/chat/completions", -- This is already the default. Just being explicit.
             },
             schema = {
