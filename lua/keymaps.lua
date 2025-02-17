@@ -12,13 +12,13 @@ vim.keymap.set("n", "<leader>nv", ":e ~/.config/nvim/<CR>", opts) -- Edit neovim
 opts["desc"] = "Write file."
 vim.keymap.set("n", "<leader>w", ":w<CR>", opts)
 opts["desc"] = "Quit file."
-vim.keymap.set("n", "<leader>qq", ":q<CR>", opts)
+vim.keymap.set({ "n", "v" }, "<leader>qq", ":<c-u>q<CR>", opts)
 opts["desc"] = "Quit all."
-vim.keymap.set("n", "<leader>qa", ":qa<CR>", opts)
+vim.keymap.set({ "n", "v" }, "<leader>qa", ":<c-u>qa<CR>", opts)
 opts["desc"] = "Close buffer."
-vim.keymap.set("n", "<leader>bd", ":bd<CR>", opts)
+vim.keymap.set({ "n", "v" }, "<leader>bd", ":<c-u>bd<CR>", opts)
 opts["desc"] = "Close tab."
-vim.keymap.set("n", "<leader>tc", ":tabc<CR>", opts)
+vim.keymap.set({ "n", "v" }, "<leader>tc", ":<c-u>tabc<CR>", opts)
 opts["desc"] = "Switch to previous buffer."
 vim.keymap.set("n", "<leader>tt", "<C-^>", opts) -- Switch to previous buffer.
 
@@ -46,7 +46,7 @@ opts["desc"] = "Yank current file's full path into system clipboard."
 vim.keymap.set("n", "<leader>yrp", ':let @+=expand("%:p")<CR>', opts)
 
 opts["desc"] = "Close quickfix list."
-vim.keymap.set("n", "<leader>ccl", ":ccl<CR>", opts)
+vim.keymap.set({ "n", "v" }, "<leader>ccl", ":<c-u>ccl<CR>", opts)
 
 -- Go to window by index.
 vim.keymap.set("n", "<leader>1", "1<C-W>w", { noremap = true, desc = "Move to window 1." })
