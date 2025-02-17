@@ -21,7 +21,12 @@ return {
         color_9 = { "#7d5c34", "smart" }, -- Fallow brown
       },
     })
-    vim.keymap.set("v", "<leader>hl", ":<c-u>HSHighlight ", { noremap = true, silent = true })
-    vim.keymap.set({ "n", "v" }, "<leader>hr", ":<c-u>HSRmHighlight<CR>", { noremap = true, silent = true })
+    vim.keymap.set("v", "<leader>hl", ":<c-u>HSHighlight ", { noremap = true, silent = true, desc = "HSHighlight" })
+    vim.keymap.set(
+      { "n", "v" },
+      "<leader>hr",
+      ":<c-u>HSRmHighlight<CR>",
+      { noremap = true, silent = true, desc = "HSRmHighlight" }
+    )
   end,
 }
