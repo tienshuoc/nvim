@@ -4,6 +4,7 @@ return {
     "mfussenegger/nvim-dap",
     {
       "microsoft/vscode-js-debug",
+      lazy = true,
       build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out", -- Required commands to run after installation and updates.
     },
   },
