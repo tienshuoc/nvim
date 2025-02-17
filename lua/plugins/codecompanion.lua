@@ -50,7 +50,7 @@ return {
           return require("codecompanion.adapters").extend("openai_compatible", {
             env = {
               url = "https://api.sambanova.ai",
-              api_key = "eb466201-fa25-44e9-8222-d00b2985313b",
+              api_key = "MY_API_KEY",
               chat_url = "/v1/chat/completions", -- This is already the default. Just being explicit.
             },
             schema = {
