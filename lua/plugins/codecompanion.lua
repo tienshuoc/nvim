@@ -61,7 +61,7 @@ return {
             },
             schema = {
               model = {
-                default = "Meta-Llama-3.1-8B-Instruct",
+                default = "DeepSeek-R1-Distill-Llama-70B",
               },
             },
           })
