@@ -35,6 +35,7 @@ return {
         javascript = { "prettierd", "prettier" },
         cpp = { "clang-format" },
         jsonnet = { "jsonnet_indent4" },
+        sh = { "shfmt" },
       },
     })
     vim.api.nvim_create_autocmd("BufWritePre", {
