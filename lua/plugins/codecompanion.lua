@@ -47,7 +47,7 @@ return {
           })
         end,
         sambacloud = function()
-          -- Remember to add "$XDG_CONFIG_HOME/shh_my_api_keys.lua" with :
+          -- Remember to add "$XDG_CONFIG_HOME/lua/shh_my_api_keys.lua" with :
           -- return {
           --           sambacloud_api_key = "some_api_key",
           --       }
