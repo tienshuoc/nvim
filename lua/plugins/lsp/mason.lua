@@ -29,6 +29,7 @@ return {
         "clangd",
         "lua_ls",
         "pyright",
+        "bashls",
       },
     })
 
@@ -39,6 +40,7 @@ return {
         "stylua", -- lua formatter
         "isort", -- python formatter
         "black", -- python formatter
+        "shfmt", -- bash formatter
         "pylint",
         "eslint_d",
       },
