@@ -35,6 +35,12 @@ return {
     },
     {
       "<leader>fm",
+      "<cmd> FzfLua marks<cr>",
+      mode = "n",
+      { noremap = true, desc = "Fuzzy search marks." },
+    },
+    {
+      "<leader>fn",
       "<cmd> FzfLua builtin<cr>",
       mode = "n",
       { noremap = true, desc = "Fuzzy search builtin commands." },
