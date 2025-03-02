@@ -63,7 +63,7 @@ return {
         vim.notify("✓ GitHub permalink copied to clipboard:\n" .. url, vim.log.levels.INFO)
       end,
       mode = "n",
-      { noremap = true, desc = "Yank GitHub URL to clipboard (permalink)." },
+      { noremap = true, desc = "Yank GitHub URL (permalink) to clipboard." },
     },
   },
 }
