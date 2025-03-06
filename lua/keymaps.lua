@@ -22,6 +22,19 @@ vim.keymap.set(
   "zszH",
   vim.tbl_extend("force", opts, { desc = "Center cursor on middle of screen horizontal." })
 )
+
+vim.keymap.set("c", "<CR>", function()
+  local cmd = vim.fn.getcmdline()
+  if cmd:match("^/?") then -- Check if command is a search (/) or (?)
+    return "<CR>zzzv" -- zz (center) + zv (open folds)
+  end
+  return "<CR>" -- Preserve normal <CR> behavior for other commands
+end, {
+  noremap = true,
+  expr = true,
+  desc = "Center first search result",
+})
+
 vim.keymap.set(
   "n",
   "n",
