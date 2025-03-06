@@ -34,6 +34,7 @@ vim.keymap.set(
   "Nzzzv",
   vim.tbl_extend("force", opts, { desc = "Keeps previous search term in middle of screen." })
 )
+vim.keymap.set("n", "G", "Gzz", vim.tbl_extend("force", opts, { desc = "Keeps goto line in middle of screen." }))
 
 vim.keymap.set(
   "n",
@@ -42,8 +43,7 @@ vim.keymap.set(
   vim.tbl_extend("force", opts, { desc = "Toggle relative number." })
 )
 
-opts["desc"] = "Toggle line wrap."
-vim.keymap.set("n", "<leader>tw", ":set wrap!<CR>", opts)
+vim.keymap.set("n", "<leader>tw", ":set wrap!<CR>", vim.tbl_extend("force", opts, { desc = "Toggle line wrap." }))
 
 vim.keymap.set("n", "<c-h>", ":wincmd h<CR>", vim.tbl_extend("force", opts, { desc = "Switch panes left." }))
 vim.keymap.set("n", "<c-j>", ":wincmd j<CR>", vim.tbl_extend("force", opts, { desc = "Switch panes down." }))
