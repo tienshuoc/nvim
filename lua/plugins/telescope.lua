@@ -51,6 +51,7 @@ return {
           "package%-lock.json",
           "package.json",
           "yarn.lock",
+          "bazel-cache",
         },
       },
     })
