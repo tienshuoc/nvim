@@ -44,7 +44,7 @@ if vim.g.vscode then
     vscode.action("workbench.action.findInFiles")
   end, opts)
   vim.keymap.set("n", "<leader>ss", function()
-    vscode.action("workbench.action.showAllSymbols")
+    vscode.action("workbench.action.gotoSymbol")
   end, opts)
   vim.keymap.set("n", "<leader>rn", function()
     vscode.action("editor.action.rename")
