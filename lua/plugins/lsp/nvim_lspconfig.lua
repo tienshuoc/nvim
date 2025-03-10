@@ -88,7 +88,12 @@ return {
           vim.tbl_extend("force", opts, { desc = "Go to declaration." })
         )
 
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition." }))
+        vim.keymap.set(
+          "n",
+          "gd",
+          require("fzf-lua").lsp_definitions,
+          vim.tbl_extend("force", opts, { desc = "Go to definition." })
+        )
 
         vim.keymap.set(
           "n",
