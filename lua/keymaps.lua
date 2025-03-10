@@ -24,11 +24,7 @@ vim.keymap.set(
 )
 
 vim.keymap.set("c", "<CR>", function()
-  local cmd = vim.fn.getcmdline()
-  if cmd:match("^/?") then -- Check if command is a search (/) or (?)
-    return "<CR>zzzv" -- zz (center) + zv (open folds)
-  end
-  return "<CR>" -- Preserve normal <CR> behavior for other commands
+  return vim.fn.getcmdtype() == "/" and "<CR>zzzv" or "<CR>"
 end, {
   noremap = true,
   expr = true,
