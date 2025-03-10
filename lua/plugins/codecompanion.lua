@@ -61,7 +61,7 @@ return {
             },
             schema = {
               model = {
-                default = "DeepSeek-R1-Distill-Llama-70B",
+                default = "DeepSeek-R1",
               },
             },
           })
