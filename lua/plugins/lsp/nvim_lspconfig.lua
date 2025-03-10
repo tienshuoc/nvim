@@ -39,7 +39,7 @@ return {
       enabled = true,
     },
   },
-  config = function(_, opts)
+  config = function()
     -- Show diagnostics under the cursor when holding position
     vim.api.nvim_create_augroup("lsp_diagnostics_hold", { clear = true })
     vim.api.nvim_create_autocmd({ "CursorHold" }, {
@@ -50,6 +50,13 @@ return {
     -- These have to be setup beforehand in this order.
 
     vim.lsp.set_log_level("off") -- Disable log level to prevent generating large log files. Set to `vim.lsp.set_log_level("debug")` if debugging is needed.
+
+    -- UI customization
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = "rounded",
+    })
+    vim.lsp.handlers["textDocument/signatureHelp"] =
+      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
     -- Setup language servers.
     local navic = require("nvim-navic")
@@ -74,40 +81,74 @@ return {
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local opts = { buffer = ev.buf }
 
-        opts.desc = "Go to declaration."
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+        vim.keymap.set(
+          "n",
+          "gD",
+          vim.lsp.buf.declaration,
+          vim.tbl_extend("force", opts, { desc = "Go to declaration." })
+        )
 
-        opts.desc = "Go to definition."
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition." }))
 
-        opts.desc = "Go to references."
-        vim.keymap.set("n", "gr", require("fzf-lua").lsp_references, opts)
+        vim.keymap.set(
+          "n",
+          "gr",
+          require("fzf-lua").lsp_references,
+          vim.tbl_extend("force", opts, { desc = "Go to references." })
+        )
 
-        opts.desc = "Show documentation for under cursor."
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts) -- This is native with NVIM0.10+
+        -- This is native with NVIM0.10+
+        vim.keymap.set(
+          "n",
+          "K",
+          vim.lsp.buf.hover,
+          vim.tbl_extend("force", opts, { desc = "Show documentation for under cursor." })
+        )
 
-        opts.desc = "Go to implementation."
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+        vim.keymap.set(
+          "n",
+          "gi",
+          vim.lsp.buf.implementation,
+          vim.tbl_extend("force", opts, { desc = "Go to implementation." })
+        )
 
-        opts.desc = "Displays signature information about the symbol under the cursor in a floating window."
-        vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-        -- vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
-        -- vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
-        -- vim.keymap.set("n", "<leader>wl", function()
-        -- 	print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        -- end, opts)
-        -- vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+        vim.keymap.set(
+          "n",
+          "<C-k>",
+          vim.lsp.buf.signature_help,
+          vim.tbl_extend(
+            "force",
+            opts,
+            { desc = "Displays signature information about the symbol under the cursor in a floating window." }
+          )
+        )
 
-        opts.desc = "Renames all reference to symbol under cursor."
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+        vim.keymap.set(
+          "n",
+          "<leader>rn",
+          vim.lsp.buf.rename,
+          vim.tbl_extend("force", opts, { desc = "Renames all reference to symbol under cursor." })
+        )
 
-        opts.desc = "See available code actions."
-        vim.keymap.set({ "n", "v" }, "<leader>ca", require("fzf-lua").lsp_code_actions, opts)
+        vim.keymap.set(
+          { "n", "v" },
+          "<leader>ca",
+          require("fzf-lua").lsp_code_actions,
+          vim.tbl_extend("force", opts, { desc = "See available code actions." })
+        )
 
-        opts.desc = "Formats a buffer using the attached (and optionally filtered) language server clients."
-        vim.keymap.set("n", "<leader>f", function()
-          vim.lsp.buf.format({ async = true })
-        end, opts)
+        vim.keymap.set(
+          "n",
+          "<leader>f",
+          function()
+            vim.lsp.buf.format({ async = true })
+          end,
+          vim.tbl_extend(
+            "force",
+            opts,
+            { desc = "Formats a buffer using the attached (and optionally filtered) language server clients." }
+          )
+        )
       end,
     }) -- LspAttach config.
 
@@ -120,6 +161,14 @@ return {
 
     -- Used to enable autocompletion (assign to every lsp server config).
     local capabilities = cmp_nvim_lsp.default_capabilities()
+    local default_on_attach_behavior = function(client, bufnr)
+      -- Used to enable LSP symbol information on winbar
+      navic.attach(client, bufnr)
+      -- Enable inlay hints if available.
+      if client.server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+      end
+    end
 
     lspconfig.lua_ls.setup({
       capabilities = capabilities,
@@ -134,38 +183,29 @@ return {
           },
         },
       },
-      on_attach = function(client, bufnr)
-        navic.attach(client, bufnr)
-        -- Inlay hints.
-        if client.server_capabilities.inlayHintProvider then
-          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-        end
-      end,
+      on_attach = default_on_attach_behavior,
     }) -- lua_ls.setup()
 
     lspconfig.pyright.setup({
       capabilities = capabilities,
+      on_attach = default_on_attach_behavior,
     }) -- pyright.setup()
 
     lspconfig.bashls.setup({
       capabilities = capabilities,
+      on_attach = default_on_attach_behavior,
     })
 
     -- lspconfig.ts_ls.setup({
     --  capabilities = capabilities,
+    --  on_attach = default_on_attach_behavior,
     -- }) -- tsserver.setup()
 
     lspconfig.clangd.setup({
       -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
       -- Make sure that there are no symlinks in `compile_command.json`. Otherwise GoTo Definition/Implementation wouldn't work until the file is opened once.
       capabilities = capabilities,
-      on_attach = function(client, bufnr)
-        navic.attach(client, bufnr)
-        -- Inlay hints.
-        if client.server_capabilities.inlayHintProvider then
-          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-        end
-      end, -- on_attach function()
+      on_attach = default_on_attach_behavior,
       cmd = {
         "clangd",
         "--background-index",
