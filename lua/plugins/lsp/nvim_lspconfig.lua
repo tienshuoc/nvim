@@ -141,19 +141,6 @@ return {
           require("fzf-lua").lsp_code_actions,
           vim.tbl_extend("force", opts, { desc = "See available code actions." })
         )
-
-        vim.keymap.set(
-          "n",
-          "<leader>f",
-          function()
-            vim.lsp.buf.format({ async = true })
-          end,
-          vim.tbl_extend(
-            "force",
-            opts,
-            { desc = "Formats a buffer using the attached (and optionally filtered) language server clients." }
-          )
-        )
       end,
     }) -- LspAttach config.
 
