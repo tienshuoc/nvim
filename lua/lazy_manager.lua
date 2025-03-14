@@ -17,7 +17,18 @@ vim.opt.rtp:prepend(lazypath)
 
 if vim.g.vscode then
   require("lazy").setup({
-    { import = "plugins.flash" },
+    spec = {
+      { import = "plugins.flash" },
+      { import = "plugins.neoscroll" },
+      { import = "plugins.mini_ai" },
+      { import = "plugins.treesitter_textobjects" },
+      { import = "plugins.treesitter" },
+      { import = "plugins.surround" },
+      { import = "plugins.yanky" },
+    },
+    { -- automatically check for plugin updates
+      checker = { enabled = true },
+    },
   })
 else
   require("lazy").setup({
