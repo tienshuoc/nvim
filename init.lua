@@ -55,9 +55,41 @@ if vim.g.vscode then
 
   vim.opt.clipboard = "unnamedplus" -- use system clipboard
   vim.opt.smartcase = true -- Automatiaclly switch search to case-sensitive when search query contains uppercase.
+  vim.opt.ignorecase = true -- Ignore case when searching.
 
   -- Disable session history tracking in VSCode to avoid concurrent write conflicts with the one running in terminal.
   vim.opt.shada = ""
+
+  -- Cursor centering
+  vim.keymap.set(
+    "n",
+    "zZ",
+    "zszH",
+    vim.tbl_extend("force", opts, { desc = "Center cursor on middle of screen horizontal." })
+  )
+
+  vim.keymap.set("c", "<CR>", function()
+    return vim.fn.getcmdtype() == "/" and "<CR>zzzv" or "<CR>"
+  end, {
+    noremap = true,
+    expr = true,
+    desc = "Center first search result",
+  })
+
+  vim.keymap.set(
+    "n",
+    "n",
+    "nzzzv",
+    vim.tbl_extend("force", opts, { desc = "Keeps next search term in middle of screen." })
+  )
+  vim.keymap.set(
+    "n",
+    "N",
+    "Nzzzv",
+    vim.tbl_extend("force", opts, { desc = "Keeps previous search term in middle of screen." })
+  )
+  vim.keymap.set("n", "G", "Gzz", vim.tbl_extend("force", opts, { desc = "Keeps goto line in middle of screen." }))
+  require("lazy_manager")
 
   -- Plugins
 else
