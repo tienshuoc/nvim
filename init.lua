@@ -56,6 +56,9 @@ if vim.g.vscode then
   vim.opt.clipboard = "unnamedplus" -- use system clipboard
   vim.opt.smartcase = true -- Automatiaclly switch search to case-sensitive when search query contains uppercase.
 
+  -- Disable session history tracking in VSCode to avoid concurrent write conflicts with the one running in terminal.
+  vim.opt.shada = ""
+
   -- Plugins
 else
   -- Requires
