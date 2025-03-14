@@ -87,7 +87,10 @@ return {
         },
       },
       fzf_opts = { ["--cycle"] = "" },
-      files = { formatter = "path.filename_first" },
+      files = {
+        formatter = "path.filename_first",
+        fd_opts = "--hidden --type f --type l --exclude .git --exclude '*bazel-cache*'",
+      },
     })
   end,
 }
