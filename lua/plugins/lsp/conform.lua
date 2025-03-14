@@ -8,7 +8,11 @@ return {
     {
       "<leader>F",
       function()
-        require("conform").format({ timeout_ms = 3000, lsp_fallback = true })
+        require("conform").format({
+          timeout_ms = 3000,
+          -- LSP formatting is used when no other formatters are available.
+          lsp_fallback = true,
+        })
       end,
       mode = { "n", "v" },
       desc = "Format current buffer.",
