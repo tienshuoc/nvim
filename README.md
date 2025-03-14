@@ -60,6 +60,13 @@ git clone https://github.com/tienshuoc/nvim.git
 * https://github.com/folke/snacks.nvim : Collection of small quality of life plugins
 Vim in browser: https://github.com/glacambre/firenvim
 
+* don't care about commit if file isn't changed for github url yanks
+* neogit 
+* power of g (vimwiki)
+* treewalker + mini.clue (reddit)
+* linediff
+
+
 Clangd Generate compilation database:
 ```bash
 cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
