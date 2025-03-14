@@ -23,8 +23,13 @@ return {
   lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
-    { "<leader>ff", "<cmd>Telescope find_files<cr>", mode = "n", { noremap = true } }, -- Find files.
-    { "<leader>fb", "<cmd>Telescope buffers sort_mru=true<cr>", mode = "n", { noremap = true } }, -- Find files in buffer list.
+    { "<leader>ff", "<cmd>Telescope find_files<cr>", mode = "n", { noremap = true, desc = "Telescope find_files" } }, -- Find files.
+    {
+      "<leader>fb",
+      "<cmd>Telescope buffers sort_mru=true<cr>",
+      mode = "n",
+      { noremap = true, desc = "Telescope buffers" },
+    }, -- Find files in buffer list.
   },
   config = function()
     local telescope = require("telescope")
