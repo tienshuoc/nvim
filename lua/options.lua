@@ -26,7 +26,7 @@ vim.opt.hlsearch = true -- Enable search highlighting.
 vim.opt.ignorecase = true -- Ignore case when searching.
 vim.opt.incsearch = true -- Incremental search that shows partial matches.
 vim.opt.smartcase = true -- Automatiaclly switch search to case-sensitive when search query contains uppercase.
-vim.opt.shortmess:append({S = true}) -- Don't show search match counts. Rely on lualine plugin s/t display in a file-by-file window and don't have a max limit.
+vim.opt.shortmess:append({ S = true }) -- Don't show search match counts. Rely on lualine plugin s/t display in a file-by-file window and don't have a max limit.
 
 ------------------------------- Text Rendering Options ----------------------------
 vim.opt.encoding = "utf-8"
