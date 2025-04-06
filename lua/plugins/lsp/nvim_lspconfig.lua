@@ -97,7 +97,7 @@ return {
 
         vim.keymap.set(
           "n",
-          "gr",
+          "grr", -- Override the default keymapping for `lsp_go_to_references` in Neovim 0.11.
           require("fzf-lua").lsp_references,
           vim.tbl_extend("force", opts, { desc = "Go to references." })
         )
