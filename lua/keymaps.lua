@@ -81,6 +81,14 @@ vim.keymap.set(
   vim.tbl_extend("force", opts, { desc = "Yank current filename into system clipboard." })
 )
 
+vim.keymap.set("n", "<leader>yln", function() -- "Yank Line Number"
+  local relative_path = vim.fn.expand("%")
+  local line_number = vim.fn.line(".")
+  vim.fn.setreg("+", string.format("%s:%d", relative_path, line_number))
+end, {
+  desc = "Yank relative file path with line number to clipboard (format: path:line)",
+})
+
 vim.keymap.set(
   { "n", "v" },
   "<leader>ccl",
