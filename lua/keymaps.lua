@@ -68,6 +68,13 @@ vim.keymap.set(
 )
 
 vim.keymap.set(
+  "n",
+  "<leader>ywp", -- Changed the mnemonic to 'yrr' (Yank Relative Path)
+  ':let @+=expand("%")<CR>',
+  vim.tbl_extend("force", opts, { desc = "Yank current file's workspace-relative path into system clipboard." })
+)
+
+vim.keymap.set(
   { "n", "v" },
   "<leader>ccl",
   ":<c-u>ccl<CR>",
