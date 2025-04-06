@@ -62,16 +62,23 @@ vim.keymap.set("n", "<c-l>", ":wincmd l<CR>", vim.tbl_extend("force", opts, { de
 vim.keymap.set("n", "<leader>rp", "1<C-G>", vim.tbl_extend("force", opts, { desc = "Show file fullpath." }))
 vim.keymap.set(
   "n",
-  "<leader>yrp",
+  "<leader>yrp", -- "Yank Real Path"
   ':let @+=expand("%:p")<CR>',
   vim.tbl_extend("force", opts, { desc = "Yank current file's full path into system clipboard." })
 )
 
 vim.keymap.set(
   "n",
-  "<leader>ywp", -- Changed the mnemonic to 'yrr' (Yank Relative Path)
+  "<leader>ywp", -- "Yank Workspace-relative Path"
   ':let @+=expand("%")<CR>',
   vim.tbl_extend("force", opts, { desc = "Yank current file's workspace-relative path into system clipboard." })
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>yfn", -- "Yank File Name"
+  ':let @+=expand("%:t")<CR>',
+  vim.tbl_extend("force", opts, { desc = "Yank current filename into system clipboard." })
 )
 
 vim.keymap.set(
