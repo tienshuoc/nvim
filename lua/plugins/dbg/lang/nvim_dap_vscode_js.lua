@@ -1,5 +1,7 @@
 return {
   "mxsdev/nvim-dap-vscode-js",
+  lazy = true,
+  ft = { "tsx", "js" },
   dependencies = {
     "mfussenegger/nvim-dap",
     {
