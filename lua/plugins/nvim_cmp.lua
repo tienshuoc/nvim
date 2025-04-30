@@ -1,6 +1,7 @@
 return {
   "hrsh7th/nvim-cmp",
-  event = { "InsertEnter", "CmdlineEnter" },
+  event = { "InsertEnter" },
+  lazy = true,
   dependencies = {
     "hrsh7th/cmp-nvim-lsp", -- Source for Neovim's built-in language server client.
     "hrsh7th/cmp-buffer", -- Source for text in buffer.
@@ -8,8 +9,12 @@ return {
     "hrsh7th/cmp-nvim-lsp-signature-help", -- Source for displaying function signatures with the current parameter emphasized.
     {
       "L3MON4D3/LuaSnip", -- Snippet engine for Neovim.
+      lazy = true,
       dependencies = {
-        "rafamadriz/friendly-snippets", -- Snippets collection for a set of different programming languages.
+        {
+          "rafamadriz/friendly-snippets", -- Snippets collection for a set of different programming languages.
+          lazy = true,
+        },
       },
       -- follow latest release.
       version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
