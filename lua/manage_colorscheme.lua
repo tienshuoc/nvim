@@ -1,23 +1,17 @@
--- Maintain file as single source of truth for current colors.
--- This file contains a single line with colorscheme, e.g. gruvbox-material
-local colorscheme_fname = vim.fn.expand(vim.fn.stdpath("config") .. "/colorscheme_value")
-
--- Read colorscheme from file.
-if vim.fn.filereadable(colorscheme_fname) == 1 then
-  vim.cmd.colorscheme(vim.fn.readfile(colorscheme_fname)[1])
+-- init.lua runs before reading shada, so we have to read shada first.
+vim.cmd("rshada")
+-- Attempt to read saved colorscheme value from global variable which gets saved in shada.
+-- If it's empty, just use default theme.
+if vim.g.COLORSCHEME then
+  vim.cmd.colorscheme(vim.g.COLORSCHEME)
 else
-  vim.cmd.colorscheme("vscode")
+  vim.cmd.colorscheme("PaperColor")
 end
 
--- Define a function to write the current color scheme to a file
-local function write_color_scheme()
-  local colorscheme = vim.g.colors_name
-  vim.fn.writefile({ colorscheme }, colorscheme_fname)
-end
-
--- Automatically execute the function when the color scheme changes
+-- Automatically overwrite the saved colorscheme when changing colortheme.
 vim.api.nvim_create_autocmd("ColorScheme", {
   callback = function()
-    write_color_scheme()
+    -- write_color_scheme()
+    vim.g.COLORSCHEME = vim.g.colors_name
   end,
 })
