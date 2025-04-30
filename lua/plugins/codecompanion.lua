@@ -1,5 +1,21 @@
 return {
   "olimorris/codecompanion.nvim",
+  lazy = true,
+  keys = {
+    {
+      "<leader>cct",
+      function()
+        require("codecompanion").toggle()
+      end,
+      { "n", "v" },
+      { noremap = true, desc = "Toggle CodeCompanionChat" },
+    },
+    {
+      "<leader>ccb",
+      ":CodeCompanion /buffer",
+      { noremap = true, desc = "CodeCompanion /buffer" }, -- "ga": Accept change, "gr": Reject change.
+    },
+  },
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
@@ -86,14 +102,5 @@ return {
         },
       },
     })
-    vim.keymap.set({ "n", "v" }, "<leader>cct", function()
-      require("codecompanion").toggle()
-    end, { noremap = true, desc = "Toggle CodeCompanionChat" })
-    vim.keymap.set(
-      { "n", "v" },
-      "<leader>ccb",
-      ":CodeCompanion /buffer ",
-      { noremap = true, desc = "CodeCompanion /buffer" } -- "ga": Accept change, "gr": Reject change.
-    )
   end,
 }
