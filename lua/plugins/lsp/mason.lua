@@ -1,6 +1,7 @@
 -- Package manager for LSP servers, DAP servers, linters, and formatters.
 return {
   "williamboman/mason.nvim",
+  lazy = true,
   dependencies = {
     "williamboman/mason-lspconfig.nvim", -- Bridges the gap btw `mason.nvim` and `lspconfig`.
     "WhoIsSethDaniel/mason-tool-installer.nvim", -- Install and upgrade third-party tools automatically.
