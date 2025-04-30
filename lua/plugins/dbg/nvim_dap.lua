@@ -8,6 +8,7 @@ return {
       "theHamsta/nvim-dap-virtual-text",
       opts = {},
     },
+    "rcarriga/nvim-dap-ui",
   },
   keys = {
     { "<leader>dc", ":DapContinue<CR>", mode = "n", desc = "DapContinue", {} },
