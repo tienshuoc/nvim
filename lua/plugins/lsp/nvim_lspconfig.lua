@@ -25,6 +25,7 @@ return {
   -- event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "p00f/clangd_extensions.nvim",
+    "williamboman/mason-lspconfig.nvim",
     {
       "SmiteshP/nvim-navic",
       config = function()
@@ -61,7 +62,6 @@ return {
     -- Setup language servers.
     local navic = require("nvim-navic")
     local lspconfig = require("lspconfig")
-    -- local mason_lspconfig = require("mason-lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
     -- Global mappings.
@@ -181,6 +181,12 @@ return {
     lspconfig.pyright.setup({
       capabilities = capabilities,
       on_attach = default_on_attach_behavior,
+      settings = {
+        python = {
+          -- pythonPath = vim.fn.exepath("python"),
+          venvPath = "/opt/software/sambaflow/apps/modelzoo/tests/venv/bin/python",
+        },
+      },
     }) -- pyright.setup()
 
     lspconfig.bashls.setup({
