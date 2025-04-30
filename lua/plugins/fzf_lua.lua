@@ -16,6 +16,12 @@ return {
       { noremap = true, desc = "Search document symbols." },
     },
     {
+      "<leader>ft",
+      "<cmd> FzfLua treesitter<cr>",
+      mode = "n",
+      { noremap = true, desc = "Fuzzy search treesitter components." },
+    },
+    {
       "<leader>fh",
       "<cmd> FzfLua helptags<cr>",
       mode = "n",
