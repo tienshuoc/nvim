@@ -65,9 +65,9 @@ return {
     },
     {
       "<leader>fl",
-      "<cmd> FzfLua lines<cr>",
+      "<cmd> FzfLua grep_last<cr>",
       mode = "n",
-      { noremap = true, desc = "Fzzy search lines." },
+      { noremap = true, desc = "Fuzzy find last search." },
     },
     {
       "<leader>fr",
