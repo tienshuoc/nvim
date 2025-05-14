@@ -25,6 +25,7 @@ return {
   -- event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "p00f/clangd_extensions.nvim",
+    "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     {
       "SmiteshP/nvim-navic",
