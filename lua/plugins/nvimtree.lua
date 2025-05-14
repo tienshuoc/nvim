@@ -29,6 +29,9 @@ return {
           },
         },
       },
+      git = {
+        enable = false,
+      },
     })
   end,
 }
