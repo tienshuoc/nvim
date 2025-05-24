@@ -36,11 +36,6 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     { "folke/neodev.nvim", opts = {} }, -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
   },
-  opts = {
-    inlay_hints = {
-      enabled = true,
-    },
-  },
   config = function()
     -- Show diagnostics under the cursor when holding position
     vim.api.nvim_create_augroup("lsp_diagnostics_hold", { clear = true })
@@ -52,6 +47,9 @@ return {
     -- These have to be setup beforehand in this order.
 
     vim.lsp.set_log_level("off") -- Disable log level to prevent generating large log files. Set to `vim.lsp.set_log_level("debug")` if debugging is needed.
+    -- Enable inlay hints.
+    vim.lsp.inlay_hint.enable(true)
+
 
     -- UI customization
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -158,9 +156,9 @@ return {
       -- Used to enable LSP symbol information on winbar
       navic.attach(client, bufnr)
       -- Enable inlay hints if available.
-      if client.server_capabilities.inlayHintProvider then
-        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-      end
+      -- if client.server_capabilities.inlayHintProvider then
+      --   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+      -- end
     end
 
     lspconfig.lua_ls.setup({
@@ -200,38 +198,38 @@ return {
     --  on_attach = default_on_attach_behavior,
     -- }) -- tsserver.setup()
 
-    lspconfig.clangd.setup({
-      -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
-      -- Make sure that there are no symlinks in `compile_command.json`. Otherwise GoTo Definition/Implementation wouldn't work until the file is opened once.
-      capabilities = capabilities,
-      on_attach = default_on_attach_behavior,
-      cmd = {
-        "clangd",
-        "--background-index",
-        "--clang-tidy",
-        "--header-insertion=iwyu",
-        "--completion-style=detailed",
-        "--function-arg-placeholders",
-        "--fallback-style=llvm",
-      },
-      root_dir = function(fname)
-        return require("lspconfig.util").root_pattern(
-          "Makefile",
-          "configure.ac",
-          "configure.in",
-          "config.h.in",
-          "meson.build",
-          "meson_options.txt",
-          "build.ninja"
-        )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname) or require(
-          "lspconfig.util"
-        ).find_git_ancestor(fname)
-      end,
-      init_options = {
-        usePlaceholders = true,
-        completeUnimported = true,
-        clangdFileStatus = true,
-      },
-    }) -- clangd.setup()
+    -- lspconfig.clangd.setup({
+    --   -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
+    --   -- Make sure that there are no symlinks in `compile_command.json`. Otherwise GoTo Definition/Implementation wouldn't work until the file is opened once.
+    --   capabilities = capabilities,
+    --   on_attach = default_on_attach_behavior,
+    --   cmd = {
+    --     "clangd",
+    --     "--background-index",
+    --     "--clang-tidy",
+    --     "--header-insertion=iwyu",
+    --     "--completion-style=detailed",
+    --     "--function-arg-placeholders",
+    --     "--fallback-style=llvm",
+    --   },
+    --   root_dir = function(fname)
+    --     return require("lspconfig.util").root_pattern(
+    --       "Makefile",
+    --       "configure.ac",
+    --       "configure.in",
+    --       "config.h.in",
+    --       "meson.build",
+    --       "meson_options.txt",
+    --       "build.ninja"
+    --     )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname) or require(
+    --       "lspconfig.util"
+    --     ).find_git_ancestor(fname)
+    --   end,
+    --   init_options = {
+    --     usePlaceholders = true,
+    --     completeUnimported = true,
+    --     clangdFileStatus = true,
+    --   },
+    -- }) -- clangd.setup()
   end, -- config function()
 }
