@@ -144,11 +144,14 @@ return {
     }) -- LspAttach config.
 
     -- Change the Diagnostic symbols in the sign column (gutter).
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    end
+    vim.diagnostic.config({
+      signs = {
+        error = { text = " ", texthl = "DiagnosticSignError", numhl = "" },
+        warn  = { text = " ", texthl = "DiagnosticSignWarn",  numhl = "" },
+        hint  = { text = "󰠠 ", texthl = "DiagnosticSignHint",  numhl = "" },
+        info  = { text = " ", texthl = "DiagnosticSignInfo",  numhl = "" },
+      }
+    })
 
     -- Used to enable autocompletion (assign to every lsp server config).
     local capabilities = cmp_nvim_lsp.default_capabilities()
