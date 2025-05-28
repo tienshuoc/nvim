@@ -1,3 +1,5 @@
+### 🔗 [DeepWiki Documentation](https://deepwiki.com/tienshuoc/nvim/1-overview) 📑
+
 # Requirements 🔨
 * Nerd Font compatible font ( e.g. [Jet Brains Mono Nerd Font](https://www.nerdfonts.com/font-downloads) ). Othewise, Devicons used may not render properly.
 * [RipGrep](https://github.com/BurntSushi/ripgrep) for [full Telescope fuzzy-finding power](https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#required-dependencies).
