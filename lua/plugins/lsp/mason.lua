@@ -32,6 +32,7 @@ return {
         "pyright",
         "bashls",
       },
+      automatic_enable = false, -- Enable and setup lsps in nvim_lspconfig
     })
 
     mason_tool_installer.setup({
