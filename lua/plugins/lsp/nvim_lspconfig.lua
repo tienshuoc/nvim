@@ -191,7 +191,7 @@ return {
       settings = {
         python = {
           -- pythonPath = vim.fn.exepath("python"),
-          venvPath = "/opt/software/sambaflow/apps/modelzoo/tests/venv/bin/python",
+          venvPath = "/opt/software/model_zoo/tests/venv/bin/python",
         },
       },
     }) -- pyright.setup()
