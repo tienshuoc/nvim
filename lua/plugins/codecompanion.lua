@@ -77,7 +77,7 @@ return {
             },
             schema = {
               model = {
-                default = "DeepSeek-R1",
+                default = "DeepSeek-R1-0528",
               },
             },
           })
