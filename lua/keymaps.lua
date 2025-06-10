@@ -107,6 +107,19 @@ vim.keymap.set("n", "<leader>7", "7<C-W>w", { noremap = true, desc = "Move to wi
 vim.keymap.set("n", "<leader>8", "8<C-W>w", { noremap = true, desc = "Move to window 8." })
 vim.keymap.set("n", "<leader>9", "9<C-W>w", { noremap = true, desc = "Move to window 9." })
 
+-- Close all floating windows.
+vim.keymap.set("n", "<leader>cfw", function()
+  for _, w in ipairs(vim.api.nvim_list_wins()) do
+    if vim.api.nvim_win_is_valid(w) then -- Good practice to check validity
+      local c = vim.api.nvim_win_get_config(w)
+      if c and c.relative ~= "" and not c.external then
+        pcall(vim.api.nvim_win_close, w, true)
+      end
+    end
+  end
+  vim.api.nvim_echo({ { "Attempted to close all floating windows." } }, false, {})
+end, { silent = true, desc = "Close All Floating Windows" })
+
 vim.keymap.set("n", "c", '"_c') -- Don't let change text action yank anything into registers.
 
 vim.keymap.set("n", "gV", "`[v`]", { noremap = true, desc = "Select last paste area." })
