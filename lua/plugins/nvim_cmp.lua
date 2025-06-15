@@ -3,16 +3,16 @@ return {
   event = { "InsertEnter" },
   lazy = true,
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp", -- Source for Neovim's built-in language server client.
-    "hrsh7th/cmp-buffer", -- Source for text in buffer.
-    "hrsh7th/cmp-path", -- Source for file system paths.
-    "hrsh7th/cmp-nvim-lsp-signature-help", -- Source for displaying function signatures with the current parameter emphasized.
+    "hrsh7th/cmp-nvim-lsp", -- Provides LSP (Language Server Protocol) completion sources.
+    "hrsh7th/cmp-buffer", -- Provides completion sources from the text in your current buffer.
+    "hrsh7th/cmp-path", -- Provides completion sources for file system paths.
+    "hrsh7th/cmp-nvim-lsp-signature-help", -- Shows function signatures and highlights the current parameter.
     {
-      "L3MON4D3/LuaSnip", -- Snippet engine for Neovim.
+      "L3MON4D3/LuaSnip", -- The primary snippet engine.
       lazy = true,
       dependencies = {
         {
-          "rafamadriz/friendly-snippets", -- Snippets collection for a set of different programming languages.
+          "rafamadriz/friendly-snippets", -- Snippet collection for a set of different programming languages.
           lazy = true,
         },
       },
@@ -21,18 +21,28 @@ return {
       -- install jsregexp (optional!).
       build = "make install_jsregexp",
     },
-    "saadparwaiz1/cmp_luasnip", -- LuaSnip completion source for `nvim-cmp`.
-    "onsails/lspkind.nvim", -- VSCode-like pictograms.
-    "windwp/nvim-autopairs", -- For completion to include brackets.
-    "alexander-born/cmp-bazel", -- bazel target completion and package files
+    "saadparwaiz1/cmp_luasnip", -- Provides a completion source for LuaSnip within nvim-cmp.
+    "onsails/lspkind.nvim", -- Adds VSCode-like icons to the completion menu.
+    "windwp/nvim-autopairs", -- Automatically adds closing brackets, parentheses, quotes, etc..
+    "alexander-born/cmp-bazel", -- Provides completion for Bazel targets and package files.
     {
-      "tzachar/cmp-tabnine", -- Source for tabnine.
+      "tzachar/cmp-tabnine", -- Provides AI-powered completions via Tabnine.
       build = "./install.sh",
     },
   },
   config = function()
+    -- =================================================================
+    --  1. REQUIRE AND SETUP INDIVIDUAL PLUGINS
+    -- =================================================================
     local cmp = require("cmp")
+    local luasnip = require("luasnip")
+    local lspkind = require("lspkind")
+    -- Insert `(` after select function or method item
+    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+    -- Loads vscode style snippets from installed plugins (e.g. friendly-snippets).
+    require("luasnip.loaders.from_vscode").lazy_load()
 
+    -- Setup Tabnine configuration.
     local tabnine = require("cmp_tabnine.config")
     tabnine:setup({
       max_lines = 1000,
@@ -49,85 +59,120 @@ return {
       min_percent = 0,
     })
 
-    -- Insert `(` after select function or method item
-    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-
-    local luasnip = require("luasnip")
-    local lspkind = require("lspkind")
-
-    -- Loads vscode style snippets from installed plugins (e.g. friendly-snippets).
-    require("luasnip.loaders.from_vscode").lazy_load()
-
+    -- =================================================================
+    --  2. SETUP NVIM-CMP
+    -- =================================================================
     cmp.setup({
-      preselect = cmp.PreselectMode.None,
-      completion = {
-        completeopt = "menu,menuone,preview,noselect",
-      },
-      snippet = { -- Configure how `nvim-cmp` interacts w/ snippet engine.
+      -- Configure how nvim-cmp interacts with the snippet engine.
+      snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
         end,
       },
+
+      -- Do not pre-select the first item in the completion menu.
+      -- Have to explicitly navigate to an item to select it.
+      preselect = cmp.PreselectMode.None,
+      completion = {
+        -- This ensures that the menu appears but doesn't auto-select anything.
+        completeopt = "menu,menuone,preview,noselect",
+      },
+
+      -- Configure the appearance of the completion and documentation windows
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       },
+
+      -- =================================================================
+      --  3. KEY MAPPINGS
+      -- =================================================================
       mapping = cmp.mapping.preset.insert({
-        ["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Up
-        ["<C-d>"] = cmp.mapping.scroll_docs(4), -- Down
-        -- C-b (back) C-f (forward) for snippet placeholder navigation.
+        -- Scroll up and down in the documentation window
+        ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-d>"] = cmp.mapping.scroll_docs(4),
+        -- Manually trigger completion.
         ["<C-s>"] = cmp.mapping.complete(),
+
+        -- Enter key mapping.
         ["<CR>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
+            -- If a snippet is expandable, expand it.
             if luasnip.expandable() then
               luasnip.expand()
+            -- If an item is selected in the completion menu, confirm it.
+            elseif cmp.get_selected_entry() then
+              cmp.confirm({ select = true })
+            -- Otherwise, close the completion window and fallback to a new line.
             else
-              cmp.confirm({
-                select = true,
-              })
+              cmp.close()
+              fallback()
             end
           else
+            -- If the completion window is not visible, just insert a new line
             fallback()
           end
         end),
+
+        -- Tab and Shift-Tab for navigating the completion menu and snippets.
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
+            -- If the completion menu is visible, select the next item.
             cmp.select_next_item()
           elseif luasnip.locally_jumpable(1) then
+            -- If inside an active snippet, jump to the next placeholder.
             luasnip.jump(1)
           else
+            -- Otherwise, fallback to a literal tab character
             fallback()
           end
-        end, { "i", "s" }),
+        end, { "i", "s" }), -- This mapping works in insert and select mode.
+
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
-            cmp.select_prev_item()
+            -- If the completion menu is visible, select the previous item.
           elseif luasnip.locally_jumpable(-1) then
+            -- If inside an active snippet, jump to the previous placeholder.
             luasnip.jump(-1)
           else
+            -- Otherwise, fallback.
             fallback()
           end
-        end, { "i", "s" }),
+        end, { "i", "s" }), -- This mapping works in insert and select mode.
       }),
+
+      -- =================================================================
+      --  4. COMPLETION SOURCES
+      -- =================================================================
+      -- These are the different sources nvim-cmp will use for suggestions.
+      -- The order matters, as it determines the priority of the suggestions.
       sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-        { name = "path" },
-        { name = "cmp_tabnine" },
-        { name = "luasnip" },
-        { name = "nvim_lsp_signature_help" },
-        { name = "bazel" },
+        { name = "nvim_lsp" }, -- Highest priority: Language Server.
+        { name = "luasnip" }, -- Snippets.
+        { name = "buffer" }, -- Words from the current file.
+        { name = "cmp_tabnine" }, -- AI suggestions.
+        { name = "path" }, -- File system paths.
+        { name = "bazel" }, -- Bazel targets.
+        { name = "nvim_lsp_signature_help" }, -- Function signatures.
       }),
-      -- Configure lspkind for VSCode-like pictograms in completion menu.
+
+      -- =================================================================
+      --  5. FORMATTING & INTEGRATIONS
+      -- =================================================================
+
+      -- Configure lspkind for VSCode-like pictograms in the completion menu
       formatting = {
         format = lspkind.cmp_format({
-          mode = "symbol_text",
-          maxwidth = 50,
+          mode = "symbol_text", -- Show icon and text
+          maxwidth = 50, -- Truncate long entries
           ellipsis_char = "...",
           show_labelDetails = true,
         }),
       },
+
+      -- Integrate with nvim-autopairs to automatically add () after function completion
+      -- This event fires after a completion is "confirmed" (i.e., you selected it).
+      ["confirm_done"] = cmp_autopairs.on_confirm_done(),
     })
   end,
 }
