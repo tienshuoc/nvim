@@ -5,24 +5,48 @@ return {
     {
       "<leader>gU",
       function()
-        -- Check if we're in a git repository
+        -- Check if we're in a git repository.
         local is_git_repo = vim.fn.system("git rev-parse --is-inside-work-tree 2>/dev/null"):gsub("%s+$", "")
         if is_git_repo ~= "true" then
           vim.notify("⚠️ Not in a git repository", vim.log.levels.ERROR)
           return
         end
 
-        -- Get current commit SHA
-        local sha = vim.fn.system("git rev-parse HEAD 2>/dev/null"):gsub("%s+$", "")
-        if sha == "" then
-          vim.notify("⚠️ Could not get commit SHA", vim.log.levels.ERROR)
+        -- Get relative file path from repo root.
+        local file_path = vim.fn.expand("%:p")
+        if file_path == "" then
+          vim.notify("⚠️ Not a file buffer", vim.log.levels.ERROR)
+          return
+        end
+        local rel_path_output =
+          vim.fn.systemlist("git ls-files --full-name -- " .. vim.fn.shellescape(file_path) .. " 2>/dev/null")
+        if vim.v.shell_error ~= 0 or not rel_path_output[1] then
+          vim.notify("⚠️ File not tracked in repository", vim.log.levels.ERROR)
+          return
+        end
+        local rel_path = rel_path_output[1]
+
+        -- Check for uncommitted changes in this file.
+        vim.fn.system("git diff --quiet HEAD -- " .. vim.fn.shellescape(file_path) .. " 2>/dev/null")
+        -- Getting the exit code from the previous command.
+        if vim.v.shell_error ~= 0 then
+          vim.notify("⚠️ File has uncommitted changes!", vim.log.levels.ERROR)
           return
         end
 
-        -- Check if commit exists on remote
+        -- Get SHA of the last commit that touched this file.
+        local sha = vim.fn
+          .system("git log -1 --pretty=format:%H -- " .. vim.fn.shellescape(file_path) .. " 2>/dev/null")
+          :gsub("%s+$", "")
+        if sha == "" then
+          vim.notify("⚠️ Could not get commit SHA for this file", vim.log.levels.ERROR)
+          return
+        end
+
+        -- Check if the commit that last touched the file exists on remote.
         local remote_branches = vim.fn.systemlist("git branch -r --contains " .. sha .. " 2>/dev/null")
         if #remote_branches == 0 then
-          vim.notify("⚠️ Commit not pushed to remote!", vim.log.levels.ERROR)
+          vim.notify("⚠️ Last change to this file is not pushed to remote!", vim.log.levels.ERROR)
           return
         end
 
@@ -36,23 +60,6 @@ return {
         local remote_url = vim.fn.system("git remote get-url " .. remote .. " 2>/dev/null"):gsub("%s+$", "")
         -- Convert SSH URL to HTTPS and strip .git suffix
         remote_url = remote_url:gsub("^git@(.-):", "https://%1/"):gsub("%.git$", "")
-
-        -- Get relative file path from repo root
-        local file_path = vim.fn.expand("%:p")
-        local rel_path_output =
-          vim.fn.systemlist("git ls-files --full-name -- " .. vim.fn.shellescape(file_path) .. " 2>/dev/null")
-        if vim.v.shell_error ~= 0 or not rel_path_output[1] then
-          vim.notify("⚠️ File not tracked in repository", vim.log.levels.ERROR)
-          return
-        end
-        local rel_path = rel_path_output[1]
-
-        -- Check for uncommitted changes in this file
-        local is_dirty = vim.fn.system("git diff --quiet HEAD -- " .. vim.fn.shellescape(file_path) .. " 2>/dev/null")
-        if vim.v.shell_error ~= 0 then
-          vim.notify("⚠️ File has uncommitted changes!", vim.log.levels.ERROR)
-          return
-        end
 
         -- Construct GitHub URL with line number
         local line = vim.fn.line(".")
