@@ -1,6 +1,11 @@
 return {
   "olimorris/codecompanion.nvim",
   lazy = true,
+  dependencies = {
+    "nvim-lua/plenary.nvim", -- A required utility library for many Neovim plugins.
+    "nvim-treesitter/nvim-treesitter", -- For code parsing and context.
+    "ibhagwan/fzf-lua", -- Added because it's used as a provider for slash commands.
+  },
   keys = {
     {
       "<leader>cct",
@@ -8,17 +13,14 @@ return {
         require("codecompanion").toggle()
       end,
       { "n", "v" },
-      { noremap = true, desc = "Toggle CodeCompanionChat" },
+      desc = "[C]ode[C]ompanion [T]oggle Chat",
     },
     {
       "<leader>ccb",
       ":CodeCompanion /buffer",
-      { noremap = true, desc = "CodeCompanion /buffer" }, -- "ga": Accept change, "gr": Reject change.
+      { "n", "v" },
+      desc = "[C]ode[C]ompanion /buffer",
     },
-  },
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-treesitter/nvim-treesitter",
   },
   config = function()
     require("codecompanion").setup({
