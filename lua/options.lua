@@ -23,7 +23,7 @@ vim.opt.backspace = "indent,eol,start"
 
 -- Don't create swapfiles for *.log, *.mlir files.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.log", "*.mlir" },
+  pattern = { "*.log", "*.mlir", "*.log.gz" },
   callback = function()
     vim.opt_local.swapfile = false
     vim.opt_local.modifiable = false
