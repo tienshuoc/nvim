@@ -95,6 +95,7 @@ if vim.g.vscode then
 else
   -- Requires
   require("options")
+  require("handle_large_file")
   require("keymaps")
   -- Plugins
   require("lazy_manager")

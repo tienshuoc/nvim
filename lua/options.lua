@@ -21,15 +21,6 @@ vim.cmd("au InsertLeave * set nocul")
 -- Allow backspacing over indentation, line breaks, and insertion start.
 vim.opt.backspace = "indent,eol,start"
 
--- Don't create swapfiles for *.log, *.mlir files.
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.log", "*.mlir", "*.log.gz" },
-  callback = function()
-    vim.opt_local.swapfile = false
-    vim.opt_local.modifiable = false
-  end,
-})
-
 ------------------------------------- Search Options ------------------------------
 vim.opt.hlsearch = true -- Enable search highlighting.
 vim.opt.ignorecase = true -- Ignore case when searching.
