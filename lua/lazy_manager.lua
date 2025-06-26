@@ -30,6 +30,11 @@ if vim.g.vscode then
       checker = { enabled = true },
     },
   })
+elseif vim.g.is_large_file_on_startup then
+  vim.notify("Large file detected, loading minimal set of plugins.", vim.log.levels.WARN)
+  require("lazy").setup({
+    { import = "plugins" },
+  })
 else
   require("lazy").setup({
     { import = "plugins" },
@@ -50,4 +55,5 @@ else
       notify = false,
     },
   })
+  require("manage_colorscheme") -- Load colorscheme manager after colorscheme plugins are loaded.
 end

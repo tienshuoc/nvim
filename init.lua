@@ -93,13 +93,39 @@ if vim.g.vscode then
 
   -- Plugins
 else
-  -- Requires
-  require("options")
-  require("handle_large_file")
-  require("keymaps")
-  -- Plugins
-  require("lazy_manager")
+  local size_limit = 10 * 1024 * 1024 -- 10MB
+  local file_to_check = vim.fn.argv()[1] -- Get the first file argument from the command line
+  vim.g.is_large_file_on_startup = false
 
-  require("manage_colorscheme") -- Manage colorschemes.
-  require("sn_options") -- SN options
+  -- Check if a file was passed on startup and if it's large
+  if file_to_check and vim.fn.filereadable(vim.fn.expand(file_to_check)) == 1 then
+    if vim.fn.getfsize(file_to_check) > size_limit then
+      vim.g.is_large_file_on_startup = true
+    else
+    end
+  end
+
+  -- Set up the autocommand to handle large files opened *during* this session.
+  local large_file_group = vim.api.nvim_create_augroup("LargeFileHandler", { clear = true })
+  vim.api.nvim_create_autocmd("BufEnter", {
+    group = large_file_group,
+    pattern = "*",
+    callback = function()
+      local file_path = vim.fn.expand("%:p")
+      if file_path ~= "" and vim.fn.filereadable(vim.fn.expand(file_path)) == 1 then
+        if vim.fn.getfsize(file_path) > size_limit then
+          require("handle_large_file").apply_large_file_settings()
+        end
+      end
+    end,
+  })
+
+  require("lazy_manager") -- This will set up and load all plugins
+  require("options") -- Load default options first and override if large file in large file settings below.
+  require("keymaps")
+  require("sn_options")
+
+  if vim.g.is_large_file_on_startup then
+    require("handle_large_file").apply_large_file_settings()
+  end
 end
