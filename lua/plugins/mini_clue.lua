@@ -1,5 +1,6 @@
 return {
   "echasnovski/mini.clue",
+  cond = not vim.g.is_large_file_on_startup,
   version = false,
   config = function()
     local miniclue = require("mini.clue")

@@ -1,5 +1,6 @@
 return {
   "olimorris/codecompanion.nvim",
+  cond = not vim.g.is_large_file_on_startup,
   lazy = true,
   dependencies = {
     "nvim-lua/plenary.nvim", -- A required utility library for many Neovim plugins.

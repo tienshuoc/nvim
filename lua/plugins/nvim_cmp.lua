@@ -1,5 +1,6 @@
 return {
   "hrsh7th/nvim-cmp",
+  cond = not vim.g.is_large_file_on_startup,
   event = { "InsertEnter" },
   lazy = true,
   dependencies = {

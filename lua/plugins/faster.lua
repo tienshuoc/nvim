@@ -1,5 +1,6 @@
 return {
   "pteroctopus/faster.nvim",
+  cond = not vim.g.is_large_file_on_startup,
   opts = {
     behaviors = {
       -- Behaviour can be turned on or off. To turn on set to true, otherwise

@@ -1,6 +1,7 @@
 return {
   -- Better syntax highlighting
   "nvim-treesitter/nvim-treesitter",
+  cond = not vim.g.is_large_file_on_startup,
   lazy = false,
   event = {
     -- Lazy load when buffer open existing or non-existent file.
@@ -28,6 +29,7 @@ return {
         "python",
         "lua",
         "haskell",
+        "html",
       },
       ignore_install = { "mlir" }, -- Tries to complain that you don't have "treesitter-cli", and installing it gives GLIBC problems. Back off for MLIR.
       sync_install = true,

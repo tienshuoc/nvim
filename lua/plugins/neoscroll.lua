@@ -1,6 +1,7 @@
 return {
   -- Smooth scrolling.
   "karb94/neoscroll.nvim",
+  cond = not vim.g.is_large_file_on_startup,
   config = function()
     local neoscroll = require("neoscroll")
     neoscroll.setup({

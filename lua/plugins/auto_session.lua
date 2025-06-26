@@ -1,5 +1,6 @@
 return {
   "rmagatti/auto-session",
+  cond = not vim.g.is_large_file_on_startup,
   lazy = true,
   enable = false,
   -- dependencies = { "nvim-telescope/telescope.nvim", "nvim-tree/nvim-tree.lua" },

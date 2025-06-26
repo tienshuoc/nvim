@@ -1,5 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter-textobjects",
+  cond = not vim.g.is_large_file_on_startup,
   lazy = true,
   config = function()
     require("nvim-treesitter.configs").setup({
