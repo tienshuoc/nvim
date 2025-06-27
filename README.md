@@ -40,7 +40,7 @@
 
 # Installation 🗺️
 📌 **WIP, currently just for UNIX/LINUX**
-1. [Install Neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md) ( I currently use [`NVIM v0.9.4`](https://github.com/neovim/neovim/releases/tag/v0.9.4)).
+1. [Install Neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md) ( I currently use [`NVIM v0.11.0`](https://github.com/neovim/neovim/releases/tag/v0.11.0)).
 2. Go to [`$XDG_CONFIG_HOME`](https://neovim.io/doc/user/starting.html#%24XDG_CONFIG_HOME). This is typically `~/.config` for Unix. <br>
 This'll be the base root of where your Neovim configuration folder will reside.
 ```bash
