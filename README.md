@@ -60,7 +60,6 @@ git clone https://github.com/tienshuoc/nvim.git
 * icons : https://www.lazyvim.org/configuration#icons--colorscheme
 * https://github.com/SmiteshP/nvim-navbuddy
 * https://github.com/folke/snacks.nvim : Collection of small quality of life plugins
-Vim in browser: https://github.com/glacambre/firenvim
 
 * don't care about commit if file isn't changed for github url yanks
 * neogit 
