@@ -19,30 +19,34 @@ return {
       end,
       desc = "Toggle Harpoon list.",
     },
-    {
-        "1",
-        function() require("harpoon"):list():select(1)
-        end,
-        desc = "Select 1 in list."
-    },
-    {
-        "2",
-        function() require("harpoon"):list():select(2)
-        end,
-        desc = "Select 2 in list."
-    },
-    {
-        "3",
-        function() require("harpoon"):list():select(3)
-        end,
-        desc = "Select 3 in list."
-    },
-    {
-        "4",
-        function() require("harpoon"):list():select(4)
-        end,
-        desc = "Select 4 in list."
-    }
+    -- {
+    --   "1",
+    --   function()
+    --     require("harpoon"):list():select(1)
+    --   end,
+    --   desc = "Select 1 in list.",
+    -- },
+    -- {
+    --   "2",
+    --   function()
+    --     require("harpoon"):list():select(2)
+    --   end,
+    --   desc = "Select 2 in list.",
+    -- },
+    -- {
+    --   "3",
+    --   function()
+    --     require("harpoon"):list():select(3)
+    --   end,
+    --   desc = "Select 3 in list.",
+    -- },
+    -- {
+    --   "4",
+    --   function()
+    --     require("harpoon"):list():select(4)
+    --   end,
+    --   desc = "Select 4 in list.",
+    -- },
   },
   opts = {},
 }
