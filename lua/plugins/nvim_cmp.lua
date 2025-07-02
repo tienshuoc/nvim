@@ -132,6 +132,7 @@ return {
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             -- If the completion menu is visible, select the previous item.
+            cmp.select_prev_item()
           elseif luasnip.locally_jumpable(-1) then
             -- If inside an active snippet, jump to the previous placeholder.
             luasnip.jump(-1)
