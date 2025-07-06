@@ -11,6 +11,7 @@ return {
   dependencies = {
     "JoosepAlviste/nvim-ts-context-commentstring",
     "nvim-treesitter/nvim-treesitter-textobjects",
+    "iamcco/markdown-preview.nvim",
   },
   build = function()
     require("nvim-treesitter.install").update({ with_sync = true })()
