@@ -5,7 +5,7 @@ return {
   keys = {
     {
       "<leader>fg",
-      "<cmd> FzfLua live_grep_glob<cr>",
+      "<cmd> FzfLua live_grep<cr>",
       mode = "n",
       { noremap = true, desc = "Live grep current project with glob support." },
     },
