@@ -13,6 +13,8 @@ vim.keymap.set("n", "<leader>w", ":w<CR>", vim.tbl_extend("force", opts, { desc 
 vim.keymap.set({ "n", "v" }, "<leader>qq", ":<c-u>q<CR>", vim.tbl_extend("force", opts, { desc = "Quit file." }))
 vim.keymap.set({ "n", "v" }, "<leader>qa", ":<c-u>qa<CR>", vim.tbl_extend("force", opts, { desc = "Quit all." }))
 vim.keymap.set({ "n", "v" }, "<leader>qb", ":<c-u>bd<CR>", vim.tbl_extend("force", opts, { desc = "Close buffer." }))
+vim.keymap.set({ "n" }, "<leader>tn", ":<c-u>tabn<CR>", vim.tbl_extend("force", opts, { desc = "Next tab." }))
+vim.keymap.set({ "n" }, "<leader>tp", ":<c-u>tabp<CR>", vim.tbl_extend("force", opts, { desc = "Previous tab." }))
 vim.keymap.set({ "n", "v" }, "<leader>tc", ":<c-u>tabc<CR>", vim.tbl_extend("force", opts, { desc = "Close tab." }))
 vim.keymap.set("n", "<leader>tt", "<C-^>", vim.tbl_extend("force", opts, { desc = "Switch to previous buffer." }))
 
