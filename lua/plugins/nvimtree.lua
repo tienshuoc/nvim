@@ -6,7 +6,14 @@ return {
     "nvim-tree/nvim-web-devicons", -- Icons.
   },
   keys = {
-    { "<leader>nt", ":NvimTreeToggle<CR>", mode = "n", { noremap = true, silent = true } },
+    {
+      "<leader>nt",
+      function()
+        require("nvim-tree.api").tree.toggle()
+      end,
+      mode = "n",
+      { noremap = true, silent = true },
+    },
   },
   config = function()
     vim.g.loaded_netrw = 1
@@ -14,7 +21,6 @@ return {
     require("nvim-tree").setup({
       update_focused_file = {
         enable = true,
-        update_cwd = false,
       },
       renderer = {
         indent_markers = {
