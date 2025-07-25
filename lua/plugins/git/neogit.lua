@@ -18,5 +18,9 @@ return {
   opts = {
     -- Show message with spinning animation when a git command is running.
     process_spinner = false,
+    integrations = {
+      diffview = true,
+      fzf_lua = true,
+    },
   },
 }
