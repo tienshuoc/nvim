@@ -85,8 +85,12 @@ return {
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
     -- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open diagnostic in floating window." }) -- Conflicts with harpoon keymaps.
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic." }) -- This is native with NVIM0.10+
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic." }) -- This is native with NVIM0.10+
+    vim.keymap.set("n", "[d", function()
+      vim.diagnostic.jump({ count = -1, float = true })
+    end, { desc = "Go to previous diagnostic." }) -- This is native with NVIM0.10+
+    vim.keymap.set("n", "]d", function()
+      vim.diagnostic.jump({ count = 1, float = true })
+    end, { desc = "Go to next diagnostic." }) -- This is native with NVIM0.10+
 
     -- Use LspAttach autocommand to only map the following keys
     -- after the language server attaches to the current buffer
@@ -96,7 +100,6 @@ return {
         vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
         -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
         local opts = { buffer = ev.buf }
 
         vim.keymap.set(
@@ -163,7 +166,6 @@ return {
     }) -- LspAttach config.
 
     -- Change the Diagnostic symbols in the sign column (gutter).
-    -- vim.opt.ambiwidth = "double"
     vim.diagnostic.config({
       signs = {
         text = {
@@ -172,29 +174,15 @@ return {
           [vim.diagnostic.severity.INFO] = "󰠠",
           [vim.diagnostic.severity.HINT] = "",
         },
-        linehl = {
-          -- [vim.diagnostic.severity.ERROR] = "ErrorMsg",
-        },
         numhl = {
           [vim.diagnostic.severity.ERROR] = "ErrorMsg",
           [vim.diagnostic.severity.WARN] = "WarningMsg",
         },
-
-        -- error = { text = "", texthl = "DiagnosticSignError", numhl = "" },
-        -- warn = { text = "", texthl = "DiagnosticSignWarn", numhl = "" },
-        -- hint = { text = "󰠠", texthl = "DiagnosticSignHint", numhl = "" },
-        -- info = { text = "", texthl = "DiagnosticSignInfo", numhl = "" },
       },
     })
 
     -- Used to enable autocompletion (assign to every lsp server config).
     local capabilities = cmp_nvim_lsp.default_capabilities()
-    local default_on_attach_behavior = function(client, bufnr)
-      -- Enable inlay hints if available.
-      -- if client.server_capabilities.inlayHintProvider then
-      --   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-      -- end
-    end
 
     lspconfig.lua_ls.setup({
       capabilities = capabilities,
@@ -209,12 +197,10 @@ return {
           },
         },
       },
-      on_attach = default_on_attach_behavior,
     }) -- lua_ls.setup()
 
     lspconfig.pyright.setup({
       capabilities = capabilities,
-      on_attach = default_on_attach_behavior,
       settings = {
         python = {
           -- pythonPath = vim.fn.exepath("python"),
@@ -225,18 +211,15 @@ return {
 
     lspconfig.bashls.setup({
       capabilities = capabilities,
-      on_attach = default_on_attach_behavior,
     })
 
     -- lspconfig.ts_ls.setup({
     --  capabilities = capabilities,
-    --  on_attach = default_on_attach_behavior,
     -- }) -- tsserver.setup()
 
     lspconfig.clangd.setup({
       -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
       capabilities = capabilities,
-      on_attach = default_on_attach_behavior,
       cmd = {
         "clangd",
         "--background-index",
