@@ -203,8 +203,7 @@ return {
       capabilities = capabilities,
       settings = {
         python = {
-          -- pythonPath = vim.fn.exepath("python"),
-          venvPath = "/opt/software/model_zoo/tests/venv/bin/python",
+          pythonPath = vim.fn.exepath("python"),
         },
       },
     }) -- pyright.setup()
