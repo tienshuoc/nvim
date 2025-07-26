@@ -22,29 +22,32 @@ end
 
 -- Goto definition often takes us to files under the cache directory, we want to resolve symlinks first before making the jump.
 -- A wrapper around the default LSP jump handler to resolve symlinks first.
-local original_jump_handler = vim.lsp.util.show_document
+if not vim.g._lsp_jump_handler_wrapped then
+  local original_jump_handler = vim.lsp.util.show_document
 
-vim.lsp.util.show_document = function(location, ...)
-  -- Check if the location is valid and has a URI
-  if location and location.uri then
-    local path = vim.uri_to_fname(location.uri)
+  vim.lsp.util.show_document = function(location, ...)
+    -- Check if the location is valid and has a URI
+    if location and location.uri then
+      local path = vim.uri_to_fname(location.uri)
 
-    -- Use the modern, performant way to resolve symlinks.
-    -- It returns (realpath, err), so we capture both for robust error handling.
-    local realpath, err = vim.uv.fs_realpath(path)
+      -- Use the modern, performant way to resolve symlinks.
+      -- It returns (realpath, err), so we capture both for robust error handling.
+      local realpath, err = vim.uv.fs_realpath(path)
 
-    -- If resolution was successful and the path is different, update the location.
-    if not err and realpath and realpath ~= path then
-      location.uri = vim.uri_from_fname(realpath)
-    elseif err then
-      -- Optional: Notify the user if path resolution fails for some reason.
-      -- This can be helpful for debugging unexpected behavior.
-      vim.notify("LSP jump: Could not resolve path: " .. err.message, vim.log.levels.WARN)
+      -- If resolution was successful and the path is different, update the location.
+      if not err and realpath and realpath ~= path then
+        location.uri = vim.uri_from_fname(realpath)
+      elseif err then
+        -- Optional: Notify the user if path resolution fails for some reason.
+        -- This can be helpful for debugging unexpected behavior.
+        vim.notify("LSP jump: Could not resolve path: " .. err.message, vim.log.levels.WARN)
+      end
     end
-  end
 
-  -- Call the original jump handler with the (potentially modified) location
-  original_jump_handler(location, ...)
+    -- Call the original jump handler with the (potentially modified) location
+    original_jump_handler(location, ...)
+  end
+  vim.g._lsp_jump_handler_wrapped = true -- set guard
 end
 
 return {
