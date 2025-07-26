@@ -20,6 +20,33 @@ function OpenDiagnosticIfNoFloat()
   })
 end
 
+-- Goto definition often takes us to files under the cache directory, we want to resolve symlinks first before making the jump.
+-- A wrapper around the default LSP jump handler to resolve symlinks first.
+local original_jump_handler = vim.lsp.util.show_document
+
+vim.lsp.util.show_document = function(location, ...)
+  -- Check if the location is valid and has a URI
+  if location and location.uri then
+    local path = vim.uri_to_fname(location.uri)
+
+    -- Use the modern, performant way to resolve symlinks.
+    -- It returns (realpath, err), so we capture both for robust error handling.
+    local realpath, err = vim.uv.fs_realpath(path)
+
+    -- If resolution was successful and the path is different, update the location.
+    if not err and realpath and realpath ~= path then
+      location.uri = vim.uri_from_fname(realpath)
+    elseif err then
+      -- Optional: Notify the user if path resolution fails for some reason.
+      -- This can be helpful for debugging unexpected behavior.
+      vim.notify("LSP jump: Could not resolve path: " .. err.message, vim.log.levels.WARN)
+    end
+  end
+
+  -- Call the original jump handler with the (potentially modified) location
+  original_jump_handler(location, ...)
+end
+
 return {
   "neovim/nvim-lspconfig",
   -- event = { "BufReadPre", "BufNewFile" },
@@ -208,7 +235,6 @@ return {
 
     lspconfig.clangd.setup({
       -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
-      -- Make sure that there are no symlinks in `compile_command.json`. Otherwise GoTo Definition/Implementation wouldn't work until the file is opened once.
       capabilities = capabilities,
       on_attach = default_on_attach_behavior,
       cmd = {
