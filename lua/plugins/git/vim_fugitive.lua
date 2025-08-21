@@ -13,7 +13,7 @@ return {
         end
 
         -- Get relative file path from repo root.
-        local file_path = vim.fn.expand("%:p")
+        local file_path = vim.uv.fs_realpath(vim.fn.expand("%"))
         if file_path == "" then
           vim.notify("⚠️ Not a file buffer", vim.log.levels.ERROR)
           return
