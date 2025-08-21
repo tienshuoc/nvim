@@ -1,4 +1,4 @@
 return {
-    -- monokai_pro
-    'tanvirtin/monokai.nvim',
+  -- monokai_pro
+  "tanvirtin/monokai.nvim",
 }
