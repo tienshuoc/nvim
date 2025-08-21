@@ -152,7 +152,6 @@ return {
         { name = "nvim_lsp" }, -- Highest priority: Language Server.
         { name = "luasnip" }, -- Snippets.
         { name = "buffer" }, -- Words from the current file.
-        { name = "cmp_tabnine" }, -- AI suggestions.
         { name = "path" }, -- File system paths.
         { name = "bazel" }, -- Bazel targets.
         { name = "nvim_lsp_signature_help" }, -- Function signatures.
