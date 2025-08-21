@@ -40,7 +40,9 @@ if not vim.g._lsp_jump_handler_wrapped then
       elseif err then
         -- Optional: Notify the user if path resolution fails for some reason.
         -- This can be helpful for debugging unexpected behavior.
-        vim.notify("LSP jump: Could not resolve path: " .. err.message, vim.log.levels.WARN)
+        vim.notify("LSP jump: Could not resolve path: " .. err.message, vim.log.levels.ERROR)
+      else
+        vim.notify("Unable to jump using realpath.")
       end
     end
 
@@ -240,9 +242,9 @@ return {
           "meson.build",
           "meson_options.txt",
           "build.ninja"
-        )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname) or require(
-          "lspconfig.util"
-        ).find_git_ancestor(fname)
+        )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname) or vim.fs.dirname(
+          vim.fs.find(".git", { path = fname, upward = true })[1]
+        )
       end,
       init_options = {
         usePlaceholders = true,
