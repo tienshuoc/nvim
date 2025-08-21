@@ -111,11 +111,17 @@ else
     group = large_file_group,
     pattern = "*",
     callback = function()
-      local file_path = vim.fn.expand("%:p")
-      if file_path ~= "" and vim.fn.filereadable(vim.fn.expand(file_path)) == 1 then
-        if vim.fn.getfsize(file_path) > size_limit then
-          require("handle_large_file").apply_large_file_settings()
-        end
+      local buf_path = vim.api.nvim_buf_get_name(0)
+      if buf_path == "" then
+        return
+      end
+
+      -- this is buggy when doing cdo on quickfix list
+      local file_path = vim.fn.fnamemodify(buf_path, ":p")
+      local stat = vim.loop.fs_stat(file_path)
+
+      if stat and stat.size > size_limit then
+        require("handle_large_file").apply_large_file_settings()
       end
     end,
   })
