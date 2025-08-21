@@ -65,7 +65,7 @@ return {
     },
     {
       "<leader>fl",
-      "<cmd> FzfLua grep_last<cr>",
+      "<cmd>lua FzfLua.grep({resume=true})<cr>",
       mode = "n",
       { noremap = true, desc = "Fuzzy find last search." },
     },
@@ -79,6 +79,11 @@ return {
   config = function()
     require("fzf-lua").setup({
       "fzf-vim", -- Give fzf-vim-like keymaps and feel.
+      keymap = {
+        fzf = {
+          ["ctrl-q"] = "select-all+accept",
+        },
+      },
       winopts = {
         width = 0.8,
         height = 0.9,
