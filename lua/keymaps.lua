@@ -10,6 +10,7 @@ local opts = {
 vim.keymap.set("n", "<leader>nv", ":e ~/.config/nvim/<CR>", opts) -- Edit neovim settings.
 
 vim.keymap.set("n", "<leader>w", ":w<CR>", vim.tbl_extend("force", opts, { desc = "Write file." }))
+vim.keymap.set("n", "<leader>rf", ":edit<CR>", vim.tbl_extend("force", { noremap = true }, { desc = "Refresh file." }))
 vim.keymap.set({ "n", "v" }, "<leader>qq", ":<c-u>q<CR>", vim.tbl_extend("force", opts, { desc = "Quit file." }))
 vim.keymap.set({ "n", "v" }, "<leader>qa", ":<c-u>qa<CR>", vim.tbl_extend("force", opts, { desc = "Quit all." }))
 vim.keymap.set({ "n", "v" }, "<leader>qb", ":<c-u>bd<CR>", vim.tbl_extend("force", opts, { desc = "Close buffer." }))
@@ -61,12 +62,17 @@ vim.keymap.set("n", "<c-j>", ":wincmd j<CR>", vim.tbl_extend("force", opts, { de
 vim.keymap.set("n", "<c-k>", ":wincmd k<CR>", vim.tbl_extend("force", opts, { desc = "Switch panes up." }))
 vim.keymap.set("n", "<c-l>", ":wincmd l<CR>", vim.tbl_extend("force", opts, { desc = "Switch panes right." }))
 
-vim.keymap.set("n", "<leader>rp", "1<C-G>", vim.tbl_extend("force", opts, { desc = "Show file fullpath." }))
+vim.keymap.set("n", "<leader>rp", function()
+  vim.notify(vim.uv.fs_realpath(vim.fn.expand("%")))
+end, vim.tbl_extend("force", opts, { desc = "Show file fullpath." }))
+
 vim.keymap.set(
   "n",
   "<leader>yrp", -- "Yank Real Path"
-  ':let @+=expand("%:p")<CR>',
-  vim.tbl_extend("force", opts, { desc = "Yank current file's full path into system clipboard." })
+  function()
+    vim.fn.setreg("+", vim.uv.fs_realpath(vim.fn.expand("%")))
+  end,
+  vim.tbl_extend("force", opts, { desc = "Yank current file's full resolved path into system clipboard." })
 )
 
 vim.keymap.set(
