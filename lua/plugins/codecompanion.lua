@@ -80,7 +80,7 @@ return {
             },
             schema = {
               model = {
-                default = "DeepSeek-R1-0528",
+                default = "DeepSeek-V3.1",
               },
             },
           })
