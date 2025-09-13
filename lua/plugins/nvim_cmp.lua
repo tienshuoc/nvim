@@ -26,10 +26,6 @@ return {
     "onsails/lspkind.nvim", -- Adds VSCode-like icons to the completion menu.
     "windwp/nvim-autopairs", -- Automatically adds closing brackets, parentheses, quotes, etc..
     "alexander-born/cmp-bazel", -- Provides completion for Bazel targets and package files.
-    {
-      "tzachar/cmp-tabnine", -- Provides AI-powered completions via Tabnine.
-      build = "./install.sh",
-    },
   },
   config = function()
     -- =================================================================
@@ -42,23 +38,6 @@ return {
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     -- Loads vscode style snippets from installed plugins (e.g. friendly-snippets).
     require("luasnip.loaders.from_vscode").lazy_load()
-
-    -- Setup Tabnine configuration.
-    local tabnine = require("cmp_tabnine.config")
-    tabnine:setup({
-      max_lines = 1000,
-      max_num_results = 20,
-      sort = true,
-      run_on_every_keystroke = true,
-      snippet_placeholder = "..",
-      ignored_file_types = {
-        -- default is not to ignore
-        -- uncomment to ignore in lua:
-        -- lua = true
-      },
-      show_prediction_strength = false,
-      min_percent = 0,
-    })
 
     -- =================================================================
     --  2. SETUP NVIM-CMP
