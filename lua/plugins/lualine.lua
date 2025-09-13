@@ -5,6 +5,7 @@ end
 return {
   -- Lualine
   "nvim-lualine/lualine.nvim",
+  cond = not vim.g.is_large_file_on_startup,
   dependencies = { { "nvim-tree/nvim-web-devicons", opt = true } },
   config = function()
     require("lualine").setup({
