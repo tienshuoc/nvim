@@ -160,13 +160,6 @@ return {
           vim.lsp.buf.rename,
           vim.tbl_extend("force", opts, { desc = "Renames all reference to symbol under cursor." })
         )
-
-        vim.keymap.set(
-          { "n", "v" },
-          "<leader>ca",
-          require("fzf-lua").lsp_code_actions,
-          vim.tbl_extend("force", opts, { desc = "See available code actions." })
-        )
       end,
     }) -- LspAttach config.
 
