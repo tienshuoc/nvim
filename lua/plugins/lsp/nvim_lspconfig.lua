@@ -89,7 +89,6 @@ return {
 
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-    -- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open diagnostic in floating window." }) -- Conflicts with harpoon keymaps.
     vim.keymap.set("n", "[d", function()
       vim.diagnostic.jump({ count = -1, float = true })
     end, { desc = "Go to previous diagnostic." }) -- This is native with NVIM0.10+
