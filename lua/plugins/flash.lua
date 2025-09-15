@@ -3,7 +3,14 @@ return {
   cond = not vim.g.is_large_file_on_startup,
   lazy = true,
   ---@type Flash.Config
-  opts = {},
+  opts = {
+    labels = { "tnseriaodhplfuwybjqgmvkcxz" },
+    modes = {
+      char = {
+        enabled = false, -- turn off flash for `t`, `f`, `T`, `F`
+      },
+    },
+  },
   -- stylua: ignore
   keys = {
     { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
