@@ -14,6 +14,7 @@ return {
         "lua_ls",
         "pyright",
         "bashls",
+        "starpls", -- Bazel
       },
       automatic_enable = true,
     })
