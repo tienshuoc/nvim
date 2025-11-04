@@ -57,8 +57,6 @@ return {
   -- event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "p00f/clangd_extensions.nvim",
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
     { "folke/neodev.nvim", opts = {} }, -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
   },
@@ -84,8 +82,7 @@ return {
       vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
     -- Setup language servers.
-    local lspconfig = require("lspconfig")
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    -- local lspconfig = vim.lsp.config("*")
 
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -178,10 +175,14 @@ return {
       },
     })
 
+    -- Setup language servers.
+    -- local lspconfig = vim.lsp.config("*")
+    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
     -- Used to enable autocompletion (assign to every lsp server config).
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
-    lspconfig.lua_ls.setup({
+    vim.lsp.config("lua_ls", {
       capabilities = capabilities,
       settings = {
         Lua = {
@@ -192,28 +193,32 @@ return {
           completion = {
             callSnippet = "Replace",
           },
+          -- Do not send telemetry data containing a randomized but unique identifier
+          telemetry = {
+            enable = false,
+          },
         },
       },
-    }) -- lua_ls.setup()
+    }) -- lua_ls setup
 
-    lspconfig.pyright.setup({
+    vim.lsp.config("pyright", {
       capabilities = capabilities,
       settings = {
         python = {
           pythonPath = vim.fn.exepath("python"),
         },
       },
-    }) -- pyright.setup()
+    }) -- pyright setup
 
-    lspconfig.bashls.setup({
+    vim.lsp.config("bashls", {
       capabilities = capabilities,
-    })
+    }) -- bashls setup
 
-    -- lspconfig.ts_ls.setup({
+    -- vim.lsp.config.ts_ls.setup({
     --  capabilities = capabilities,
     -- }) -- tsserver.setup()
 
-    lspconfig.clangd.setup({
+    vim.lsp.config("clangd", {
       -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
       capabilities = capabilities,
       cmd = {
@@ -238,11 +243,24 @@ return {
           vim.fs.find(".git", { path = fname, upward = true })[1]
         )
       end,
+      root_markers = {
+        "compile_commands.json",
+        "compile_flags.txt",
+        "configure.ac", -- AutoTools
+        "Makefile",
+        "configure.ac",
+        "configure.in",
+        "config.h.in",
+        "meson.build",
+        "meson_options.txt",
+        "build.ninja",
+        ".git",
+      },
       init_options = {
         usePlaceholders = true,
         completeUnimported = true,
         clangdFileStatus = true,
       },
-    }) -- clangd.setup()
+    }) -- clangd setup
   end, -- config function()
 }
