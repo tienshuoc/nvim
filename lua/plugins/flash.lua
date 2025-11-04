@@ -4,7 +4,7 @@ return {
   lazy = true,
   ---@type Flash.Config
   opts = {
-    labels = { "tnseriaodhplfuwybjqgmvkcxz" },
+    labels = "tnseriaodhplfuwybjqgmvkcxz",
     modes = {
       char = {
         enabled = false, -- turn off flash for `t`, `f`, `T`, `F`
