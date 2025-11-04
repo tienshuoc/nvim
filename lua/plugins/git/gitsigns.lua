@@ -30,5 +30,6 @@ return {
     -- Staging hunks.
     vim.keymap.set("n", "<leader>gph", ":Gitsigns preview_hunk<CR>", { desc = "Gitsigns preview hunk." })
     vim.keymap.set("n", "<leader>gsh", ":Gitsigns stage_hunk<CR>", { desc = "Gitsigns stage hunk." })
+    vim.keymap.set("n", "<leader>grh", ":Gitsigns reset_hunk<CR>", { desc = "Gitsigns reset hunk." })
   end,
 }
