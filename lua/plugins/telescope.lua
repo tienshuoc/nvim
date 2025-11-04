@@ -23,7 +23,14 @@ return {
   lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
-    { "<leader>ff", "<cmd>Telescope find_files<cr>", mode = "n", { noremap = true, desc = "Telescope find_files" } }, -- Find files.
+    {
+      "<leader>ff",
+      function()
+        require("telescope.builtin").find_files()
+      end,
+      mode = "n",
+      { noremap = true, desc = "Telescope find_files" },
+    }, -- Find files.
     {
       "<leader>fb",
       "<cmd>Telescope buffers sort_mru=true<cr>",
@@ -33,6 +40,26 @@ return {
   },
   config = function()
     local telescope = require("telescope")
+    local actions = require("telescope.actions")
+    local action_state = require("telescope.actions.state")
+
+    -- Custom action to open all selected files or current file
+    local function multi_select_open(prompt_bufnr)
+      local picker = action_state.get_current_picker(prompt_bufnr)
+      local multi_selection = picker:get_multi_selection()
+
+      if #multi_selection > 0 then
+        -- Open all selected files
+        actions.close(prompt_bufnr)
+        for _, entry in ipairs(multi_selection) do
+          vim.cmd(string.format("edit %s", entry.path or entry.filename))
+        end
+      else
+        -- No selections, open current file under cursor
+        actions.select_default(prompt_bufnr)
+      end
+    end
+
     telescope.setup({
       defaults = { -- Default configuration for telescope.
         -- path_display = {
@@ -50,6 +77,14 @@ return {
           i = {
             ["<C-u>"] = false, -- Allow Ctrl-U to clear in insert mode.
             ["<C-h>"] = "which_key",
+            ["<CR>"] = multi_select_open,
+            ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+            ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+          },
+          n = {
+            ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+            ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+            ["<CR>"] = multi_select_open,
           },
         },
         file_ignore_patterns = {
