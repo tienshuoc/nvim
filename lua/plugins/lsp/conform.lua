@@ -40,6 +40,7 @@ return {
       cpp = { "clang-format" },
       jsonnet = { "jsonnet_indent4" },
       sh = { "shfmt" },
+      bzl = { "buildifier" },
     },
     format_on_save = function(bufnr)
       if vim.bo.filetype ~= "lua" and vim.bo.filetype ~= "jsonnet" then

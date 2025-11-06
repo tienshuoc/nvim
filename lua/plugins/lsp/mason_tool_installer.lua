@@ -15,6 +15,7 @@ return {
         "shfmt", -- bash formatter
         "pylint",
         "eslint_d",
+        "buildifier", -- bazel formatter
       },
     })
   end,
