@@ -61,15 +61,34 @@ return {
         -- Convert SSH URL to HTTPS and strip .git suffix
         remote_url = remote_url:gsub("^git@(.-):", "https://%1/"):gsub("%.git$", "")
 
-        -- Construct GitHub URL with line number
-        local line = vim.fn.line(".")
-        local url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. line
+        -- Determine line range based on mode
+        local start_line, end_line
+        local mode = vim.fn.mode()
+        if mode == "v" or mode == "V" or mode == "\22" then -- visual mode (v, V, or ^V)
+          start_line = vim.fn.line("v")
+          end_line = vim.fn.line(".")
+          -- Ensure start_line <= end_line
+          if start_line > end_line then
+            start_line, end_line = end_line, start_line
+          end
+        else -- normal mode
+          start_line = vim.fn.line(".")
+          end_line = start_line
+        end
+
+        -- Construct GitHub URL with line number or range
+        local url
+        if start_line == end_line then
+          url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. start_line
+        else
+          url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. start_line .. "-L" .. end_line
+        end
 
         -- Yank to clipboard and notify
         vim.fn.setreg("+", url)
         vim.notify("✓ GitHub permalink copied to clipboard:\n" .. url, vim.log.levels.INFO)
       end,
-      mode = "n",
+      mode = { "n", "v" },
       { noremap = true, desc = "Yank GitHub URL (permalink) to clipboard." },
     },
   },
