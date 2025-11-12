@@ -132,6 +132,11 @@ vim.keymap.set("n", "c", '"_c') -- Don't let change text action yank anything in
 
 vim.keymap.set("n", "gV", "`[v`]", { noremap = true, desc = "Select last paste area." })
 
+-- Normal mode yanks a single line, visual mode yanks the selected range of lines.
+vim.keymap.set({ "n", "v" }, "<leader>gU", function()
+  require("utils.yank_github_permalink").yank_github_permalink()
+end, vim.tbl_extend("force", opts, { desc = "Yank GitHub URL (permalink) to clipboard." }))
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- ========================================================= Insert mode ===============================================================
 ----------------------------------------------------------------------------------------------------------------------------------------
