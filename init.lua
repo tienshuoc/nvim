@@ -121,7 +121,7 @@ else
       local stat = vim.loop.fs_stat(file_path)
 
       if stat and stat.size > size_limit then
-        require("handle_large_file").apply_large_file_settings()
+        require("utils.handle_large_file").apply_large_file_settings()
       end
     end,
   })
@@ -132,6 +132,6 @@ else
   require("sn_options")
 
   if vim.g.is_large_file_on_startup then
-    require("handle_large_file").apply_large_file_settings()
+    require("utils.handle_large_file").apply_large_file_settings()
   end
 end
