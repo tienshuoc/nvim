@@ -3,6 +3,7 @@ return {
   lazy = false,
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
+    { "<leader>ff", "<cmd> FzfLua files<cr>", mode = "n", { noremap = true, desc = "Fuzzy search files." } },
     {
       "<leader>fg",
       "<cmd> FzfLua live_grep<cr>",

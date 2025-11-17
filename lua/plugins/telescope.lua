@@ -24,14 +24,6 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
     {
-      "<leader>ff",
-      function()
-        require("telescope.builtin").find_files()
-      end,
-      mode = "n",
-      { noremap = true, desc = "Telescope find_files" },
-    }, -- Find files.
-    {
       "<leader>fb",
       "<cmd>Telescope buffers sort_mru=true<cr>",
       mode = "n",
