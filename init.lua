@@ -107,7 +107,7 @@ else
 
   -- Set up the autocommand to handle large files opened *during* this session.
   local large_file_group = vim.api.nvim_create_augroup("LargeFileHandler", { clear = true })
-  vim.api.nvim_create_autocmd("BufEnter", {
+  vim.api.nvim_create_autocmd("BufNew", {
     group = large_file_group,
     pattern = "*",
     callback = function()
