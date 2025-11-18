@@ -1,4 +1,26 @@
-vim.opt.clipboard = "unnamedplus" -- use system clipboard
+-- Native OSC52 clipboard support for SSH/tmux (Neovim 10.0+)
+local function paste()
+  return {
+    vim.fn.split(vim.fn.getreg(""), "\n"),
+    vim.fn.getregtype(""),
+  }
+end
+
+vim.g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    -- Uses OSC52 to send to system clipboard.
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+  },
+  paste = {
+    -- Just reads from Neovim's internal register instead of querying the terminal.
+    ["+"] = paste,
+    ["*"] = paste,
+  },
+}
+
+vim.opt.clipboard = "unnamedplus" -- Use system clipboard via OSC52
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 ----------------------------------- Indentation -----------------------------------
