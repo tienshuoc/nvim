@@ -14,7 +14,7 @@ return {
     "nvim-treesitter/nvim-treesitter-textobjects",
   },
   build = function()
-    require("nvim-treesitter.install").update({ with_sync = true })()
+    require("nvim-treesitter.install").update({ with_sync = false })()
   end,
   config = function()
     require("nvim-treesitter.configs").setup({
@@ -33,8 +33,8 @@ return {
         "html",
       },
       ignore_install = { "mlir" }, -- Tries to complain that you don't have "treesitter-cli", and installing it gives GLIBC problems. Back off for MLIR.
-      sync_install = true,
-      auto_install = true,
+      sync_install = false,
+      auto_install = false,
       highlight = {
         enable = true,
       },
