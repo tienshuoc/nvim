@@ -28,9 +28,6 @@ if vim.g.vscode then
     vscode.action("workbench.action.closeActiveEditor")
   end, vim.tbl_extend("force", opts, { desc = "Quit file." }))
 
-  -- vim.keymap.set({ "n", "v" }, "<leader>qb", ":<c-u>bd<CR>", vim.tbl_extend("force", opts, { desc = "Close buffer." }))
-  vim.keymap.set("n", "<leader>tt", "<C-^>", vim.tbl_extend("force", opts, { desc = "Switch to previous buffer." }))
-
   vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
   vim.keymap.set("x", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
