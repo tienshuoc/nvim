@@ -11,8 +11,12 @@ vim.opt.autoindent = true -- New lines inherit the indentation of previous lines
 
 -------------------------------------- Editing --------------------------------------
 -- Disable automcommenting on newline.
-vim.cmd("autocmd BufEnter * set formatoptions-=cro")
-vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*",
+  callback = function()
+    vim.opt.formatoptions:remove({ "c", "r", "o" })
+  end,
+})
 
 -- Underline when in insert mode.
 vim.cmd("au InsertEnter * set cul")
