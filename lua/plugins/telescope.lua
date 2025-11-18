@@ -20,7 +20,7 @@ vim.api.nvim_create_autocmd("FileType", {
 return {
   "nvim-telescope/telescope.nvim",
   branch = "0.1.x",
-  lazy = false,
+  lazy = true,
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
     {

@@ -1,6 +1,6 @@
 return {
   "ibhagwan/fzf-lua",
-  lazy = false,
+  lazy = true,
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
     { "<leader>ff", "<cmd> FzfLua files<cr>", mode = "n", { noremap = true, desc = "Fuzzy search files." } },
