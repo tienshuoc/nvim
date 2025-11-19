@@ -1,28 +1,36 @@
 --- Indent Blankline ---
 return {
   "lukas-reineke/indent-blankline.nvim",
-  cond = not vim.g.is_large_file_on_startup,
-  scope = { enabled = true },
-  exclude = {
-    filetypes = {
-      "help",
-      "alpha",
-      "dashboard",
-      "neo-tree",
-      "Trouble",
-      "trouble",
-      "lazy",
-      "mason",
-      "notify",
-      "toggleterm",
-      "lazyterm",
-    },
+  main = "ibl",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter", -- Enabling "scope" requires this.
   },
+  event = "VimEnter",
+  cond = not vim.g.is_large_file_on_startup,
   opts = {
     indent = {
       char = "│",
-      tab_char = "│",
+    },
+    scope = {
+      -- This is the indentation level where variables or functions are accessible, NOT the current indentation level.
+      enabled = true,
+      exclude = { language = { "python" } },
+    },
+    exclude = {
+      filetypes = {
+        "help",
+        "alpha",
+        "dashboard",
+        "neo-tree",
+        "Trouble",
+        "trouble",
+        "lazy",
+        "log",
+        "mason",
+        "notify",
+        "toggleterm",
+        "lazyterm",
+      },
     },
   },
-  main = "ibl",
 }
