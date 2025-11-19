@@ -14,7 +14,6 @@ return {
     scope = {
       -- This is the indentation level where variables or functions are accessible, NOT the current indentation level.
       enabled = true,
-      exclude = { language = { "python" } },
     },
     exclude = {
       filetypes = {
