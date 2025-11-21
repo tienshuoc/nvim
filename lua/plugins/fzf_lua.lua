@@ -98,10 +98,14 @@ return {
           winopts = { number = false },
         },
       },
-      fzf_opts = { ["--cycle"] = "" },
+      fzf_opts = { ["--cycle"] = "" }, -- Cycles back from last result to the first when scrolling.
+      cmd = "fd", -- Favour using `fd` first.
       files = {
-        formatter = "path.filename_first",
-        fd_opts = "--hidden --type f --type l --exclude .git --exclude '*bazel-cache*'",
+        -- Uses v2 version of filename_first.
+        -- Issue with just doing "path.filename_first" is that it matches on how the string itself is presented to the user.
+        -- So instead of fuzzy finding `path` + `filename`, it fuzzy finds on `filename` + `path`.
+        -- See: https://www.reddit.com/r/neovim/comments/1dck9r3/fzflua_pathfilename_first_causing_issues_with/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+        formatter = { "path.filename_first", 2 },
       },
     })
   end,
