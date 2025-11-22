@@ -37,10 +37,10 @@ elseif vim.g.is_large_file_on_startup then
   })
 else
   require("lazy").setup({
-    { import = "plugins" },
+    { import = "plugins.colorschemes" },
     { import = "plugins.git" },
     { import = "plugins.ftplugins" },
-    { import = "plugins.colorschemes" },
+    { import = "plugins" },
     -- Debugger plugins.
     { import = "plugins.dbg" },
     { import = "plugins.dbg.lang" },
@@ -55,5 +55,4 @@ else
       notify = false,
     },
   })
-  require("manage_colorscheme") -- Load colorscheme manager after colorscheme plugins are loaded.
 end

@@ -127,6 +127,7 @@ else
   require("options") -- Load default options first and override if large file in large file settings below.
   require("keymaps")
   require("sn_options")
+  require("manage_colorscheme") -- Load colorscheme manager after colorscheme plugins are loaded.
 
   if vim.g.is_large_file_on_startup then
     require("utils.handle_large_file").apply_large_file_settings()

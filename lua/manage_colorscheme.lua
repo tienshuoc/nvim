@@ -12,6 +12,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 -- After Neovim has fully started, load the saved colorscheme.
 vim.api.nvim_create_autocmd("BufReadPre", {
   pattern = "*",
+  once = true, -- Command is ran once then removed (one-shot).
   callback = function()
     -- Attempt to read the saved value. If it's not set, use a default.
     if vim.g.COLORSCHEME then
