@@ -1,4 +1,4 @@
 return {
   "tpope/vim-unimpaired",
-  lazy = false
+  lazy = false,
 }

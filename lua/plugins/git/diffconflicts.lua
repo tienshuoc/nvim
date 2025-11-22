@@ -1,3 +1,3 @@
 return {
-    'whiteinge/diffconflicts', -- Git diff conflicts.
+  "whiteinge/diffconflicts", -- Git diff conflicts.
 }

@@ -1,4 +1,4 @@
 return {
-    -- nightfox, dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
-    'EdenEast/nightfox.nvim'
+  -- nightfox, dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
+  "EdenEast/nightfox.nvim",
 }

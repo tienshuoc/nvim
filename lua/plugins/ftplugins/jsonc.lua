@@ -1,3 +1,3 @@
 return {
-    'neoclide/jsonc.vim',
+  "neoclide/jsonc.vim",
 }

@@ -1,10 +1,10 @@
 return {
   -- Edit filesystem like a normal Neovim buffer.
-  'stevearc/oil.nvim',
+  "stevearc/oil.nvim",
   opts = {},
   -- Optional dependencies
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
-      require('oil').setup()
+    require("oil").setup()
   end,
 }

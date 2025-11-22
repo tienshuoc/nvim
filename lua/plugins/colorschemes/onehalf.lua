@@ -1,7 +1,6 @@
 return {
-    -- onehalflight, onehalfdark
-    "sonph/onehalf",
-    rtp = "vim/",
-    config = function()
-    end,
+  -- onehalflight, onehalfdark
+  "sonph/onehalf",
+  rtp = "vim/",
+  config = function() end,
 }

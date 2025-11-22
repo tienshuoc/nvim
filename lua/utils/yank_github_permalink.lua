@@ -75,48 +75,36 @@ function M.yank_github_permalink()
               local branch = branch_name_result.stdout and branch_name_result.stdout:gsub("%s+$", "") or "main"
 
               -- Get remote URL information
-              vim.system(
-                { "git", "config", "branch." .. branch .. ".remote" },
-                { text = true },
-                function(remote_result)
-                  local remote = remote_result.stdout and remote_result.stdout:gsub("%s+$", "") or ""
-                  remote = remote ~= "" and remote or "origin"
+              vim.system({ "git", "config", "branch." .. branch .. ".remote" }, { text = true }, function(remote_result)
+                local remote = remote_result.stdout and remote_result.stdout:gsub("%s+$", "") or ""
+                remote = remote ~= "" and remote or "origin"
 
-                  vim.system({ "git", "remote", "get-url", remote }, { text = true }, function(url_result)
-                    if url_result.code ~= 0 or not url_result.stdout then
-                      vim.schedule(function()
-                        vim.notify("⚠️ Could not get remote URL", vim.log.levels.ERROR)
-                      end)
-                      return
-                    end
-                    local remote_url = url_result.stdout:gsub("%s+$", "")
-                    -- Convert SSH URL to HTTPS and strip .git suffix
-                    remote_url = remote_url:gsub("^git@(.-):", "https://%1/"):gsub("%.git$", "")
-
+                vim.system({ "git", "remote", "get-url", remote }, { text = true }, function(url_result)
+                  if url_result.code ~= 0 or not url_result.stdout then
                     vim.schedule(function()
-                      -- Construct GitHub URL with line number or range
-                      local url
-                      if start_line == end_line then
-                        url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. start_line
-                      else
-                        url = remote_url
-                          .. "/blob/"
-                          .. sha
-                          .. "/"
-                          .. rel_path
-                          .. "#L"
-                          .. start_line
-                          .. "-L"
-                          .. end_line
-                      end
-
-                      -- Yank to clipboard and notify
-                      vim.fn.setreg("+", url)
-                      vim.notify("✓ GitHub permalink copied to clipboard:\n" .. url, vim.log.levels.INFO)
+                      vim.notify("⚠️ Could not get remote URL", vim.log.levels.ERROR)
                     end)
+                    return
+                  end
+                  local remote_url = url_result.stdout:gsub("%s+$", "")
+                  -- Convert SSH URL to HTTPS and strip .git suffix
+                  remote_url = remote_url:gsub("^git@(.-):", "https://%1/"):gsub("%.git$", "")
+
+                  vim.schedule(function()
+                    -- Construct GitHub URL with line number or range
+                    local url
+                    if start_line == end_line then
+                      url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. start_line
+                    else
+                      url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. start_line .. "-L" .. end_line
+                    end
+
+                    -- Yank to clipboard and notify
+                    vim.fn.setreg("+", url)
+                    vim.notify("✓ GitHub permalink copied to clipboard:\n" .. url, vim.log.levels.INFO)
                   end)
-                end
-              )
+                end)
+              end)
             end)
           end)
         end)
