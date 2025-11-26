@@ -11,6 +11,12 @@ return {
       { noremap = true, desc = "Live grep current project with glob support." },
     },
     {
+      "<leader>fb",
+      "<cmd> FzfLua buffers<cr>", -- Default already sorts by most-recently-used.
+      mode = "n",
+      { noremap = true, desc = "Search buffers." },
+    },
+    {
       "<leader>ss",
       "<cmd> FzfLua lsp_document_symbols<cr>",
       mode = "n",

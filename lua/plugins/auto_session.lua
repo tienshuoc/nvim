@@ -3,13 +3,6 @@ return {
   cond = not vim.g.is_large_file_on_startup,
   lazy = true,
   enable = false,
-  -- dependencies = { "nvim-telescope/telescope.nvim", "nvim-tree/nvim-tree.lua" },
-  -- keys = {
-  --   "n",
-  --   "<leader>fs",
-  --   require("auto-session.session-lens").search_session,
-  --   { noremap = true },
-  -- },
   config = function()
     require("auto-session").setup({
       log_level = "error",
