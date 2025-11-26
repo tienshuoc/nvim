@@ -92,19 +92,25 @@ return {
         },
       },
       winopts = {
-        width = 0.8,
-        height = 0.9,
+        width = 0.7,
+        height = 0.5,
+        row = 0.85, -- window row position (0=top, 1=bottom)
+        col = 0.50, -- window col position (0=left, 1=right)
+        backdrop = 40, -- (what's outside the preview window) 0 is opaque, 100 is transparent
         preview = {
           hidden = "nohidden",
           vertical = "up:45%",
           horizontal = "right:50%",
           layout = "flex",
           flip_columns = 120,
-          delay = 10,
-          winopts = { number = false },
+          delay = 0,
+          winopts = { number = true },
         },
       },
-      fzf_opts = { ["--cycle"] = "" }, -- Cycles back from last result to the first when scrolling.
+      fzf_opts = {
+        ["--cycle"] = "", -- Cycles back from last result to the first when scrolling.
+        ["--layout"] = "reverse", -- Reverses the search bar to be on top.
+      },
       cmd = "fd", -- Favour using `fd` first.
       files = {
         -- Uses v2 version of filename_first.
