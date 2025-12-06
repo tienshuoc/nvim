@@ -3,6 +3,7 @@ return {
   cond = not vim.g.is_large_file_on_startup,
   event = "InsertEnter",
   config = true,
+  enabled = false,
   -- use opts = {} for passing setup options
   -- this is equalent to setup({}) function
 }
