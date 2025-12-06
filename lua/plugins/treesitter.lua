@@ -2,7 +2,6 @@ return {
   -- Better syntax highlighting
   "nvim-treesitter/nvim-treesitter",
   cond = not vim.g.is_large_file_on_startup,
-  lazy = false,
   event = {
     -- Lazy load when buffer open existing or non-existent file.
     "BufReadPre",
