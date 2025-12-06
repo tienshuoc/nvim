@@ -76,4 +76,9 @@ vim.api.nvim_set_hl(0, "VirtualTextError", { fg = "#fc5d7c" })
 
 ------------------------------- Miscellaneous Options -----------------------------
 vim.opt.history = 1000 -- Increase the undo limit.
-vim.opt.updatetime = 50 -- If this many milliseconds nothing is styped, the swap file will be written to disk.
+vim.opt.updatetime = 500 -- If this many milliseconds nothing is typed, the swap file will be written to disk.
+
+-- Disable unused providers for faster startup
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
