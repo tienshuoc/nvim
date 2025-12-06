@@ -54,7 +54,7 @@ end
 
 return {
   "neovim/nvim-lspconfig",
-  -- event = { "BufReadPre", "BufNewFile" },
+  event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "p00f/clangd_extensions.nvim",
     "hrsh7th/cmp-nvim-lsp",
