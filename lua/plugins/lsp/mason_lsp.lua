@@ -15,6 +15,7 @@ return {
         "pyright",
         "bashls",
         "starpls", -- Bazel LSP
+        "rust-analyzer",
       },
       automatic_enable = true,
     })

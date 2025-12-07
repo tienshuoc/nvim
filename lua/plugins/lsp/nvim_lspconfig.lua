@@ -262,5 +262,10 @@ return {
         clangdFileStatus = true,
       },
     }) -- clangd setup
+
+    vim.lsp.config("rust_analyzer", {
+      -- Note: do not set init_options for this LS config, it will be automatically populated by the contents of settings["rust-analyzer"]
+      capabilities = capabilities,
+    }) -- rust_analyzer setup
   end, -- config function()
 }
