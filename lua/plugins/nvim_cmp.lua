@@ -34,8 +34,6 @@ return {
     local cmp = require("cmp")
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
-    -- Insert `(` after select function or method item
-    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     -- Loads vscode style snippets from installed plugins (e.g. friendly-snippets).
     require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -150,9 +148,16 @@ return {
         }),
       },
 
-      -- Integrate with nvim-autopairs to automatically add () after function completion
-      -- This event fires after a completion is "confirmed" (i.e., you selected it).
-      ["confirm_done"] = cmp_autopairs.on_confirm_done(),
     })
+
+    -- =================================================================
+    --  6. NVIM-AUTOPAIRS INTEGRATION
+    -- =================================================================
+    -- Integrate with nvim-autopairs to automatically add () after function completion
+    -- This event fires after a completion is "confirmed" (i.e., you selected it).
+    local ok, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
+    if ok then
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+    end
   end,
 }
