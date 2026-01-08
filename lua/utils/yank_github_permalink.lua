@@ -1,5 +1,29 @@
 local M = {}
 
+-- Helper to get remote URL
+local function get_remote_url(callback)
+  vim.system({ "git", "rev-parse", "--abbrev-ref", "HEAD" }, { text = true }, function(branch_result)
+    local branch = branch_result.stdout and branch_result.stdout:gsub("%s+$", "") or "main"
+
+    vim.system({ "git", "config", "branch." .. branch .. ".remote" }, { text = true }, function(remote_result)
+      local remote = remote_result.stdout and remote_result.stdout:gsub("%s+$", "") or ""
+      remote = remote ~= "" and remote or "origin"
+
+      vim.system({ "git", "remote", "get-url", remote }, { text = true }, function(url_result)
+        if url_result.code ~= 0 or not url_result.stdout then
+          callback(nil)
+          return
+        end
+
+        local remote_url = url_result.stdout:gsub("%s+$", "")
+        -- Convert SSH URL to HTTPS and strip .git suffix
+        remote_url = remote_url:gsub("^git@(.-):", "https://%1/"):gsub("%.git$", "")
+        callback(remote_url)
+      end)
+    end)
+  end)
+end
+
 -- Yank GitHub permalink to clipboard for current line or visual selection
 function M.yank_github_permalink()
   -- Capture line numbers before async operations (they might change during execution)
@@ -61,51 +85,54 @@ function M.yank_github_permalink()
           end
           local sha = log_result.stdout:gsub("%s+$", "")
 
-          -- Check if the commit that last touched the file exists on remote.
-          vim.system({ "git", "branch", "-r", "--contains", sha }, { text = true }, function(branch_result)
-            if branch_result.code ~= 0 or not branch_result.stdout or branch_result.stdout == "" then
-              vim.schedule(function()
-                vim.notify("⚠️ Last change to this file is not pushed to remote!", vim.log.levels.ERROR)
-              end)
-              return
-            end
+          -- Run remote check and URL fetching in parallel
+          local remote_url
+          local is_on_remote = false
+          local completed = 0
 
-            -- Get current branch for remote configuration
-            vim.system({ "git", "rev-parse", "--abbrev-ref", "HEAD" }, { text = true }, function(branch_name_result)
-              local branch = branch_name_result.stdout and branch_name_result.stdout:gsub("%s+$", "") or "main"
-
-              -- Get remote URL information
-              vim.system({ "git", "config", "branch." .. branch .. ".remote" }, { text = true }, function(remote_result)
-                local remote = remote_result.stdout and remote_result.stdout:gsub("%s+$", "") or ""
-                remote = remote ~= "" and remote or "origin"
-
-                vim.system({ "git", "remote", "get-url", remote }, { text = true }, function(url_result)
-                  if url_result.code ~= 0 or not url_result.stdout then
-                    vim.schedule(function()
-                      vim.notify("⚠️ Could not get remote URL", vim.log.levels.ERROR)
-                    end)
-                    return
-                  end
-                  local remote_url = url_result.stdout:gsub("%s+$", "")
-                  -- Convert SSH URL to HTTPS and strip .git suffix
-                  remote_url = remote_url:gsub("^git@(.-):", "https://%1/"):gsub("%.git$", "")
-
-                  vim.schedule(function()
-                    -- Construct GitHub URL with line number or range
-                    local url
-                    if start_line == end_line then
-                      url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. start_line
-                    else
-                      url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. start_line .. "-L" .. end_line
-                    end
-
-                    -- Yank to clipboard and notify
-                    vim.fn.setreg("+", url)
-                    vim.notify("✓ GitHub permalink copied to clipboard:\n" .. url, vim.log.levels.INFO)
-                  end)
+          local function try_finish()
+            completed = completed + 1
+            if completed == 2 then
+              if not is_on_remote then
+                vim.schedule(function()
+                  vim.notify("⚠️ Last change to this file is not pushed to remote!", vim.log.levels.ERROR)
                 end)
+                return
+              end
+
+              if not remote_url then
+                vim.schedule(function()
+                  vim.notify("⚠️ Could not get remote URL", vim.log.levels.ERROR)
+                end)
+                return
+              end
+
+              vim.schedule(function()
+                -- Construct GitHub URL with line number or range
+                local url
+                if start_line == end_line then
+                  url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. start_line
+                else
+                  url = remote_url .. "/blob/" .. sha .. "/" .. rel_path .. "#L" .. start_line .. "-L" .. end_line
+                end
+
+                -- Yank to clipboard and notify
+                vim.fn.setreg("+", url)
+                vim.notify("✓ GitHub permalink copied to clipboard:\n" .. url, vim.log.levels.INFO)
               end)
-            end)
+            end
+          end
+
+          -- Check if the commit exists on remote
+          vim.system({ "git", "branch", "-r", "--contains", sha }, { text = true }, function(branch_result)
+            is_on_remote = branch_result.code == 0 and branch_result.stdout and branch_result.stdout ~= ""
+            try_finish()
+          end)
+
+          -- Get remote URL
+          get_remote_url(function(url)
+            remote_url = url
+            try_finish()
           end)
         end)
       end)

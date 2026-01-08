@@ -136,6 +136,9 @@ vim.keymap.set("n", "gV", "`[v`]", { noremap = true, desc = "Select last paste a
 vim.keymap.set({ "n", "v" }, "<leader>gU", function()
   require("utils.yank_github_permalink").yank_github_permalink()
 end, vim.tbl_extend("force", opts, { desc = "Yank GitHub URL (permalink) to clipboard." }))
+vim.keymap.set({ "n" }, "<leader>gB", function()
+  require("utils.yank_github_blame").yank_github_blame()
+end, vim.tbl_extend("force", opts, { desc = "Yank GitHub blame PR to clipboard." }))
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- ========================================================= Insert mode ===============================================================
