@@ -96,7 +96,7 @@ else
   require("lazy_manager") -- This will set up and load all plugins
   require("options") -- Load default options first and override if large file in large file settings below.
   require("keymaps")
-  require("sn_options")
+  require("sessions").setup() -- Set up session management keymaps
 
   if vim.g.is_large_file_on_startup then
     -- Mark the buffer as already checked to prevent duplicate handling by autocommand

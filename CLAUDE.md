@@ -43,7 +43,7 @@ Files exceeding the configured threshold (default: 10MB) automatically trigger p
 
 - **lua/options.lua**: Core Neovim settings
 - **lua/keymaps.lua**: Global key mappings
-- **lua/sn_options.lua**: User-specific option overrides
+- **lua/sessions.lua**: Session management with configurable save/load keymaps
 - **after/ftplugin/**: Filetype-specific configurations
 
 ## Plugin Dependencies
