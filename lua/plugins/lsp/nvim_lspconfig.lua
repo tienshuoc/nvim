@@ -100,62 +100,16 @@ return {
         -- Enable completion triggered by <c-x><c-o>
         vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-        -- Buffer local mappings.
-        local opts = { buffer = ev.buf }
+        -- Buffer local mappings with shared options
+        local opts = { buffer = ev.buf, noremap = true, silent = true }
 
-        vim.keymap.set(
-          "n",
-          "gD",
-          vim.lsp.buf.declaration,
-          vim.tbl_extend("force", opts, { desc = "Go to declaration." })
-        )
-
-        vim.keymap.set(
-          "n",
-          "gd",
-          require("fzf-lua").lsp_definitions,
-          vim.tbl_extend("force", opts, { desc = "Go to definition." })
-        )
-
-        vim.keymap.set(
-          "n",
-          "grr", -- Override the default keymapping for `lsp_go_to_references` in Neovim 0.11.
-          require("fzf-lua").lsp_references,
-          vim.tbl_extend("force", opts, { desc = "Go to references." })
-        )
-
-        -- This is native with NVIM0.10+
-        vim.keymap.set(
-          "n",
-          "K",
-          vim.lsp.buf.hover,
-          vim.tbl_extend("force", opts, { desc = "Show documentation for under cursor." })
-        )
-
-        vim.keymap.set(
-          "n",
-          "gi",
-          vim.lsp.buf.implementation,
-          vim.tbl_extend("force", opts, { desc = "Go to implementation." })
-        )
-
-        vim.keymap.set(
-          "n",
-          "<C-k>",
-          vim.lsp.buf.signature_help,
-          vim.tbl_extend(
-            "force",
-            opts,
-            { desc = "Displays signature information about the symbol under the cursor in a floating window." }
-          )
-        )
-
-        vim.keymap.set(
-          "n",
-          "<leader>rn",
-          vim.lsp.buf.rename,
-          vim.tbl_extend("force", opts, { desc = "Renames all reference to symbol under cursor." })
-        )
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
+        vim.keymap.set("n", "gd", require("fzf-lua").lsp_definitions, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
+        vim.keymap.set("n", "grr", require("fzf-lua").lsp_references, vim.tbl_extend("force", opts, { desc = "Go to references" })) -- Override default in Neovim 0.11
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "Show documentation for under cursor" }))
+        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to implementation" }))
+        vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, vim.tbl_extend("force", opts, { desc = "Show signature information" }))
+        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol under cursor" }))
       end,
     }) -- LspAttach config.
 
@@ -175,97 +129,90 @@ return {
       },
     })
 
-    -- Setup language servers.
-    -- local lspconfig = vim.lsp.config("*")
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-    -- Used to enable autocompletion (assign to every lsp server config).
-    local capabilities = cmp_nvim_lsp.default_capabilities()
-
-    vim.lsp.config("lua_ls", {
-      capabilities = capabilities,
-      settings = {
-        Lua = {
-          -- Make the language server recognize "vim" global
-          diagnostics = {
-            globals = { "vim" },
-          },
-          completion = {
-            callSnippet = "Replace",
-          },
-          -- Do not send telemetry data containing a randomized but unique identifier
-          telemetry = {
-            enable = false,
+    -- Centralized server configurations
+    local servers = {
+      lua_ls = {
+        settings = {
+          Lua = {
+            -- Make the language server recognize "vim" global
+            diagnostics = {
+              globals = { "vim" },
+            },
+            completion = {
+              callSnippet = "Replace",
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+              enable = false,
+            },
           },
         },
       },
-    }) -- lua_ls setup
-
-    vim.lsp.config("pyright", {
-      capabilities = capabilities,
-      settings = {
-        python = {
-          pythonPath = vim.fn.exepath("python"),
+      pyright = {
+        settings = {
+          python = {
+            pythonPath = vim.fn.exepath("python"),
+          },
         },
       },
-    }) -- pyright setup
-
-    vim.lsp.config("bashls", {
-      capabilities = capabilities,
-    }) -- bashls setup
-
-    -- vim.lsp.config.ts_ls.setup({
-    --  capabilities = capabilities,
-    -- }) -- tsserver.setup()
-
-    vim.lsp.config("clangd", {
-      -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
-      capabilities = capabilities,
-      cmd = {
-        "clangd",
-        "--background-index",
-        "--clang-tidy",
-        "--header-insertion=iwyu",
-        "--completion-style=detailed",
-        "--function-arg-placeholders",
-        "--fallback-style=llvm",
-      },
-      root_dir = function(fname)
-        return require("lspconfig.util").root_pattern(
+      bashls = {},
+      -- ts_ls = {},  -- Uncomment to enable TypeScript language server
+      clangd = {
+        -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--clang-tidy",
+          "--header-insertion=iwyu",
+          "--completion-style=detailed",
+          "--function-arg-placeholders",
+          "--fallback-style=llvm",
+        },
+        root_dir = function(fname)
+          return require("lspconfig.util").root_pattern(
+            "Makefile",
+            "configure.ac",
+            "configure.in",
+            "config.h.in",
+            "meson.build",
+            "meson_options.txt",
+            "build.ninja"
+          )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname) or vim.fs.dirname(
+            vim.fs.find(".git", { path = fname, upward = true })[1]
+          )
+        end,
+        root_markers = {
+          "compile_commands.json",
+          "compile_flags.txt",
+          "configure.ac", -- AutoTools
           "Makefile",
           "configure.ac",
           "configure.in",
           "config.h.in",
           "meson.build",
           "meson_options.txt",
-          "build.ninja"
-        )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname) or vim.fs.dirname(
-          vim.fs.find(".git", { path = fname, upward = true })[1]
-        )
-      end,
-      root_markers = {
-        "compile_commands.json",
-        "compile_flags.txt",
-        "configure.ac", -- AutoTools
-        "Makefile",
-        "configure.ac",
-        "configure.in",
-        "config.h.in",
-        "meson.build",
-        "meson_options.txt",
-        "build.ninja",
-        ".git",
+          "build.ninja",
+          ".git",
+        },
+        init_options = {
+          usePlaceholders = true,
+          completeUnimported = true,
+          clangdFileStatus = true,
+        },
       },
-      init_options = {
-        usePlaceholders = true,
-        completeUnimported = true,
-        clangdFileStatus = true,
+      rust_analyzer = {
+        -- Note: do not set init_options for this LS config, it will be automatically populated by the contents of settings["rust-analyzer"]
       },
-    }) -- clangd setup
+    }
 
-    vim.lsp.config("rust_analyzer", {
-      -- Note: do not set init_options for this LS config, it will be automatically populated by the contents of settings["rust-analyzer"]
-      capabilities = capabilities,
-    }) -- rust_analyzer setup
+    -- Setup all language servers with shared configuration
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+    for server, config in pairs(servers) do
+      local server_opts = vim.tbl_deep_extend("force", {
+        capabilities = capabilities,
+      }, config)
+      vim.lsp.config(server, server_opts)
+    end
   end, -- config function()
 }
