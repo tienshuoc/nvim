@@ -1,7 +1,6 @@
 return {
   -- Dim unused functions, variables, parameters, and more. (Requires `-Wunused-variable` for clangd)
   "zbirenbaum/neodim",
-  cond = not vim.g.is_large_file_on_startup,
   event = "LspAttach",
   config = function()
     require("neodim").setup({

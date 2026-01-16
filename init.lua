@@ -90,38 +90,8 @@ if vim.g.vscode then
 
   -- Plugins
 else
-  local size_limit = 10 * 1024 * 1024 -- 10MB
-  local file_to_check = vim.fn.argv()[1] -- Get the first file argument from the command line
-  vim.g.is_large_file_on_startup = false
-
-  -- Check if a file was passed on startup and if it's large
-  if file_to_check and vim.fn.filereadable(vim.fn.expand(file_to_check)) == 1 then
-    if vim.fn.getfsize(file_to_check) > size_limit then
-      vim.g.is_large_file_on_startup = true
-    else
-    end
-  end
-
-  -- Set up the autocommand to handle large files opened *during* this session.
-  local large_file_group = vim.api.nvim_create_augroup("LargeFileHandler", { clear = true })
-  vim.api.nvim_create_autocmd("BufNew", {
-    group = large_file_group,
-    pattern = "*",
-    callback = function()
-      local buf_path = vim.api.nvim_buf_get_name(0)
-      if buf_path == "" then
-        return
-      end
-
-      -- this is buggy when doing cdo on quickfix list
-      local file_path = vim.fn.fnamemodify(buf_path, ":p")
-      local stat = vim.loop.fs_stat(file_path)
-
-      if stat and stat.size > size_limit then
-        require("utils.handle_large_file").apply_large_file_settings()
-      end
-    end,
-  })
+  -- Set up large file detection for both startup and runtime
+  require("utils.handle_large_file").setup()
 
   require("lazy_manager") -- This will set up and load all plugins
   require("options") -- Load default options first and override if large file in large file settings below.

@@ -27,10 +27,12 @@ The configuration uses conditional loading based on:
 - Standard mode: Full plugin suite
 
 ### Large File Optimization
-Files >10MB automatically trigger performance optimizations:
-- Disabled swap, undo, syntax highlighting
-- Minimal plugin loading
-- Settings applied via `handle_large_file.lua`
+Files exceeding the configured threshold (default: 10MB) automatically trigger performance optimizations:
+- Size threshold is easily configurable in `lua/utils/handle_large_file.lua`
+- All large file detection and handling logic centralized in the `handle_large_file` module
+- Automatically disables heavy plugins (treesitter, LSP, completion, git integrations, etc.)
+- Disables performance-intensive features (swap, undo, syntax highlighting, folding)
+- Detection works for both startup files and files opened during the session
 
 ### Colorscheme Management
 - Current theme stored in `colorscheme_value` file

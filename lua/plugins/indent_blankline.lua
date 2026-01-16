@@ -6,7 +6,6 @@ return {
     "nvim-treesitter/nvim-treesitter", -- Enabling "scope" requires this.
   },
   event = "VeryLazy",
-  cond = not vim.g.is_large_file_on_startup,
   opts = {
     indent = {
       char = "│",

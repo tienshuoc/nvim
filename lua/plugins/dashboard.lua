@@ -1,7 +1,6 @@
 return {
   -- Dashboard during empty startup.
   "glepnir/dashboard-nvim",
-  cond = not vim.g.is_large_file_on_startup,
   event = "VimEnter",
   config = function()
     require("dashboard").setup({

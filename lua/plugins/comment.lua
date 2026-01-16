@@ -1,7 +1,6 @@
 --- Comment ---
 return {
   "numToStr/Comment.nvim",
-  cond = not vim.g.is_large_file_on_startup,
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "JoosepAlviste/nvim-ts-context-commentstring",

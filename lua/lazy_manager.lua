@@ -31,9 +31,14 @@ if vim.g.vscode then
     },
   })
 elseif vim.g.is_large_file_on_startup then
-  vim.notify("Large file detected, loading minimal set of plugins.", vim.log.levels.WARN)
+  local large_file = require("utils.handle_large_file")
+  local threshold_mb = large_file.config.size_threshold / (1024 * 1024)
+  vim.notify(
+    string.format("Large file detected (>%.0fMB), loading minimal plugins.", threshold_mb),
+    vim.log.levels.WARN
+  )
   require("lazy").setup({
-    { import = "plugins" },
+    { import = "plugins" }, -- Only base plugins, no colorschemes/git/lsp/debuggers
   })
 else
   require("lazy").setup({
