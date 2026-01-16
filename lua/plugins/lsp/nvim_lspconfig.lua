@@ -103,13 +103,48 @@ return {
         -- Buffer local mappings with shared options
         local opts = { buffer = ev.buf, noremap = true, silent = true }
 
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
-        vim.keymap.set("n", "gd", require("fzf-lua").lsp_definitions, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
-        vim.keymap.set("n", "grr", require("fzf-lua").lsp_references, vim.tbl_extend("force", opts, { desc = "Go to references" })) -- Override default in Neovim 0.11
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "Show documentation for under cursor" }))
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to implementation" }))
-        vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, vim.tbl_extend("force", opts, { desc = "Show signature information" }))
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol under cursor" }))
+        vim.keymap.set(
+          "n",
+          "gD",
+          vim.lsp.buf.declaration,
+          vim.tbl_extend("force", opts, { desc = "Go to declaration" })
+        )
+        vim.keymap.set(
+          "n",
+          "gd",
+          require("fzf-lua").lsp_definitions,
+          vim.tbl_extend("force", opts, { desc = "Go to definition" })
+        )
+        vim.keymap.set(
+          "n",
+          "grr",
+          require("fzf-lua").lsp_references,
+          vim.tbl_extend("force", opts, { desc = "Go to references" })
+        ) -- Override default in Neovim 0.11
+        vim.keymap.set(
+          "n",
+          "K",
+          vim.lsp.buf.hover,
+          vim.tbl_extend("force", opts, { desc = "Show documentation for under cursor" })
+        )
+        vim.keymap.set(
+          "n",
+          "gi",
+          vim.lsp.buf.implementation,
+          vim.tbl_extend("force", opts, { desc = "Go to implementation" })
+        )
+        vim.keymap.set(
+          "n",
+          "<C-k>",
+          vim.lsp.buf.signature_help,
+          vim.tbl_extend("force", opts, { desc = "Show signature information" })
+        )
+        vim.keymap.set(
+          "n",
+          "<leader>rn",
+          vim.lsp.buf.rename,
+          vim.tbl_extend("force", opts, { desc = "Rename symbol under cursor" })
+        )
       end,
     }) -- LspAttach config.
 
@@ -177,9 +212,9 @@ return {
             "meson.build",
             "meson_options.txt",
             "build.ninja"
-          )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname) or vim.fs.dirname(
-            vim.fs.find(".git", { path = fname, upward = true })[1]
-          )
+          )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
+            fname
+          ) or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
         end,
         root_markers = {
           "compile_commands.json",
