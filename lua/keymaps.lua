@@ -72,6 +72,7 @@ vim.keymap.set(
   "<leader>yrp", -- "Yank Real Path"
   function()
     vim.fn.setreg("+", vim.uv.fs_realpath(vim.fn.expand("%")))
+    vim.notify("Yanked realpath!")
   end,
   vim.tbl_extend("force", opts, { desc = "Yank current file's full resolved path into system clipboard." })
 )
@@ -79,14 +80,20 @@ vim.keymap.set(
 vim.keymap.set(
   "n",
   "<leader>ywp", -- "Yank Workspace-relative Path"
-  ':let @+=expand("%")<CR>',
+  function()
+    vim.fn.setreg("+", vim.fn.expand("%"))
+    vim.notify("Yanked workspace-relative path!")
+  end,
   vim.tbl_extend("force", opts, { desc = "Yank current file's workspace-relative path into system clipboard." })
 )
 
 vim.keymap.set(
   "n",
   "<leader>yfn", -- "Yank File Name"
-  ':let @+=expand("%:t")<CR>',
+  function()
+    vim.fn.setreg("+", vim.fn.expand("%:t"))
+    vim.notify("Yanked filename!")
+  end,
   vim.tbl_extend("force", opts, { desc = "Yank current filename into system clipboard." })
 )
 
