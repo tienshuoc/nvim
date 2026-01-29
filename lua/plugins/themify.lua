@@ -3,6 +3,10 @@ return {
 
   lazy = false,
   priority = 999,
+  cond = function()
+    -- Don't load themify for large files
+    return not vim.g.is_large_file_on_startup
+  end,
   dependencies = { "ibhagwan/fzf-lua" },
   keys = {
     {
