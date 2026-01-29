@@ -1,3 +1,0 @@
-return {
-  "NTBBloodbath/sweetie.nvim",
-}

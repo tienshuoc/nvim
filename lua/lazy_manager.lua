@@ -42,7 +42,6 @@ elseif vim.g.is_large_file_on_startup then
   })
 else
   require("lazy").setup({
-    { import = "plugins.colorschemes" },
     { import = "plugins.git" },
     { import = "plugins.ftplugins" },
     { import = "plugins" },

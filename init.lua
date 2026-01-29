@@ -103,7 +103,5 @@ else
     vim.b.large_file_checked = true
     vim.b.large_file = true
     require("utils.handle_large_file").apply_large_file_settings()
-  else
-    require("manage_colorscheme") -- Load colorscheme manager only when colorscheme plugins are loaded.
   end
 end
