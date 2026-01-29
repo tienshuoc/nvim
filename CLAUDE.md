@@ -11,13 +11,13 @@ This is a comprehensive Neovim configuration that supports both standalone Neovi
 ### Core Bootstrap Process
 1. **init.lua**: Entry point that detects environment (VSCode vs standalone) and handles large file optimization
 2. **lazy_manager.lua**: Configures Lazy.nvim plugin manager with different plugin sets based on environment
-3. **manage_colorscheme.lua**: Dynamic colorscheme management system that persists theme selection
+3. **themify.nvim**: Colorscheme manager with persistence and FzfLua integration for fuzzy finding with live preview
 
 ### Plugin Organization
 - **lua/plugins/**: Individual plugin configurations (one plugin per file)
 - **lua/plugins/lsp/**: LSP-related plugins (lspconfig, mason, conform, lint)
 - **lua/plugins/git/**: Git integration plugins (fugitive, gitsigns, neogit)
-- **lua/plugins/colorschemes/**: Theme plugins
+- **lua/plugins/themify.lua**: Colorscheme manager with 25+ themes, FzfLua integration for live preview
 - **lua/plugins/dbg/**: DAP debugging configurations
 
 ### Environment-Specific Loading
@@ -30,14 +30,19 @@ The configuration uses conditional loading based on:
 Files exceeding the configured threshold (default: 10MB) automatically trigger performance optimizations:
 - Size threshold is easily configurable in `lua/utils/handle_large_file.lua`
 - All large file detection and handling logic centralized in the `handle_large_file` module
-- Automatically disables heavy plugins (treesitter, LSP, completion, git integrations, etc.)
+- Automatically disables heavy plugins (treesitter, LSP, completion, git integrations, themify, etc.)
 - Disables performance-intensive features (swap, undo, syntax highlighting, folding)
 - Detection works for both startup files and files opened during the session
 
 ### Colorscheme Management
-- Current theme stored in `colorscheme_value` file
-- `manage_colorscheme.lua` handles persistence across sessions
-- Multiple theme options available in `lua/plugins/colorschemes/`
+- Managed by **Themify.nvim** plugin with automatic persistence
+- 25+ colorschemes configured in `lua/plugins/themify.lua`
+- Custom FzfLua integration provides fuzzy finding with live preview
+- Keybindings:
+  - `<leader>fc`: FzfLua fuzzy finder with live preview (as you navigate, colorschemes apply instantly)
+  - `<leader>T`: Themify's built-in colorscheme switcher
+- Each colorscheme's `before` hooks ensure proper setup (vim.g settings, require().setup() calls)
+- Automatically disabled for large files to maintain performance
 
 ## Key Configuration Files
 
