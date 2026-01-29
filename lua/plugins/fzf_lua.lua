@@ -35,12 +35,6 @@ return {
       { noremap = true, desc = "Search help documentation." },
     },
     {
-      "<leader>fc",
-      "<cmd> FzfLua colorschemes<cr>",
-      mode = "n",
-      { noremap = true, desc = "Fuzzy search and apply colorschemes." },
-    },
-    {
       "<leader>fj",
       "<cmd> FzfLua jumps<cr>",
       mode = "n",
