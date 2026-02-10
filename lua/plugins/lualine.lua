@@ -14,7 +14,7 @@ return {
           "searchcount",
           "filename",
           {
-            "diagnosticss",
+            "diagnostics",
             sources = { "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic" }, -- Displays diagnostics for the defined severity types
             sections = { "error", "warn", "info", "hint" },
 
