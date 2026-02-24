@@ -3,8 +3,8 @@ return {
   keys = {
     {
       "<leader>ld",
-      "<Cmd>Linediff<CR>",
-      mode = "n",
+      ":Linediff<CR>",
+      mode = { "n", "v" },
       { noremap = true, silent = true, desc = "Linediff" },
     },
   },
