@@ -101,6 +101,7 @@ vim.keymap.set("n", "<leader>yln", function() -- "Yank Line Number"
   local relative_path = vim.fn.expand("%")
   local line_number = vim.fn.line(".")
   vim.fn.setreg("+", string.format("%s:%d", relative_path, line_number))
+  vim.notify("Yanked line number!")
 end, {
   desc = "Yank relative file path with line number to clipboard (format: path:line)",
 })
