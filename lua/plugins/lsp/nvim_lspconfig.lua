@@ -238,6 +238,9 @@ return {
       rust_analyzer = {
         -- Note: do not set init_options for this LS config, it will be automatically populated by the contents of settings["rust-analyzer"]
       },
+      mlir_lsp_server = {
+        cmd = { "mlir-lsp-server" }, -- Replace with full path if not in PATH, e.g. "bazel-bin/.../mlir-lsp-server"
+      },
     }
 
     -- Setup all language servers with shared configuration
