@@ -252,5 +252,8 @@ return {
       }, config)
       vim.lsp.config(server, server_opts)
     end
+
+    -- Servers not managed by mason-lspconfig must be explicitly enabled.
+    vim.lsp.enable("mlir_lsp_server")
   end, -- config function()
 }
