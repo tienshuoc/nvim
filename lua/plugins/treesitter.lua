@@ -1,21 +1,16 @@
 return {
   -- Better syntax highlighting
   "nvim-treesitter/nvim-treesitter",
-  event = {
-    -- Lazy load when buffer open existing or non-existent file.
-    "BufReadPre",
-    "BufNewFile",
-  },
+  lazy = false, -- The plugin currently doesn't support lazy-loading.
   dependencies = {
     "OXY2DEV/markview.nvim",
     "JoosepAlviste/nvim-ts-context-commentstring",
-    "nvim-treesitter/nvim-treesitter-textobjects",
   },
   build = function()
     require("nvim-treesitter.install").update({ with_sync = false })()
   end,
   config = function()
-    require("nvim-treesitter.configs").setup({
+    require("nvim-treesitter").setup({
       ensure_installed = {
         "typescript",
         "cpp",
