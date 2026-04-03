@@ -15,7 +15,7 @@ return {
         "typescript",
         "cpp",
         "json",
-        "jsonc",
+        "jsonnet",
         "markdown",
         "gitcommit",
         "bash",
