@@ -1,16 +1,11 @@
 return {
   -- Better syntax highlighting
   "nvim-treesitter/nvim-treesitter",
+  branch = "master",
   lazy = false, -- The plugin currently doesn't support lazy-loading.
-  dependencies = {
-    "OXY2DEV/markview.nvim",
-    "JoosepAlviste/nvim-ts-context-commentstring",
-  },
-  build = function()
-    require("nvim-treesitter.install").update({ with_sync = false })()
-  end,
+  build = ":TSUpdate",
   config = function()
-    require("nvim-treesitter").setup({
+    require("nvim-treesitter.configs").setup({
       ensure_installed = {
         "typescript",
         "cpp",
@@ -25,15 +20,8 @@ return {
         "haskell",
         "html",
       },
-      ignore_install = { "mlir" }, -- Tries to complain that you don't have "treesitter-cli", and installing it gives GLIBC problems. Back off for MLIR.
-      sync_install = false,
-      auto_install = false,
-      highlight = {
-        enable = true,
-      },
-      indent = {
-        enable = true,
-      },
+      highlight = { enable = true },
+      indent = { enable = true },
       incremental_selection = {
         enable = true,
         keymaps = {
