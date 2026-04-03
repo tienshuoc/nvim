@@ -6,6 +6,14 @@ return {
     "JoosepAlviste/nvim-ts-context-commentstring",
   },
   config = function()
+    -- Disabling the default autocmd for ts_context_commentstring is required.
+    -- Without this, ts_context_commentstring creates its own autocmd that runs on BufEnter
+    -- and can conflict with Comment.nvim's pre_hook. Both plugins try to update the
+    -- commentstring, causing race conditions or incorrect behavior.
+    -- See: https://github.com/JoosepAlviste/nvim-ts-context-commentstring/wiki/Integrations#plugins-with-a-pre-comment-hook
+    require("ts_context_commentstring").setup({
+      enable_autocmd = false,
+    })
     require("Comment").setup({
 
       ---Add a space b/w comment and the line
