@@ -2,9 +2,6 @@
 return {
   "lukas-reineke/indent-blankline.nvim",
   main = "ibl",
-  dependencies = {
-    "nvim-treesitter/nvim-treesitter", -- Enabling "scope" requires this.
-  },
   event = "VeryLazy",
   opts = {
     indent = {
