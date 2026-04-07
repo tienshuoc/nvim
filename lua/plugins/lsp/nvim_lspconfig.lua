@@ -58,7 +58,6 @@ return {
   dependencies = {
     "p00f/clangd_extensions.nvim",
     "hrsh7th/cmp-nvim-lsp",
-    { "folke/neodev.nvim", opts = {} }, -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
   },
   config = function()
     -- Show diagnostics under the cursor when holding position
