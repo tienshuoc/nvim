@@ -59,10 +59,6 @@ return {
       },
       {
         "xiantang/darcula-dark.nvim",
-        -- Themify currently doesn't support dependencies, try using this without.
-        -- dependencies = {
-        --   "nvim-treesitter/nvim-treesitter",
-        -- },
       },
       {
         "Mofiqul/dracula.nvim", -- dracula, dracula-soft
@@ -123,9 +119,6 @@ return {
       },
       {
         "sainnhe/edge", -- Edge Dark (default, aura, neon), Edge Light
-        -- dependencies = {
-        --   "nvim-treesitter/nvim-treesitter",
-        -- },
         before = function()
           vim.g.edge_dim_inactive_windows = 1
           vim.g.edge_enable_italic = 1

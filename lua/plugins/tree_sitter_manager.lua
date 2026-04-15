@@ -4,6 +4,33 @@ return {
   --  * tree-sitter CLI
   "romus204/tree-sitter-manager.nvim",
   config = function()
-    require("tree-sitter-manager").setup()
+    require("tree-sitter-manager").setup({
+      ensure_installed = {
+        "c",
+        "cpp",
+        "bash",
+        "lua",
+        "python",
+        "diff",
+        "dockerfile",
+        "doxygen",
+        "git_config",
+        "git_rebase",
+        "gitattributes",
+        "gitcommit",
+        "gitignore",
+        "jsonnet",
+        "lua",
+        "llvm",
+        "mlir",
+        "markdown",
+        "markdown_inline",
+        "regex",
+        "rust",
+        "tablegenf",
+        "vimdoc",
+        "vim",
+      },
+    })
   end,
 }

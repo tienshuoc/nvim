@@ -8,6 +8,7 @@ return {
     "ibhagwan/fzf-lua",
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
+    "nvim-treesitter/nvim-treesitter", -- marking treesitter as dependency for html syntax
   },
   opts = {
     -- configuration goes here
