@@ -20,36 +20,64 @@ function OpenDiagnosticIfNoFloat()
   })
 end
 
--- Goto definition often takes us to files under the cache directory, we want to resolve symlinks first before making the jump.
--- A wrapper around the default LSP jump handler to resolve symlinks first.
+-- Bazel's compile_commands.json records the execroot as the compilation
+-- directory, so clangd returns file URIs that point into the Bazel cache
+-- (e.g. /scratch/.../execroot/_main/arc/foo.cpp) rather than the real
+-- workspace paths. The execroot entries are symlinks back to the workspace,
+-- so resolving them gives a canonical path the user recognises.
+--
+-- Two wrappers apply this resolution at different points in the LSP pipeline:
+--
+--   show_document      – called when jumping to a single location (gd, gD,
+--                        gi). Rewrites location.uri before Neovim opens the
+--                        buffer.
+--
+--   locations_to_items – called by fzf-lua (and the quickfix machinery) to
+--                        build picker / location-list entries for results that
+--                        return multiple locations (grr, etc.). Rewrites
+--                        item.filename so the list shows real paths.
+--
+-- Note: external dependencies (e.g. LLVM headers fetched by Bazel) live as
+-- real files in the cache with no symlink back to a nicer path, so they will
+-- still appear with their full cache path.
+--
+-- Both wrappers are guarded so they are installed only once even if this
+-- file is re-sourced.
+
+local function resolve_path(path)
+  -- fs_realpath resolves all symlink components and returns the canonical
+  -- path, or nil on failure (e.g. file does not exist). Fall back to the
+  -- original path so callers always get a usable string.
+  return vim.uv.fs_realpath(path) or path
+end
+
 if not vim.g._lsp_jump_handler_wrapped then
-  local original_jump_handler = vim.lsp.util.show_document
+  local original_show_document = vim.lsp.util.show_document
 
   vim.lsp.util.show_document = function(location, ...)
-    -- Check if the location is valid and has a URI
     if location and location.uri then
       local path = vim.uri_to_fname(location.uri)
-
-      -- Use the modern, performant way to resolve symlinks.
-      -- It returns (realpath, err), so we capture both for robust error handling.
-      local realpath, err = vim.uv.fs_realpath(path)
-
-      -- If resolution was successful and the path is different, update the location.
-      if not err and realpath and realpath ~= path then
+      local realpath = resolve_path(path)
+      if realpath ~= path then
         location.uri = vim.uri_from_fname(realpath)
-      elseif err then
-        -- Optional: Notify the user if path resolution fails for some reason.
-        -- This can be helpful for debugging unexpected behavior.
-        vim.notify("LSP jump: Could not resolve path: " .. err.message, vim.log.levels.ERROR)
-      else
-        vim.notify("Unable to jump using realpath.")
       end
     end
-
-    -- Call the original jump handler with the (potentially modified) location
-    original_jump_handler(location, ...)
+    return original_show_document(location, ...)
   end
-  vim.g._lsp_jump_handler_wrapped = true -- set guard
+
+  local original_locations_to_items = vim.lsp.util.locations_to_items
+
+  vim.lsp.util.locations_to_items = function(locations, offset_encoding)
+    local items = original_locations_to_items(locations, offset_encoding)
+    for _, item in ipairs(items) do
+      if item.filename then
+        item.filename = resolve_path(item.filename)
+      end
+    end
+    return items
+  end
+
+  vim.g._lsp_jump_handler_wrapped = true
 end
 
 return {
@@ -191,49 +219,6 @@ return {
       },
       bashls = {},
       -- ts_ls = {},  -- Uncomment to enable TypeScript language server
-      clangd = {
-        -- See `nvim/lua/plugins/lsp/clangd_config.yaml` for configurations.
-        cmd = {
-          "clangd",
-          "--background-index",
-          "--clang-tidy",
-          "--header-insertion=iwyu",
-          "--completion-style=detailed",
-          "--function-arg-placeholders",
-          "--fallback-style=llvm",
-        },
-        root_dir = function(fname)
-          return require("lspconfig.util").root_pattern(
-            "Makefile",
-            "configure.ac",
-            "configure.in",
-            "config.h.in",
-            "meson.build",
-            "meson_options.txt",
-            "build.ninja"
-          )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
-            fname
-          ) or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
-        end,
-        root_markers = {
-          "compile_commands.json",
-          "compile_flags.txt",
-          "configure.ac", -- AutoTools
-          "Makefile",
-          "configure.ac",
-          "configure.in",
-          "config.h.in",
-          "meson.build",
-          "meson_options.txt",
-          "build.ninja",
-          ".git",
-        },
-        init_options = {
-          usePlaceholders = true,
-          completeUnimported = true,
-          clangdFileStatus = true,
-        },
-      },
       rust_analyzer = {
         -- Note: do not set init_options for this LS config, it will be automatically populated by the contents of settings["rust-analyzer"]
       },
@@ -254,5 +239,60 @@ return {
 
     -- Servers not managed by mason-lspconfig must be explicitly enabled.
     vim.lsp.enable("mlir_lsp_server")
+
+    -- clangd is started via a FileType autocmd rather than the generic
+    -- vim.lsp.config loop above. This lets us compute --compile-commands-dir
+    -- at runtime from the actual project root instead of hardcoding a path.
+    --
+    -- Background: Bazel's compile_commands.json records the Bazel execroot as
+    -- the compilation directory (e.g. /scratch/.../execroot/_main/). Without
+    -- --compile-commands-dir, clangd either fails to locate compile_commands.json
+    -- or builds its background index using those execroot paths. The editor
+    -- opens files at their real workspace paths, so the index entries never
+    -- match and cross-file "find references" only returns results from already-
+    -- open buffers. Passing --compile-commands-dir with the real workspace root
+    -- anchors clangd to the right compile_commands.json and ensures path
+    -- consistency between the index and what the editor reports.
+    --
+    -- See lua/plugins/lsp/clangd_config.yaml for global clangd configuration
+    -- (softlink to ~/.config/clangd/config.yaml).
+    vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("clangd_start", { clear = true }),
+      pattern = { "c", "cpp", "objc", "objcpp", "cuda" },
+      callback = function()
+        -- Walk up from the current buffer's path to find the project root.
+        -- compile_commands.json is checked first so Bazel/CMake projects are
+        -- rooted at the build database, not at .git (which may be higher up).
+        local root = vim.fs.root(0, { "compile_commands.json", ".clangd", ".git" })
+        if not root then return end  -- not a recognised C/C++ project, skip
+
+        local cmd = {
+          "clangd",
+          "--background-index",  -- build a persistent cross-file symbol index
+          "--clang-tidy",        -- surface clang-tidy diagnostics inline
+          "--header-insertion=iwyu",
+          "--completion-style=detailed",
+          "--function-arg-placeholders",
+          "--fallback-style=llvm",
+        }
+
+        -- Only add --compile-commands-dir when compile_commands.json is
+        -- present at the root. For projects that use .clangd or .git as their
+        -- only root marker this flag would be wrong, so we skip it there.
+        if vim.uv.fs_stat(root .. "/compile_commands.json") then
+          table.insert(cmd, "--compile-commands-dir=" .. root)
+        end
+
+        -- Buffers that resolve to the same root_dir will share a single clangd
+        -- process — vim.lsp.start reuses an existing client by default when
+        -- both name and root_dir match.
+        vim.lsp.start({
+          name = "clangd",
+          cmd = cmd,
+          root_dir = root,
+          capabilities = capabilities,
+        })
+      end,
+    })
   end, -- config function()
 }
