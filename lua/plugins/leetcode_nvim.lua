@@ -3,7 +3,6 @@ return {
   build = ":TSUpdate html", -- if you have `nvim-treesitter` installed
   cmd = "Leet",
   lazy = true,
-  -- build = ":TSUpdate html", -- if you have `nvim-treesitter` installed
   dependencies = {
     "ibhagwan/fzf-lua",
     "nvim-lua/plenary.nvim",
