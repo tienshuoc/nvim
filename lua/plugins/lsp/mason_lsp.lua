@@ -17,7 +17,11 @@ return {
         "starpls", -- Bazel LSP
         "rust_analyzer",
       },
-      automatic_enable = true,
+      -- clangd is excluded here and started manually via a FileType autocmd
+      -- in nvim_lspconfig.lua so --compile-commands-dir can be set dynamically.
+      automatic_enable = {
+        exclude = { "clangd" },
+      },
     })
   end,
 }
