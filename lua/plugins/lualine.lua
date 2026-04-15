@@ -45,6 +45,8 @@ return {
             },
             -- List of LSP names to ignore (e.g., `null-ls`):
             ignore_lsp = {},
+            -- Display the LSP name
+            show_name = true,
           },
           "filetype",
           "encoding",
