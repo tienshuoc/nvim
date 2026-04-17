@@ -55,6 +55,7 @@ vim.opt.smartcase = true -- Automatiaclly switch search to case-sensitive when s
 vim.opt.shortmess:append({ S = true }) -- Don't show search match counts. Rely on lualine plugin s/t display in a file-by-file window and don't have a max limit.
 
 ------------------------------- Text Rendering Options ----------------------------
+require("utils.treesitter_highlight") -- Activate treesitter highlighting (parsers managed by tree-sitter-manager)
 vim.opt.encoding = "utf-8"
 vim.opt.linebreak = true -- Avoid wrapping a line in the middle of a word.
 vim.opt.scrolloff = 5 -- The number of screen lines to keep above and below the cursor unless hitting EOF (a large value causes the cursor to stay in the middle line when possible.

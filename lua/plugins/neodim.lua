@@ -19,10 +19,6 @@ return {
         "[nN]ot [rR]ead",
       },
       priority = 128,
-      -- Prevent TSOverride running on nvim-notify windows, which can produce
-      -- "Invalid 'col': out of range" errors when the notification text is
-      -- shorter than the column neodim computes from the treesitter range.
-      disable = { "notify" },
     })
   end,
 }
