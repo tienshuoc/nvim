@@ -97,16 +97,9 @@ return {
     })
     -- These have to be setup beforehand in this order.
 
-    vim.lsp.set_log_level("off") -- Disable log level to prevent generating large log files. Set to `vim.lsp.set_log_level("debug")` if debugging is needed.
+    vim.lsp.log.set_level("off") -- Disable log level to prevent generating large log files. Set to `vim.lsp.log.set_level("debug")` if debugging is needed.
     -- Enable inlay hints.
     vim.lsp.inlay_hint.enable(true)
-
-    -- UI customization
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-      border = "rounded",
-    })
-    vim.lsp.handlers["textDocument/signatureHelp"] =
-      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
     -- Setup language servers.
     -- local lspconfig = vim.lsp.config("*")
@@ -148,24 +141,18 @@ return {
           require("fzf-lua").lsp_references,
           vim.tbl_extend("force", opts, { desc = "Go to references" })
         ) -- Override default in Neovim 0.11
-        vim.keymap.set(
-          "n",
-          "K",
-          vim.lsp.buf.hover,
-          vim.tbl_extend("force", opts, { desc = "Show documentation for under cursor" })
-        )
+        vim.keymap.set("n", "K", function()
+          vim.lsp.buf.hover({ border = "rounded" })
+        end, vim.tbl_extend("force", opts, { desc = "Show documentation for under cursor" }))
         vim.keymap.set(
           "n",
           "gi",
           vim.lsp.buf.implementation,
           vim.tbl_extend("force", opts, { desc = "Go to implementation" })
         )
-        vim.keymap.set(
-          "n",
-          "<C-k>",
-          vim.lsp.buf.signature_help,
-          vim.tbl_extend("force", opts, { desc = "Show signature information" })
-        )
+        vim.keymap.set("n", "<C-k>", function()
+          vim.lsp.buf.signature_help({ border = "rounded" })
+        end, vim.tbl_extend("force", opts, { desc = "Show signature information" }))
         vim.keymap.set(
           "n",
           "<leader>rn",
