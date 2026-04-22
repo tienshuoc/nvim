@@ -89,6 +89,16 @@ vim.keymap.set(
 
 vim.keymap.set(
   "n",
+  "<leader>yfrd", -- "Yank File Realpath Directory"
+  function()
+    vim.fn.setreg("+", vim.fn.fnamemodify(vim.uv.fs_realpath(vim.fn.expand("%")), ":h"))
+    vim.notify("Yanked realpath directory!")
+  end,
+  vim.tbl_extend("force", opts, { desc = "Yank current file's resolved directory path into system clipboard." })
+)
+
+vim.keymap.set(
+  "n",
   "<leader>yfn", -- "Yank File Name"
   function()
     vim.fn.setreg("+", vim.fn.expand("%:t"))
