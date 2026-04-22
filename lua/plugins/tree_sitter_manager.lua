@@ -27,7 +27,7 @@ return {
         "markdown_inline",
         "regex",
         "rust",
-        "tablegenf",
+        "tablegen",
         "vimdoc",
         "vim",
       },
