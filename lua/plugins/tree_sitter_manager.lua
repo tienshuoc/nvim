@@ -19,6 +19,7 @@ return {
         "gitattributes",
         "gitcommit",
         "gitignore",
+        "html",
         "jsonnet",
         "lua",
         "llvm",
