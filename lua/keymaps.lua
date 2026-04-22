@@ -106,6 +106,15 @@ end, {
   desc = "Yank relative file path with line number to clipboard (format: path:line)",
 })
 
+vim.keymap.set("n", "<leader>yrln", function() -- "Yank Line Number (w/ realpath)"
+  local real_path = vim.uv.fs_realpath(vim.fn.expand("%"))
+  local line_number = vim.fn.line(".")
+  vim.fn.setreg("+", string.format("%s:%d", real_path, line_number))
+  vim.notify("Yanked realpath line number!")
+end, {
+  desc = "Yank real path with line number to clipboard (format: path:line)",
+})
+
 vim.keymap.set(
   { "n", "v" },
   "<leader>ccl",
