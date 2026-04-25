@@ -19,6 +19,7 @@ return {
             key = "d",
           },
         },
+        project = { enable = true, limit = 8, icon = " ", label = " Projects", action = "FzfLua files cwd=" },
       },
     })
   end,
