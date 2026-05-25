@@ -52,7 +52,7 @@ return {
         "scottmckendry/cyberdream.nvim",
         before = function()
           require("cyberdream").setup({
-            transparent = true,
+            transparent = false,
             italic_comments = true,
           })
         end,
