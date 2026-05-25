@@ -47,7 +47,6 @@ else
     { import = "plugins" },
     -- Debugger plugins.
     { import = "plugins.dbg" },
-    { import = "plugins.dbg.lang" },
     -- Lsp plugins.
     { import = "plugins.lsp" },
   }, {
