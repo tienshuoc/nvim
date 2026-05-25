@@ -71,8 +71,11 @@ return {
       {
         "eldritch-theme/eldritch.nvim",
       },
-      {
+{
         "0xstepit/flow.nvim",
+        before = function()
+          require("flow").setup({})
+        end,
       },
       {
         "savq/melange-nvim",
