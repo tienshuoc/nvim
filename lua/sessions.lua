@@ -6,7 +6,7 @@ local M = {}
 -- Configuration
 M.config = {
   session_dir = vim.fn.expand("~"), -- Session directory (default: home directory)
-  session_count = 6, -- Number of session slots
+  session_count = 9, -- Number of session slots
   session_prefix = "s", -- Session file prefix
   session_suffix = ".vim", -- Session file suffix
 }
@@ -14,13 +14,8 @@ M.config = {
 -- Set up session keymaps
 function M.setup()
   for i = 1, M.config.session_count do
-    local session_path = string.format(
-      "%s/%s%d%s",
-      M.config.session_dir,
-      M.config.session_prefix,
-      i,
-      M.config.session_suffix
-    )
+    local session_path =
+      string.format("%s/%s%d%s", M.config.session_dir, M.config.session_prefix, i, M.config.session_suffix)
 
     -- Save session keymap
     vim.keymap.set("n", "<leader>mks" .. i, function()
