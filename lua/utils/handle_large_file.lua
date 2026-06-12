@@ -1,127 +1,133 @@
--- Don't create swapfiles for *.log, *.mlir files.
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.log", "*.mlir", "*.log.gz" },
-  callback = function()
-    vim.opt_local.swapfile = false
-  end,
-})
-
 -- [[ Configure for Large Files ]]
--- This module centralizes all large file handling logic.
--- Files larger than the configured threshold will have performance optimizations applied.
+-- Settings for large files that faster.nvim does NOT cover. faster.nvim
+-- (lua/plugins/faster.lua) owns per-buffer feature disabling and restoration:
+-- syntax, filetype, treesitter, LSP, matchparen, illuminate, indent_blankline,
+-- lualine, mini_clue, vimopts (swapfile, folds, undo, list, spell) + custom
+-- gitsigns/colorizer/cmp features.
+--
+-- This module owns the complement:
+--   * startup detection: vim.g.is_large_file_on_startup drives minimal plugin
+--     loading in lua/lazy_manager.lua
+--   * buffer-local options faster.nvim misses (wrap, synmaxcol, cursorline, ...)
+--   * global perf options (lazyredraw), restored when the last large-file
+--     buffer is deleted
 
 local M = {}
 
--- Configuration
+-- Configuration. faster.nvim's bigfile.filesize derives from size_threshold --
+-- change it here only.
 M.config = {
   size_threshold = 10 * 1024 * 1024, -- 10MB (easily modifiable)
 }
 
--- List of plugins that are disabled for large files
--- These plugins have heavy performance impact and are skipped during large file loading
-M.disabled_plugins = {
-  "comment",
-  "colorizer",
-  "dashboard",
-  "fidget",
-  "flash",
-  "gitsigns",
-  "indent_blankline",
-  "leetcode_nvim",
-  "lualine",
-  "marks",
-  "mini_ai",
-  "mini_clue",
-  "mini_pairs",
-  "neodim",
-  "neoscroll",
-  "nvim_autopairs",
-  "nvim_cmp",
-  "nvim_neo",
-  "nvim_scrollbar",
-  "overseer",
-  "rainbow_delimiters",
-  "treesitter",
-  "treesitter_textobjects",
-  "vim_illuminate",
-  "yanky",
-  "codecompanion",
-}
-
 -- Check if a file exceeds the size threshold
--- @param filepath string: Absolute path to the file
+-- @param filepath string: Path to the file
 -- @return boolean: true if file is large, false otherwise
 function M.is_large_file(filepath)
   if not filepath or filepath == "" then
     return false
   end
 
-  local stat = vim.loop.fs_stat(filepath)
-  return stat and stat.size > M.config.size_threshold
+  local stat = vim.uv.fs_stat(filepath)
+  return stat ~= nil and stat.size > M.config.size_threshold
 end
 
--- Apply performance-oriented settings for large files
+-- lazyredraw has no buffer-local form; save it once on the first large file
+-- and restore when the last large-file buffer is deleted. incsearch is left
+-- alone: its built-in half-second match timeout bounds the cost, and turning
+-- it off globally would also degrade search in normal buffers.
+local saved_globals = nil
+
+local function disable_global_opts()
+  if saved_globals then
+    return
+  end
+  saved_globals = { lazyredraw = vim.o.lazyredraw }
+  vim.o.lazyredraw = true
+end
+
+local function restore_globals_if_no_large_buffers()
+  if not saved_globals then
+    return
+  end
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) and vim.b[buf].large_file then
+      return
+    end
+  end
+  vim.o.lazyredraw = saved_globals.lazyredraw
+  saved_globals = nil
+end
+
+-- Buffer-local settings faster.nvim doesn't handle. Long lines are the main
+-- redraw cost: no wrap, cap syntax column, no per-char features.
 function M.apply_large_file_settings()
-  -- Use buffer-local settings so this only affects the current large file
-  vim.opt_local.swapfile = false
-  vim.opt_local.undofile = false
-  vim.opt_local.spell = false
   vim.opt_local.relativenumber = false
   vim.opt_local.cursorline = false
   vim.opt_local.cursorcolumn = false
-  vim.opt_local.foldmethod = "manual"
-  vim.opt_local.foldenable = false
+  vim.opt_local.wrap = false
+  vim.opt_local.synmaxcol = 256
+  vim.opt_local.colorcolumn = ""
+  vim.opt_local.conceallevel = 0
 
-  -- These commands disable the syntax and filetype detection systems.
-  vim.cmd("syntax off")
-  vim.cmd("filetype off")
-
-  vim.notify("Large file mode: Disabled swap, undo, syntax, and filetype.", vim.log.levels.WARN)
+  disable_global_opts()
 end
 
 -- Set up large file detection for both startup and runtime
 function M.setup()
-  -- Initialize the global flag
+  -- is_large_file_on_startup drives minimal-plugin loading in lua/lazy_manager.lua
+  -- (which happens before any autocmd can fire). Any large file among the args
+  -- triggers it.
   vim.g.is_large_file_on_startup = false
-
-  -- Check if a large file was passed on startup
-  local startup_file = vim.fn.argv()[1]
-  if startup_file and vim.fn.filereadable(vim.fn.expand(startup_file)) == 1 then
-    local filepath = vim.fn.fnamemodify(startup_file, ":p")
-    if M.is_large_file(filepath) then
+  for _, arg in ipairs(vim.fn.argv()) do
+    if vim.fn.filereadable(vim.fn.expand(arg)) == 1 and M.is_large_file(vim.fn.fnamemodify(arg, ":p")) then
       vim.g.is_large_file_on_startup = true
+      break
     end
   end
 
-  -- Set up autocommand to handle large files opened during the session
-  -- Note: This only applies buffer-local settings. The argv check above is still
-  -- needed to control plugin loading at startup (which happens before autocmds fire).
+  M.setup_apply_autocmd()
+end
+
+-- BufReadPre fires for startup arg files too (this is registered from init.lua
+-- before the first file is read), so this single autocmd covers both the
+-- startup and mid-session paths.
+function M.setup_apply_autocmd()
   local group = vim.api.nvim_create_augroup("LargeFileHandler", { clear = true })
+
   vim.api.nvim_create_autocmd({ "BufReadPre", "FileReadPre" }, {
     group = group,
     pattern = "*",
     callback = function(args)
-      -- Skip if already checked this buffer
-      if vim.b[args.buf].large_file_checked then
+      if vim.bo[args.buf].buftype ~= "" then
         return
       end
 
-      local file = vim.fn.expand("<afile>")
-
-      -- Skip empty paths and special buffers
-      if file == "" or vim.bo[args.buf].buftype ~= "" then
+      -- Re-check on every (re)read so a file that grew past the threshold
+      -- since the first read is still caught.
+      if not M.is_large_file(vim.api.nvim_buf_get_name(args.buf)) then
         return
       end
 
-      -- Get file size (-2 for directory, -1 for non-existent/unreadable)
-      local size = vim.fn.getfsize(file)
+      local first_time = not vim.b[args.buf].large_file
+      vim.b[args.buf].large_file = true
+      M.apply_large_file_settings()
 
-      -- Mark buffer as checked to prevent duplicate checks
-      vim.b[args.buf].large_file_checked = true
+      if first_time then
+        vim.notify(
+          "Large file: applied option tweaks (heavy features disabled by faster.nvim).",
+          vim.log.levels.WARN
+        )
+      end
+    end,
+  })
 
-      if size > M.config.size_threshold then
-        vim.b[args.buf].large_file = true
-        M.apply_large_file_settings()
+  vim.api.nvim_create_autocmd("BufDelete", {
+    group = group,
+    callback = function(args)
+      if vim.b[args.buf].large_file then
+        -- The buffer is still listed during BufDelete; check after it's gone.
+        vim.schedule(restore_globals_if_no_large_buffers)
       end
     end,
   })

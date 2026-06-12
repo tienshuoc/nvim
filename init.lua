@@ -98,11 +98,4 @@ else
   require("keymaps")
   require("utils.auto_hlsearch").setup() -- Auto-toggle hlsearch on search keys
   require("sessions").setup() -- Set up session management keymaps
-
-  if vim.g.is_large_file_on_startup then
-    -- Mark the buffer as already checked to prevent duplicate handling by autocommand
-    vim.b.large_file_checked = true
-    vim.b.large_file = true
-    require("utils.handle_large_file").apply_large_file_settings()
-  end
 end

@@ -37,8 +37,15 @@ elseif vim.g.is_large_file_on_startup then
     string.format("Large file detected (>%.0fMB), loading minimal plugins.", threshold_mb),
     vim.log.levels.WARN
   )
+  -- Explicit allowlist: only these plugin specs load in large-file mode. A spec
+  -- file's declared dependencies still load automatically. Add an import line
+  -- here to make a plugin available when starting with a large file.
   require("lazy").setup({
-    { import = "plugins" }, -- Only base plugins, no colorschemes/git/lsp/debuggers
+    { import = "plugins.faster" }, -- per-buffer feature disabling for the large file
+    { import = "plugins.fzf_lua" }, -- grepping/navigation
+    { import = "plugins.marks" },
+    { import = "plugins.wrapping_paper" },
+    { import = "plugins.high_str" },
   })
 else
   require("lazy").setup({
