@@ -1,6 +1,10 @@
 return {
   "Pocco81/HighStr.nvim",
-
+  cmd = { "HSHighlight", "HSRmHighlight" },
+  keys = {
+    { "<leader>hl", ":<c-u>HSHighlight ", mode = "v", silent = false, desc = "HSHighlight" },
+    { "<leader>hr", ":<c-u>HSRmHighlight<CR>", mode = { "n", "v" }, silent = true, desc = "HSRmHighlight" },
+  },
   config = function()
     local high_str = require("high-str")
 
@@ -21,12 +25,5 @@ return {
         color_9 = { "#7d5c34", "smart" }, -- Fallow brown
       },
     })
-    vim.keymap.set("v", "<leader>hl", ":<c-u>HSHighlight ", { noremap = true, silent = false, desc = "HSHighlight" })
-    vim.keymap.set(
-      { "n", "v" },
-      "<leader>hr",
-      ":<c-u>HSRmHighlight<CR>",
-      { noremap = true, silent = true, desc = "HSRmHighlight" }
-    )
   end,
 }
