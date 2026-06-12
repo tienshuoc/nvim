@@ -96,6 +96,7 @@ else
   require("lazy_manager") -- This will set up and load all plugins
   require("options") -- Load default options first and override if large file in large file settings below.
   require("keymaps")
+  require("utils.auto_hlsearch").setup() -- Auto-toggle hlsearch on search keys
   require("sessions").setup() -- Set up session management keymaps
 
   if vim.g.is_large_file_on_startup then
