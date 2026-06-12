@@ -27,12 +27,32 @@ The configuration uses conditional loading based on:
 - Standard mode: Full plugin suite
 
 ### Large File Optimization
-Files exceeding the configured threshold (default: 10MB) automatically trigger performance optimizations:
-- Size threshold is easily configurable in `lua/utils/handle_large_file.lua`
-- All large file detection and handling logic centralized in the `handle_large_file` module
-- Automatically disables heavy plugins (treesitter, LSP, completion, git integrations, themify, etc.)
-- Disables performance-intensive features (swap, undo, syntax highlighting, folding)
-- Detection works for both startup files and files opened during the session
+Files exceeding the threshold (default 10MB; single source of truth:
+`handle_large_file.config.size_threshold`) are handled by two cooperating pieces:
+
+**faster.nvim** (`lua/plugins/faster.lua`) owns per-buffer feature disabling,
+with restore support: syntax, filetype, treesitter, LSP, matchparen, illuminate,
+indent_blankline, lualine, mini_clue, vimopts (swapfile, folds, undo, list,
+spell) plus custom gitsigns/colorizer/cmp features. Its `bigfile.filesize` is
+derived from the shared threshold. Re-enable a feature on demand with its
+`:FasterEnable*` command (e.g. `:FasterEnableLsp`).
+
+**`lua/utils/handle_large_file.lua`** owns the complement:
+- Startup detection: scans all CLI args; any large file sets
+  `vim.g.is_large_file_on_startup`, which makes `lua/lazy_manager.lua` load an
+  explicit plugin allowlist instead of the full suite. Add an import line there
+  to make a plugin available in large-file mode.
+- A single `BufReadPre` autocmd (covers both startup args and mid-session opens)
+  applies the buffer-local options faster.nvim misses: wrap, synmaxcol,
+  cursorline/cursorcolumn, relativenumber, colorcolumn, conceallevel. File size
+  is re-checked on every (re)read.
+- Global `lazyredraw` is enabled on the first large file and restored when the
+  last large-file buffer is deleted.
+
+Search options are deliberately left alone for grep-ability: `incsearch` stays
+on (its built-in half-second match timeout bounds the cost), and `hlsearch` is
+auto-managed globally by `lua/utils/auto_hlsearch.lua` (on for search keys,
+off on the next normal-mode key, via `vim.on_key`).
 
 ### Colorscheme Management
 - Managed by **Themify.nvim** plugin with automatic persistence
