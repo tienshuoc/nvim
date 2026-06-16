@@ -9,7 +9,7 @@ return {
       function()
         require("wrapping-paper").wrap_line()
       end,
-      { desc = "Fake wrap current line." },
+      desc = "Fake wrap current line.",
     },
   },
 }

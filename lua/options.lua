@@ -40,9 +40,20 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
--- Underline when in insert mode.
-vim.cmd("au InsertEnter * set cul")
-vim.cmd("au InsertLeave * set nocul")
+-- Highlight the cursor line while in insert mode. Buffer-local so it doesn't
+-- override the large-file setting (which disables cursorline for performance).
+vim.api.nvim_create_autocmd("InsertEnter", {
+  callback = function(args)
+    if not vim.b[args.buf].large_file then
+      vim.opt_local.cursorline = true
+    end
+  end,
+})
+vim.api.nvim_create_autocmd("InsertLeave", {
+  callback = function()
+    vim.opt_local.cursorline = false
+  end,
+})
 
 -- Allow backspacing over indentation, line breaks, and insertion start.
 vim.opt.backspace = "indent,eol,start"
@@ -64,10 +75,6 @@ vim.opt.relativenumber = false
 vim.opt.number = true
 vim.opt.termguicolors = true -- Enables 24-bit RGB color in the terminal UI.
 vim.opt.pumblend = 25 -- Enables pseudo-transparency for the popup menu.
-
-------------------------------- Highlight Groups ----------------------------
-vim.api.nvim_set_hl(0, "VirtualTextWarning", { fg = "#e7c664" })
-vim.api.nvim_set_hl(0, "VirtualTextError", { fg = "#fc5d7c" })
 
 ------------------------------- Miscellaneous Options -----------------------------
 vim.opt.history = 1000 -- Increase the undo limit.

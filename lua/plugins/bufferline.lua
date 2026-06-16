@@ -5,13 +5,22 @@ return {
   dependencies = "nvim-tree/nvim-web-devicons",
   event = { "BufReadPre", "BufNewFile" },
   keys = {
-    { "<leader>pp", "<Cmd>BufferLinePick<CR>", mode = "n", { noremap = true, silent = true } },
-    { "<leader>bc", "<Cmd>BufferLinePickClose<CR>", mode = "n", { noremap = true, silent = true } },
+    { "<leader>pp", "<Cmd>BufferLinePick<CR>", mode = "n", noremap = true, silent = true, desc = "Buffer Pick" },
+    {
+      "<leader>bc",
+      "<Cmd>BufferLinePickClose<CR>",
+      mode = "n",
+      noremap = true,
+      silent = true,
+      desc = "Buffer Pick + Close",
+    },
     {
       "<leader>bs",
       ":vs<CR><Cmd>BufferLinePick<CR>",
       mode = "n",
-      { desc = "Buffer Pick + Vertical Split", noremap = true, silent = true },
+      noremap = true,
+      silent = true,
+      desc = "Buffer Pick + Vertical Split",
     },
   },
   config = function()

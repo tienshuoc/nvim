@@ -15,7 +15,7 @@ return {
       function()
         vim.cmd("Themify")
       end,
-      { desc = "Toggle Themify." },
+      desc = "Toggle Themify.",
     },
     {
       "<leader>fc",
@@ -23,7 +23,7 @@ return {
       function()
         require("plugins.themify").fzf_colorscheme_picker()
       end,
-      { desc = "Fuzzy search colorschemes with live preview and persistence." },
+      desc = "Fuzzy search colorschemes with live preview and persistence.",
     },
   },
 
