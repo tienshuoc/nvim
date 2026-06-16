@@ -63,7 +63,6 @@ end
 -- redraw cost: no wrap, cap syntax column, no per-char features.
 function M.apply_large_file_settings()
   vim.opt_local.relativenumber = false
-  vim.opt_local.cursorline = false
   vim.opt_local.cursorcolumn = false
   vim.opt_local.wrap = false
   vim.opt_local.synmaxcol = 256

@@ -40,13 +40,10 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
--- Highlight the cursor line while in insert mode. Buffer-local so it doesn't
--- override the large-file setting (which disables cursorline for performance).
+-- Highlight the cursor line while in insert mode.
 vim.api.nvim_create_autocmd("InsertEnter", {
-  callback = function(args)
-    if not vim.b[args.buf].large_file then
-      vim.opt_local.cursorline = true
-    end
+  callback = function()
+    vim.opt_local.cursorline = true
   end,
 })
 vim.api.nvim_create_autocmd("InsertLeave", {
