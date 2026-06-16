@@ -23,7 +23,6 @@ return {
     },
     "saadparwaiz1/cmp_luasnip", -- Provides a completion source for LuaSnip within nvim-cmp.
     "onsails/lspkind.nvim", -- Adds VSCode-like icons to the completion menu.
-    "windwp/nvim-autopairs", -- Automatically adds closing brackets, parentheses, quotes, etc..
     "alexander-born/cmp-bazel", -- Provides completion for Bazel targets and package files.
   },
   config = function()
@@ -146,17 +145,6 @@ return {
           show_labelDetails = true,
         }),
       },
-
     })
-
-    -- =================================================================
-    --  6. NVIM-AUTOPAIRS INTEGRATION
-    -- =================================================================
-    -- Integrate with nvim-autopairs to automatically add () after function completion
-    -- This event fires after a completion is "confirmed" (i.e., you selected it).
-    local ok, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
-    if ok then
-      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-    end
   end,
 }
