@@ -52,6 +52,14 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   end,
 })
 
+-- Don't create swapfiles for *.log, *.mlir files.
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.log", "*.mlir", "*.log.gz" },
+  callback = function()
+    vim.opt_local.swapfile = false
+  end,
+})
+
 -- Allow backspacing over indentation, line breaks, and insertion start.
 vim.opt.backspace = "indent,eol,start"
 
