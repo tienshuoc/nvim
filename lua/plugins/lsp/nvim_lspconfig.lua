@@ -241,8 +241,19 @@ return {
     -- anchors clangd to the right compile_commands.json and ensures path
     -- consistency between the index and what the editor reports.
     --
-    -- See lua/plugins/lsp/clangd_config.yaml for global clangd configuration
-    -- (softlink to ~/.config/clangd/config.yaml).
+    -- Global clangd configuration (inlay hints, warnings, hover, etc.) lives in
+    -- lua/plugins/lsp/clangd_config.yaml. clangd only reads it from
+    -- ~/.config/clangd/config.yaml, so ensure that path symlinks to the repo
+    -- copy -- this keeps a single source of truth that also applies to other
+    -- clangd clients (e.g. VSCode). Only created when absent, so a hand-managed
+    -- file is never clobbered.
+    local clangd_cfg_src = vim.fn.stdpath("config") .. "/lua/plugins/lsp/clangd_config.yaml"
+    local clangd_cfg_dst = vim.fn.expand("~/.config/clangd/config.yaml")
+    if vim.uv.fs_stat(clangd_cfg_src) and not vim.uv.fs_stat(clangd_cfg_dst) then
+      vim.fn.mkdir(vim.fs.dirname(clangd_cfg_dst), "p")
+      vim.uv.fs_symlink(clangd_cfg_src, clangd_cfg_dst)
+    end
+
     vim.api.nvim_create_autocmd("FileType", {
       group = vim.api.nvim_create_augroup("clangd_start", { clear = true }),
       pattern = { "c", "cpp", "objc", "objcpp", "cuda" },
