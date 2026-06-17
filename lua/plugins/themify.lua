@@ -228,6 +228,7 @@ return {
     local fzf = require("fzf-lua")
     local shell = require("fzf-lua.shell")
     local themify = require("themify.api")
+    local manager = require("themify.core.manager")
 
     -- Check if Manager is available
     if not themify.Manager or not themify.Manager.colorschemes then
@@ -237,25 +238,23 @@ return {
 
     -- Save current colorscheme to restore on cancel
     local original = themify.get_current()
-    local live_preview = nil -- Track what's being previewed
+    local live_preview = nil
+    local selection_made = false
 
     -- Build list of colorscheme entries
     local entries = {}
-    local entry_map = {} -- Maps display string to {colorscheme_id, theme}
+    local entry_map = {}
 
-    -- Get all colorschemes from Themify
     for _, colorscheme_id in ipairs(themify.Manager.colorschemes) do
       local colorscheme_data = themify.Manager.get(colorscheme_id)
 
       if colorscheme_data and colorscheme_data.themes then
-        -- Add each theme variant as a separate entry
         for _, theme in ipairs(colorscheme_data.themes) do
           local display = string.format("%s", theme)
           table.insert(entries, display)
           entry_map[display] = { colorscheme_id = colorscheme_id, theme = theme }
         end
       else
-        -- No themes or single default theme
         local display = colorscheme_id
         table.insert(entries, display)
         entry_map[display] = { colorscheme_id = colorscheme_id, theme = nil }
@@ -267,19 +266,48 @@ return {
       return
     end
 
+    -- Find current colorscheme index to start picker there
+    local current = themify.get_current()
+    local cursor_idx = 1
+    for i, entry in ipairs(entries) do
+      local info = entry_map[entry]
+      if info then
+        local colorscheme_match = (info.theme and info.theme == current.colorscheme_id)
+          or (not info.theme and info.colorscheme_id == current.colorscheme_id)
+        local theme_match = info.theme == current.theme or current.theme == nil
+        if colorscheme_match and theme_match then
+          cursor_idx = i
+          break
+        end
+      end
+    end
+
     -- Show FzfLua picker with live preview
     fzf.fzf_exec(entries, {
       prompt = "Colorschemes> ",
       fzf_opts = {
         ["--preview-window"] = "nohidden:right:0",
       },
+      winopts = {
+        backdrop = 100, -- Disables dimming background outside of the preview window.
+        width = 0.25,
+        on_close = function()
+          if not selection_made and live_preview and original then
+            themify.set_current(original.colorscheme_id, original.theme)
+          end
+        end,
+      },
+      keymap = {
+        fzf = {
+          start = "pos(" .. cursor_idx .. ")",
+        },
+      },
       preview = shell.stringify_data(function(sel)
         if sel and #sel > 0 then
           local entry = entry_map[sel[1]]
           if entry then
             live_preview = sel[1]
-            -- Apply colorscheme using Themify (runs before hooks and persists)
-            themify.set_current(entry.colorscheme_id, entry.theme)
+            manager.load_theme(entry.colorscheme_id, entry.theme)
           end
         end
       end, {}, "{}"),
@@ -289,20 +317,14 @@ return {
             return
           end
 
+          selection_made = true
           local entry = entry_map[selected[1]]
           if entry then
-            -- Apply colorscheme permanently using Themify API
             themify.set_current(entry.colorscheme_id, entry.theme)
             vim.notify(string.format("Applied: %s", selected[1]), vim.log.levels.INFO)
           end
         end,
       },
-      _fn_post_fzf = function()
-        -- Restore original colorscheme if cancelled (nothing selected and preview was active)
-        if live_preview and original then
-          themify.set_current(original.colorscheme, original.theme)
-        end
-      end,
     })
   end,
 }
