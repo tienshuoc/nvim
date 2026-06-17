@@ -31,6 +31,25 @@ return {
     require("themify").setup({
       async = false, -- Enabling this would load the colorscheme asynchronously, which might improve your startup time.
       -- Your list of colorschemes.
+      -- Built-in colorschemes are also supported.
+      -- (Also works with any colorschemes that are installed via other plugin manager, just make sure the colorscheme is loaded before Themify is loaded.)
+      "default",
+      "darkblue",
+      "delek",
+      "desert",
+      "elflord",
+      "evening",
+      "industry",
+      "koehler",
+      "morning",
+      "murphy",
+      "pablo",
+      "peachpuff",
+      "ron",
+      "shine",
+      "slate",
+      "torte",
+      "zellner",
       -- { -- Disable cause currently themify doesn't support colorschemes with dependencies.
       --   "uloco/bluloco.nvim",
       --
@@ -71,7 +90,7 @@ return {
       {
         "eldritch-theme/eldritch.nvim",
       },
-{
+      {
         "0xstepit/flow.nvim",
         before = function()
           require("flow").setup({})
@@ -182,7 +201,7 @@ return {
         "navarasu/onedark.nvim", -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer'
         before = function()
           require("onedark").setup({
-            style = "cool",
+            style = "dark",
           })
         end,
       },
@@ -201,10 +220,6 @@ return {
       {
         "NTBBloodbath/sweetie.nvim",
       },
-
-      -- Built-in colorschemes are also supported.
-      -- (Also works with any colorschemes that are installed via other plugin manager, just make sure the colorscheme is loaded before Themify is loaded.)
-      "default",
     })
   end,
 
