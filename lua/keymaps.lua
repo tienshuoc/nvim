@@ -129,15 +129,9 @@ vim.keymap.set(
 )
 
 -- Go to window by index.
-vim.keymap.set("n", "<leader>1", "1<C-W>w", { noremap = true, desc = "Move to window 1." })
-vim.keymap.set("n", "<leader>2", "2<C-W>w", { noremap = true, desc = "Move to window 2." })
-vim.keymap.set("n", "<leader>3", "3<C-W>w", { noremap = true, desc = "Move to window 3." })
-vim.keymap.set("n", "<leader>4", "4<C-W>w", { noremap = true, desc = "Move to window 4." })
-vim.keymap.set("n", "<leader>5", "5<C-W>w", { noremap = true, desc = "Move to window 5." })
-vim.keymap.set("n", "<leader>6", "6<C-W>w", { noremap = true, desc = "Move to window 6." })
-vim.keymap.set("n", "<leader>7", "7<C-W>w", { noremap = true, desc = "Move to window 7." })
-vim.keymap.set("n", "<leader>8", "8<C-W>w", { noremap = true, desc = "Move to window 8." })
-vim.keymap.set("n", "<leader>9", "9<C-W>w", { noremap = true, desc = "Move to window 9." })
+for i = 1, 9 do
+  vim.keymap.set("n", "<leader>" .. i, i .. "<C-W>w", { noremap = true, desc = "Move to window " .. i .. "." })
+end
 
 -- Close all floating windows.
 vim.keymap.set("n", "<leader>cfw", function()
