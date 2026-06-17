@@ -1,5 +1,8 @@
 return {
   "rareitems/printer.nvim",
+  keys = {
+    { "gp", mode = { "n", "v" }, desc = "Debug print (printer.nvim operator)" },
+  },
   config = function()
     require("printer").setup({
       keymap = "gp", -- Plugin doesn't have any keymaps by default

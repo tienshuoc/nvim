@@ -1,5 +1,9 @@
 return {
   "WhoIsSethDaniel/mason-tool-installer.nvim", -- Install and upgrade third-party tools automatically.
+  -- VeryLazy so its setup() (which requires the mason-nvim-dap/mason-lspconfig
+  -- mapping modules and thus drags in the whole DAP stack) runs after startup
+  -- instead of blocking it.
+  event = "VeryLazy",
   dependencies = {
     "williamboman/mason.nvim",
   },

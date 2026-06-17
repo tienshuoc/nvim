@@ -1,1 +1,1 @@
-return { "echasnovski/mini.pairs", opts = {}, version = false }
+return { "echasnovski/mini.pairs", event = "InsertEnter", opts = {}, version = false }
