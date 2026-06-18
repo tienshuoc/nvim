@@ -1,9 +1,9 @@
 -------- README --------
--- colorscheme.lua : theme
--- keymaps.lua     : keymappings
--- lsp.lua         : LSP support
--- options.lua     : global options
--- plugins.lua     : third-party plugins
+-- options.lua      : global options
+-- keymaps.lua      : keymappings
+-- lazy_manager.lua : plugin manager + which plugins load per environment
+-- sessions.lua     : session management
+-- lua/plugins/     : plugin specs (incl. lsp/, git/, dbg/)
 --____________________
 
 --- Map Leader ---

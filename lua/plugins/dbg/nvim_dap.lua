@@ -11,10 +11,10 @@ return {
     "rcarriga/nvim-dap-ui",
   },
   keys = {
-    { "<leader>dc", ":DapContinue<CR>", mode = "n", desc = "DapContinue", {} },
-    { "<leader>dn", ":DapStepOver<CR>", mode = "n", desc = "DapStepOver", {} },
-    { "<leader>di", ":DapStepInto<CR>", mode = "n", desc = "DapStepInto", {} },
-    { "<leader>do", ":DapStepOut<CR>", mode = "n", desc = "DapStepOut", {} },
+    { "<leader>dc", ":DapContinue<CR>", mode = "n", desc = "DapContinue" },
+    { "<leader>dn", ":DapStepOver<CR>", mode = "n", desc = "DapStepOver" },
+    { "<leader>di", ":DapStepInto<CR>", mode = "n", desc = "DapStepInto" },
+    { "<leader>do", ":DapStepOut<CR>", mode = "n", desc = "DapStepOut" },
     { "<leader>db", ":DapToggleBreakpoint<CR>", desc = "DapToggleBreakpoint" },
     {
       "<leader>dC",
@@ -101,12 +101,5 @@ return {
         -- Optional: Add process ID if attaching to running process
       },
     }
-
-    -- TODO
-    -- local vscode = require("dap.ext.vscode")
-    -- local json = require("plenary.json")/home/tienshuoc/.local/share/nvim/lazy/nvim-dap/doc/dap.txt
-    -- vscode.json_decode = function(str)
-    --   return vim.json.decode(json.json_strip_comments(str))
-    -- end
   end,
 }

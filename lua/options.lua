@@ -32,7 +32,7 @@ vim.opt.smarttab = true -- "Insert "tabstop" number of spaces when the "tab" key
 vim.opt.autoindent = true -- New lines inherit the indentation of previous lines.
 
 -------------------------------------- Editing --------------------------------------
--- Disable automcommenting on newline.
+-- Disable autocommenting on newline.
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   callback = function()
@@ -67,7 +67,7 @@ vim.opt.backspace = "indent,eol,start"
 vim.opt.hlsearch = true -- Enable search highlighting.
 vim.opt.ignorecase = true -- Ignore case when searching.
 vim.opt.incsearch = true -- Incremental search that shows partial matches.
-vim.opt.smartcase = true -- Automatiaclly switch search to case-sensitive when search query contains uppercase
+vim.opt.smartcase = true -- Automatically switch search to case-sensitive when search query contains uppercase
 
 ------------------------------- Text Rendering Options ----------------------------
 vim.opt.linebreak = true -- Avoid wrapping a line in the middle of a word.
@@ -82,8 +82,8 @@ vim.opt.termguicolors = true -- Enables 24-bit RGB color in the terminal UI.
 vim.opt.pumblend = 25 -- Enables pseudo-transparency for the popup menu.
 
 ------------------------------- Miscellaneous Options -----------------------------
-vim.opt.history = 1000 -- Increase the undo limit.
-vim.opt.updatetime = 500 -- If this many milliseconds nothing is typed, the swap file will be written to disk.
+vim.opt.history = 1000 -- Number of command-line and search history entries to remember.
+vim.opt.updatetime = 500 -- Idle ms before writing the swap file and firing CursorHold (gitsigns, LSP, etc.).
 
 -- Disable unused providers for faster startup
 vim.g.loaded_node_provider = 0

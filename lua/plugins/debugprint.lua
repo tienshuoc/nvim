@@ -1,4 +1,5 @@
 return {
+  -- printer.nvim: operator (gp) to print/debug-log the text under a motion.
   "rareitems/printer.nvim",
   keys = {
     { "gp", mode = { "n", "v" }, desc = "Debug print (printer.nvim operator)" },
