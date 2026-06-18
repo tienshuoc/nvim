@@ -71,8 +71,9 @@ vim.keymap.set(
   "n",
   "<leader>yrp", -- "Yank Real Path"
   function()
-    vim.fn.setreg("+", vim.uv.fs_realpath(vim.fn.expand("%")))
-    vim.notify("Yanked realpath!")
+    local v = vim.uv.fs_realpath(vim.fn.expand("%"))
+    vim.fn.setreg("+", v)
+    vim.notify("Yanked realpath:\n" .. v)
   end,
   vim.tbl_extend("force", opts, { desc = "Yank current file's full resolved path into system clipboard." })
 )
@@ -81,18 +82,20 @@ vim.keymap.set(
   "n",
   "<leader>ywp", -- "Yank Workspace-relative Path"
   function()
-    vim.fn.setreg("+", vim.fn.expand("%"))
-    vim.notify("Yanked workspace-relative path!")
+    local v = vim.fn.expand("%")
+    vim.fn.setreg("+", v)
+    vim.notify("Yanked workspace-relative path:\n" .. v)
   end,
   vim.tbl_extend("force", opts, { desc = "Yank current file's workspace-relative path into system clipboard." })
 )
 
 vim.keymap.set(
   "n",
-  "<leader>yfrd", -- "Yank File Realpath Directory"
+  "<leader>yrd", -- "Yank Realpath Directory"
   function()
-    vim.fn.setreg("+", vim.fn.fnamemodify(vim.uv.fs_realpath(vim.fn.expand("%")), ":h"))
-    vim.notify("Yanked realpath directory!")
+    local v = vim.fn.fnamemodify(vim.uv.fs_realpath(vim.fn.expand("%")), ":h")
+    vim.fn.setreg("+", v)
+    vim.notify("Yanked realpath directory:\n" .. v)
   end,
   vim.tbl_extend("force", opts, { desc = "Yank current file's resolved directory path into system clipboard." })
 )
@@ -101,8 +104,9 @@ vim.keymap.set(
   "n",
   "<leader>yfn", -- "Yank File Name"
   function()
-    vim.fn.setreg("+", vim.fn.expand("%:t"))
-    vim.notify("Yanked filename!")
+    local v = vim.fn.expand("%:t")
+    vim.fn.setreg("+", v)
+    vim.notify("Yanked filename:\n" .. v)
   end,
   vim.tbl_extend("force", opts, { desc = "Yank current filename into system clipboard." })
 )
@@ -110,14 +114,14 @@ vim.keymap.set(
 vim.keymap.set({ "n", "v" }, "<leader>yln", function()
   require("utils.line_refs").yank_line_ref({
     realpath = false,
-    msg = "Yanked relative line number!",
+    msg = "Yanked relative line number:",
   })
 end, { desc = "Yank relative file path with line number(s) to clipboard" })
 
 vim.keymap.set({ "n", "v" }, "<leader>yrln", function()
   require("utils.line_refs").yank_line_ref({
     realpath = true,
-    msg = "Yanked realpath line number!",
+    msg = "Yanked realpath line number:",
   })
 end, { desc = "Yank real path with line number(s) to clipboard" })
 

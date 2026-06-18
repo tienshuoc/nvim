@@ -18,7 +18,8 @@ function M.yank_line_ref(opts)
   end
 
   vim.fn.setreg("+", ref)
-  vim.notify(opts.msg)
+  vim.notify(opts.msg .. "\n" .. ref)
 end
 
 return M
+
