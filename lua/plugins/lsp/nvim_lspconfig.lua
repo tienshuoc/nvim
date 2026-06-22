@@ -98,8 +98,25 @@ return {
     -- These have to be setup beforehand in this order.
 
     vim.lsp.log.set_level("off") -- Disable log level to prevent generating large log files. Set to `vim.lsp.log.set_level("debug")` if debugging is needed.
-    -- Enable inlay hints.
-    vim.lsp.inlay_hint.enable(true)
+
+    -- Enable inlay hints per-buffer, scoped to a live, capable, non-large-file
+    -- buffer, and clear them on detach. Enabling globally (and leaving them on
+    -- after the client detaches, e.g. on the large-file path) leaves stale hints
+    -- whose cached line can outrun a shrinking buffer, tripping the inlay_hint
+    -- decoration provider with "Invalid line number: out of range".
+    vim.api.nvim_create_autocmd("LspAttach", {
+      callback = function(ev)
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        if client and client:supports_method("textDocument/inlayHint") and not vim.b[ev.buf].large_file then
+          vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+        end
+      end,
+    })
+    vim.api.nvim_create_autocmd("LspDetach", {
+      callback = function(ev)
+        vim.lsp.inlay_hint.enable(false, { bufnr = ev.buf })
+      end,
+    })
 
     -- Setup language servers.
     -- local lspconfig = vim.lsp.config("*")
