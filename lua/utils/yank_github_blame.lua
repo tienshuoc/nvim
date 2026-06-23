@@ -1,30 +1,33 @@
+local git_remote_url = require("utils.git_remote_url")
+
 local M = {}
 
--- Helper to get remote URL
-local function get_remote_url(callback)
-  vim.system({ "git", "rev-parse", "--abbrev-ref", "HEAD" }, { text = true }, function(branch_result)
-    local branch = branch_result.stdout and branch_result.stdout:gsub("%s+$", "") or "main"
+local function strip(s)
+  return s and s:gsub("%s+$", "") or ""
+end
 
-    vim.system({ "git", "config", "branch." .. branch .. ".remote" }, { text = true }, function(remote_result)
-      local remote = remote_result.stdout and remote_result.stdout:gsub("%s+$", "") or ""
-      remote = remote ~= "" and remote or "origin"
-
-      vim.system({ "git", "remote", "get-url", remote }, { text = true }, function(url_result)
-        if url_result.code ~= 0 or not url_result.stdout then
-          callback(nil)
-          return
-        end
-
-        local remote_url = url_result.stdout:gsub("%s+$", "")
-        -- Convert SSH URL to HTTPS and strip .git suffix
-        remote_url = remote_url:gsub("^git@(.-):", "https://%1/"):gsub("%.git$", "")
-        callback(remote_url)
-      end)
-    end)
+local function err(msg)
+  vim.schedule(function()
+    vim.notify("⚠️ " .. msg, vim.log.levels.ERROR)
   end)
 end
 
--- Yank GitHub PR or commit URL for the line under cursor based on git blame
+-- Run all commands concurrently; call done(results) once every one finishes.
+local function run_all(cmds, done)
+  local results = {}
+  local remaining = #cmds
+  for i, cmd in ipairs(cmds) do
+    vim.system(cmd, { text = true }, function(r)
+      results[i] = r
+      remaining = remaining - 1
+      if remaining == 0 then
+        done(results)
+      end
+    end)
+  end
+end
+
+-- Yank GitHub PR or commit URL for the line under cursor based on git blame.
 function M.yank_github_blame()
   local line_number = vim.fn.line(".")
   local file_path = vim.uv.fs_realpath(vim.fn.expand("%"))
@@ -34,85 +37,66 @@ function M.yank_github_blame()
     return
   end
 
-  -- Check if we're in a git repository
-  vim.system({ "git", "rev-parse", "--is-inside-work-tree" }, { text = true }, function(result)
-    local is_git_repo = result.stdout and result.stdout:gsub("%s+$", "") or ""
-    if result.code ~= 0 or is_git_repo ~= "true" then
-      vim.schedule(function()
-        vim.notify("⚠️ Not in a git repository", vim.log.levels.ERROR)
-      end)
+  -- Phase 1: repo root (gate + cache key), branch, and blame fire concurrently.
+  run_all({
+    { "git", "rev-parse", "--show-toplevel" }, -- 1: repo root
+    { "git", "rev-parse", "--abbrev-ref", "HEAD" }, -- 2: branch
+    { "git", "blame", "-L", line_number .. "," .. line_number, "--porcelain", file_path }, -- 3: blame
+  }, function(res)
+    local root = strip(res[1].stdout)
+    if res[1].code ~= 0 or root == "" then
+      err("Not in a git repository")
       return
     end
 
-    -- Get git blame for the current line
-    vim.system({
-      "git",
-      "blame",
-      "-L",
-      line_number .. "," .. line_number,
-      "--porcelain",
-      file_path,
-    }, { text = true }, function(blame_result)
-      if blame_result.code ~= 0 or not blame_result.stdout or blame_result.stdout == "" then
-        vim.schedule(function()
-          vim.notify("⚠️ This line has not been committed yet", vim.log.levels.ERROR)
-        end)
-        return
-      end
+    local branch = strip(res[2].stdout)
+    branch = branch ~= "" and branch or "main"
 
-      -- Extract SHA from porcelain format (first line contains the SHA)
-      local sha = blame_result.stdout:match("^(%x+)")
-      if not sha or sha:match("^0+$") then
-        vim.schedule(function()
-          vim.notify("⚠️ This line has not been committed yet", vim.log.levels.ERROR)
-        end)
-        return
-      end
+    if res[3].code ~= 0 or not res[3].stdout or res[3].stdout == "" then
+      err("This line has not been committed yet")
+      return
+    end
 
-      -- Now we have the SHA, get remote URL and commit message in parallel
-      local remote_url, commit_message
-      local completed = 0
+    -- Extract SHA from porcelain format (first line contains the SHA).
+    local sha = res[3].stdout:match("^(%x+)")
+    if not sha or sha:match("^0+$") then
+      err("This line has not been committed yet")
+      return
+    end
 
-      local function try_finish()
-        completed = completed + 1
-        if completed == 2 then
-          if not remote_url then
-            vim.schedule(function()
-              vim.notify("⚠️ Could not get remote URL", vim.log.levels.ERROR)
-            end)
-            return
-          end
+    -- Phase 2: remote name (needs branch) and commit message (needs SHA) in parallel.
+    run_all({
+      { "git", "config", "branch." .. branch .. ".remote" }, -- 1: remote name
+      { "git", "log", "-1", "--pretty=format:%s", sha }, -- 2: commit message
+    }, function(res2)
+      local remote = strip(res2[1].stdout)
+      remote = remote ~= "" and remote or "origin"
+      local commit_message = strip(res2[2].stdout)
 
-          -- Look for PR number patterns: (#123), GH-123, or "Merge pull request #123"
-          local pr_number = commit_message:match("#(%d+)")
-            or commit_message:match("GH%-(%d+)")
-            or commit_message:match("pull request #(%d+)")
-
-          vim.schedule(function()
-            local url
-            if pr_number then
-              url = remote_url .. "/pull/" .. pr_number
-              vim.fn.setreg("+", url)
-              vim.notify("✓ GitHub PR URL copied to clipboard:\n" .. url, vim.log.levels.INFO)
-            else
-              url = remote_url .. "/commit/" .. sha
-              vim.fn.setreg("+", url)
-              vim.notify("✓ GitHub commit URL copied to clipboard:\n" .. url, vim.log.levels.INFO)
-            end
-          end)
+      -- Phase 3: remote URL (cached per root+remote).
+      git_remote_url.resolve(root, remote, function(remote_url)
+        if not remote_url then
+          err("Could not get remote URL")
+          return
         end
-      end
 
-      -- Get remote URL
-      get_remote_url(function(url)
-        remote_url = url
-        try_finish()
-      end)
+        -- Look for PR number patterns: (#123), GH-123, or "Merge pull request #123".
+        local pr_number = commit_message:match("#(%d+)")
+          or commit_message:match("GH%-(%d+)")
+          or commit_message:match("pull request #(%d+)")
 
-      -- Get commit message
-      vim.system({ "git", "log", "-1", "--pretty=format:%s", sha }, { text = true }, function(msg_result)
-        commit_message = msg_result.stdout and msg_result.stdout:gsub("%s+$", "") or ""
-        try_finish()
+        vim.schedule(function()
+          local url
+          if pr_number then
+            url = remote_url .. "/pull/" .. pr_number
+            vim.fn.setreg("+", url)
+            vim.notify("✓ GitHub PR URL copied to clipboard:\n" .. url, vim.log.levels.INFO)
+          else
+            url = remote_url .. "/commit/" .. sha
+            vim.fn.setreg("+", url)
+            vim.notify("✓ GitHub commit URL copied to clipboard:\n" .. url, vim.log.levels.INFO)
+          end
+        end)
       end)
     end)
   end)
