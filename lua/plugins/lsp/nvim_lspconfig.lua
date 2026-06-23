@@ -283,8 +283,10 @@ return {
 
         local cmd = {
           "clangd",
-          "--background-index",  -- build a persistent cross-file symbol index
-          "--clang-tidy",        -- surface clang-tidy diagnostics inline
+          "--background-index=false", -- stop persistent cross-file indexing (main CPU/RAM hog)
+          "-j=2", -- cap async worker threads to limit CPU spikes
+          "--pch-storage=disk", -- keep preamble PCH on disk instead of RAM
+          "--clang-tidy", -- surface clang-tidy diagnostics inline
           "--header-insertion=iwyu",
           "--completion-style=detailed",
           "--function-arg-placeholders",
