@@ -46,7 +46,7 @@ elseif vim.g.is_large_file_on_startup then
     { import = "plugins.marks" },
     { import = "plugins.wrapping_paper" },
     { import = "plugins.high_str" },
-    { import = "plugins.mini.files" },
+    { import = "plugins.mini_files" },
   })
 else
   require("lazy").setup({
