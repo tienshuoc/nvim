@@ -99,15 +99,21 @@ return {
 
     vim.lsp.log.set_level("off") -- Disable log level to prevent generating large log files. Set to `vim.lsp.log.set_level("debug")` if debugging is needed.
 
-    -- Enable inlay hints per-buffer, scoped to a live, capable, non-large-file
-    -- buffer, and clear them on detach. Enabling globally (and leaving them on
-    -- after the client detaches, e.g. on the large-file path) leaves stale hints
-    -- whose cached line can outrun a shrinking buffer, tripping the inlay_hint
-    -- decoration provider with "Invalid line number: out of range".
+    -- Enable inlay hints per-buffer, scoped to a live, capable, non-large-file,
+    -- modifiable buffer, and clear them on detach. Enabling globally (and leaving
+    -- them on after the client detaches, e.g. on the large-file path) leaves stale
+    -- hints whose cached line can outrun a shrinking buffer, tripping the inlay_hint
+    -- decoration provider with "Invalid line number: out of range". Skip read-only
+    -- buffers to avoid sending inlayHint requests with non-file URI schemes.
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(ev)
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if client and client:supports_method("textDocument/inlayHint") and not vim.b[ev.buf].large_file then
+        if
+          client
+          and client:supports_method("textDocument/inlayHint")
+          and not vim.b[ev.buf].large_file
+          and vim.bo[ev.buf].modifiable
+        then
           vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
         end
       end,
@@ -279,7 +285,13 @@ return {
         -- compile_commands.json is checked first so Bazel/CMake projects are
         -- rooted at the build database, not at .git (which may be higher up).
         local root = vim.fs.root(0, { "compile_commands.json", ".clangd", ".git" })
-        if not root then return end  -- not a recognised C/C++ project, skip
+        if not root then
+          return
+        end -- not a recognised C/C++ project, skip
+
+        if not vim.bo.modifiable then
+          return
+        end -- skip read-only buffers (e.g. diffview)
 
         local cmd = {
           "clangd",
