@@ -100,20 +100,30 @@ return {
     vim.lsp.log.set_level("off") -- Disable log level to prevent generating large log files. Set to `vim.lsp.log.set_level("debug")` if debugging is needed.
 
     -- Enable inlay hints per-buffer, scoped to a live, capable, non-large-file,
-    -- modifiable buffer, and clear them on detach. Enabling globally (and leaving
-    -- them on after the client detaches, e.g. on the large-file path) leaves stale
-    -- hints whose cached line can outrun a shrinking buffer, tripping the inlay_hint
-    -- decoration provider with "Invalid line number: out of range". Skip read-only
-    -- buffers to avoid sending inlayHint requests with non-file URI schemes.
+    -- modifiable, real-file buffer, and clear them on detach. Enabling globally
+    -- (and leaving them on after the client detaches, e.g. on the large-file
+    -- path) leaves stale hints whose cached line can outrun a shrinking buffer,
+    -- tripping the inlay_hint decoration provider with "Invalid line number: out
+    -- of range". Buffers with a non-file URI scheme (diffview://, fugitive://)
+    -- are skipped so no inlayHint request is sent for a path the server cannot
+    -- resolve.
+    local function inlay_hints_ok(buf)
+      if not vim.api.nvim_buf_is_loaded(buf) or vim.b[buf].large_file or not vim.bo[buf].modifiable then
+        return false
+      end
+      -- Reject any non-file URI scheme; a plain path or file:// is fine.
+      local name = vim.api.nvim_buf_get_name(buf)
+      local scheme = name:match("^(%a[%w+.-]*)://")
+      if scheme and scheme ~= "file" then
+        return false
+      end
+      return #vim.lsp.get_clients({ bufnr = buf, method = "textDocument/inlayHint" }) > 0
+    end
+
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(ev)
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if
-          client
-          and client:supports_method("textDocument/inlayHint")
-          and not vim.b[ev.buf].large_file
-          and vim.bo[ev.buf].modifiable
-        then
+        if client and client:supports_method("textDocument/inlayHint") and inlay_hints_ok(ev.buf) then
           vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
         end
       end,
@@ -121,6 +131,54 @@ return {
     vim.api.nvim_create_autocmd("LspDetach", {
       callback = function(ev)
         vim.lsp.inlay_hint.enable(false, { bufnr = ev.buf })
+      end,
+    })
+
+    -- Inlay hints are drawn only while `bufstate.version == util.buf_versions[bufnr]`,
+    -- but `buf_versions` is bumped solely from the LSP `on_lines` callback
+    -- (runtime lsp.lua). A buffer reloaded from disk goes through `on_reload`
+    -- instead, which re-sends the *old* version, so the guard still matches while
+    -- the text underneath has changed -- the decoration provider then fails with
+    -- "Invalid 'col': out of range". Diffview hits this by running `checktime` on
+    -- the working-tree buffer after stage/unstage/restore. Force a clean re-request
+    -- on every reload so the hints can never outlive the text they were computed
+    -- against.
+    local function resync_inlay_hints(buf)
+      if not vim.api.nvim_buf_is_loaded(buf) or not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }) then
+        return
+      end
+      vim.lsp.inlay_hint.enable(false, { bufnr = buf })
+      if inlay_hints_ok(buf) then
+        vim.lsp.inlay_hint.enable(true, { bufnr = buf })
+      end
+    end
+
+    vim.api.nvim_create_autocmd({ "BufReadPost", "FileChangedShellPost" }, {
+      callback = function(ev)
+        resync_inlay_hints(ev.buf)
+      end,
+    })
+
+    -- Diff windows are the reliable trigger for the stale-hint crash, and inlay
+    -- hints misalign the side-by-side columns anyway. Key off `wo.diff` rather
+    -- than diffview's `User` events so `:diffthis`, diffconflicts, gitsigns and
+    -- fugitive diffs are covered too. Hint state is per-buffer, so a buffer shown
+    -- in both a diff window and a normal window loses hints in both.
+    vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter", "DiffUpdated" }, {
+      callback = function(ev)
+        if not vim.api.nvim_buf_is_loaded(ev.buf) then
+          return
+        end
+        local in_diff = vim.iter(vim.fn.win_findbuf(ev.buf)):any(function(win)
+          return vim.wo[win].diff
+        end)
+        if in_diff then
+          if vim.lsp.inlay_hint.is_enabled({ bufnr = ev.buf }) then
+            vim.lsp.inlay_hint.enable(false, { bufnr = ev.buf })
+          end
+        elseif not vim.lsp.inlay_hint.is_enabled({ bufnr = ev.buf }) and inlay_hints_ok(ev.buf) then
+          vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+        end
       end,
     })
 
