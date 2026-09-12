@@ -20,66 +20,6 @@ function OpenDiagnosticIfNoFloat()
   })
 end
 
--- Bazel's compile_commands.json records the execroot as the compilation
--- directory, so clangd returns file URIs that point into the Bazel cache
--- (e.g. /scratch/.../execroot/_main/arc/foo.cpp) rather than the real
--- workspace paths. The execroot entries are symlinks back to the workspace,
--- so resolving them gives a canonical path the user recognises.
---
--- Two wrappers apply this resolution at different points in the LSP pipeline:
---
---   show_document      – called when jumping to a single location (gd, gD,
---                        gi). Rewrites location.uri before Neovim opens the
---                        buffer.
---
---   locations_to_items – called by fzf-lua (and the quickfix machinery) to
---                        build picker / location-list entries for results that
---                        return multiple locations (grr, etc.). Rewrites
---                        item.filename so the list shows real paths.
---
--- Note: external dependencies (e.g. LLVM headers fetched by Bazel) live as
--- real files in the cache with no symlink back to a nicer path, so they will
--- still appear with their full cache path.
---
--- Both wrappers are guarded so they are installed only once even if this
--- file is re-sourced.
-
-local function resolve_path(path)
-  -- fs_realpath resolves all symlink components and returns the canonical
-  -- path, or nil on failure (e.g. file does not exist). Fall back to the
-  -- original path so callers always get a usable string.
-  return vim.uv.fs_realpath(path) or path
-end
-
-if not vim.g._lsp_jump_handler_wrapped then
-  local original_show_document = vim.lsp.util.show_document
-
-  vim.lsp.util.show_document = function(location, ...)
-    if location and location.uri then
-      local path = vim.uri_to_fname(location.uri)
-      local realpath = resolve_path(path)
-      if realpath ~= path then
-        location.uri = vim.uri_from_fname(realpath)
-      end
-    end
-    return original_show_document(location, ...)
-  end
-
-  local original_locations_to_items = vim.lsp.util.locations_to_items
-
-  vim.lsp.util.locations_to_items = function(locations, offset_encoding)
-    local items = original_locations_to_items(locations, offset_encoding)
-    for _, item in ipairs(items) do
-      if item.filename then
-        item.filename = resolve_path(item.filename)
-      end
-    end
-    return items
-  end
-
-  vim.g._lsp_jump_handler_wrapped = true
-end
-
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
@@ -261,11 +201,12 @@ return {
           if config.root_dir and vim.uv.fs_stat(vim.fs.joinpath(config.root_dir, "compile_commands.json")) then
             table.insert(cmd, "--compile-commands-dir=" .. config.root_dir)
           end
-          return vim.lsp.rpc.start(cmd, dispatchers, {
+          local rpc = vim.lsp.rpc.start(cmd, dispatchers, {
             cwd = config.cmd_cwd or config.root_dir,
             env = config.cmd_env,
             detached = config.detached,
           })
+          return require("utils.bazel_lsp_paths").wrap_rpc(rpc, config.root_dir)
         end,
         root_dir = function(bufnr, on_dir)
           if not vim.bo[bufnr].modifiable or not vim.uri_from_bufnr(bufnr):match("^file://") then
