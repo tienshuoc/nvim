@@ -1,41 +1,120 @@
-### 🔗 [DeepWiki Documentation](https://deepwiki.com/tienshuoc/nvim/1-overview) 📑
+# Neovim configuration
 
-# Requirements 🔨
-* Nerd Font compatible font ( e.g. [Jet Brains Mono Nerd Font](https://www.nerdfonts.com/font-downloads) ). Othewise, Devicons used may not render properly.
-* [RipGrep](https://github.com/BurntSushi/ripgrep) for [full Telescope fuzzy-finding power](https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#required-dependencies).
+Personal configuration for standalone Neovim and the VS Code Neovim extension. Linux is the tested environment. This README is the maintained project reference for contributors and coding assistants.
 
-# File Structure 🗂️
-## General Configs 🔧
-* `lua/keymaps.lua` : Key mappings.
-* `lua/options.lua` : Neovim option settings.
-* `lua/ftsettings`: Specific settings by file type.
-## Plugins 🔌
-* `lua/lazy_manager.lua` : Entry point for Lazy neovim plugin manager.
-* `lua/plugins/` : Assortment of plugins where each file corresponds to a single plugin and categorized plugins are grouped in folders.
-* `lua/plugins/themify.lua` : Colorscheme manager with 25+ themes and FzfLua integration.
-  * Includes themes: Catppuccin 🍨, Cyberdream 🤖, Darcula 🧶, Dracula 🧛‍♂️, Edge ⛰️, Eldritch ✨, Everforest 🌳, Flow 🌊, Github 🔃, Gruvbox Material 🍂, Kanagawa 🌊, Material 🪁, Melange 🎨, Miasma 🌫️, Modus 📖, Monokai 🌸, Moonfly 🌙, NightFox 🦊, OneDark 🎨, OneHalf 🌓, PaperColor 📜, Rose Pine 🌹, Sonokai 🌺, Sweetie 🍬, Tokyo Night 🌃, VSCode 🧢
-  * **FzfLua Integration**: Press `<leader>fc` for fuzzy finding with live preview (colorschemes apply as you navigate)
-  * **Persistence**: Selected colorscheme persists across Neovim sessions
-  * **Before Hooks**: Each colorscheme properly configured with setup functions and vim.g settings
-  * **Smart Loading**: Automatically disabled for large files (>10MB) to maintain performance
-* `lua/plugins/dbg/` : All DAP ( Debugger Adapter Protocol ) settings.
+[DeepWiki documentation](https://deepwiki.com/tienshuoc/nvim/1-overview)
 
-# Installation 🗺️
-📌 **WIP, currently just for UNIX/LINUX**
-1. [Install Neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md) ( I currently use [`NVIM v0.11.0`](https://github.com/neovim/neovim/releases/tag/v0.11.0)).
-2. Go to [`$XDG_CONFIG_HOME`](https://neovim.io/doc/user/starting.html#%24XDG_CONFIG_HOME). This is typically `~/.config` for Unix. <br>
-This'll be the base root of where your Neovim configuration folder will reside.
+## Requirements
+
+- **Neovim 0.12+**. Recent configuration checks used **0.12.1**. See [Neovim installation](https://github.com/neovim/neovim/blob/master/INSTALL.md).
+- **Git 2.31+**, including for Diffview's Git support.
+- **tree-sitter CLI and a C compiler** such as GCC or Clang to build parsers. See the [parser manager requirements](https://github.com/romus204/tree-sitter-manager.nvim#requirements).
+- **make** for the configured LuaSnip `jsregexp` build.
+- **fzf** for pickers, **ripgrep (`rg`)** for text search, and **fd** for file search. This configuration uses [fzf-lua](https://github.com/ibhagwan/fzf-lua).
+- **SQLite3's shared library** for Yanky's SQLite history backend. See [sqlite.lua installation](https://github.com/kkharji/sqlite.lua#installation).
+- A [Nerd Font](https://www.nerdfonts.com/font-downloads) for the configured icons.
+
+Mason also needs download and archive tools: on Linux, have `curl` or `wget`, `unzip`, GNU `tar`, and `gzip` available. Individual packages can require additional runtimes, such as Node.js/npm for Node-based language servers. See [Mason's requirements](https://github.com/mason-org/mason.nvim#requirements) and run `:checkhealth mason`.
+
+## Installation
+
+For a fresh install, clone into Neovim's configuration directory:
+
 ```bash
-cd ~/.config
+mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}"
+git clone https://github.com/tienshuoc/nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
+nvim
 ```
-3. Clone this `nvim/` folder into your config directory.
+
+Lazy.nvim bootstraps itself on first launch. Open `:Lazy` to inspect installation, or use `:Lazy install` to install missing plugins. Run `:checkhealth` after installation.
+
+Mason's configured installation lists include clangd, LuaLS, Pyright, BashLS, Starpls, rust-analyzer, and CodeLLDB. Other tools declared in [Conform's configuration](lua/plugins/lsp/conform.lua) must be installed through Mason or otherwise available on `PATH`; `:ConformInfo` shows their status. Feature-specific integrations also have their own prerequisites—for example, OpenCode uses its CLI and `lsof`.
+
+## Startup profiles
+
+- **Standalone:** `init.lua` loads options, Lazy, keymaps, search highlighting, and sessions. The ordinary plugin set loads for every file size.
+- **VS Code:** when the extension sets `vim.g.vscode`, `lua/vscode_config.lua` supplies its own options and mappings, then loads the explicit VS Code plugin subset in `lua/lazy_manager.lua`.
+
+The profiles do not configure separate plugin installation roots. If they share `stdpath("data")`, they share Lazy's plugin directory. Run `:Lazy clean` or `:Lazy sync` from standalone Neovim when sharing that directory, so the active specification includes the full plugin set. [Lazy's command reference](https://lazy.folke.io/usage) describes the install, clean, and update operations combined by `sync`.
+
+## File layout
+
+| Path | Purpose |
+|---|---|
+| [init.lua](init.lua) | Entry point and profile selection |
+| [lua/lazy_manager.lua](lua/lazy_manager.lua) | Lazy bootstrap and plugin imports |
+| [lua/options.lua](lua/options.lua), [lua/keymaps.lua](lua/keymaps.lua) | Standalone options and mappings |
+| [lua/vscode_config.lua](lua/vscode_config.lua) | VS Code-specific options and mappings |
+| [lua/sessions.lua](lua/sessions.lua) | Session management |
+| [lua/plugins/](lua/plugins/) | Plugin specs, including `lsp/`, `git/`, and `dbg/` |
+| [lua/plugins/themify.lua](lua/plugins/themify.lua) | Theme installation, persistence, and the preview picker |
+| [lua/plugins/ftplugins/](lua/plugins/ftplugins/) | Specs for filetype-support plugins |
+| [after/ftplugin/](after/ftplugin/) | Local filetype overrides |
+| [lua/utils/](lua/utils/) | Shared helpers, including Git links and Bazel LSP paths |
+
+## Large files
+
+[faster.nvim's configuration](lua/plugins/faster.lua) owns the **10 MiB** big-file threshold, the plugin's default long-line detection, and macro acceleration. There is no separate large-file startup scan or reduced plugin profile; the theme manager loads normally too.
+
+Faster's feature hooks provide the local LSP, gitsigns, colorizer, and completion integrations. LSP detachment affects the current buffer; lualine and MiniClue suspension is limited to macro acceleration.
+
+Use `:Faster status` to inspect state and `:Faster enable <feature>` to restore a feature manually. When restoring LSP individually, run `:Faster enable filetype` before `:Faster enable lsp`. Shrink recovery and cleanup follow the installed plugin's behavior; some built-in feature switches affect global state.
+
+Incremental search stays enabled. [auto_hlsearch.lua](lua/utils/auto_hlsearch.lua) enables search highlighting for search keys and clears it on the next normal-mode key.
+
+## Common mappings
+
+The leader key is **Space**. These mappings apply to standalone Neovim:
+
+| Mapping | Action |
+|---|---|
+| `<leader>ff` / `<leader>fg` | Find files / search file contents with fzf-lua |
+| `<leader>fc` / `<leader>T` | Theme picker with preview / Themify UI; selection is persisted |
+| `<leader>ih` | Toggle inlay hints for the buffer; hints are opt-in and excluded from diff and flagged large buffers |
+| `<leader>F` | Format the current buffer or selection |
+| `<leader>gU` | Copy a permalink for the current line or visual range |
+| `<leader>gB` | Copy the blamed commit URL or a PR URL inferred from its subject |
+
+Git link helpers use the source file's repository and reject unsaved buffers. Their shared [Git utility](lua/utils/git.lua) captures the buffer and selection, runs queries from explicit directories, and checks the source buffer before copying. Permalinks also reject staged or on-disk changes to that file and check the file revision against local remote-tracking information.
+
+## C++ and MLIR
+
+The native LSP setup lives in [nvim_lspconfig.lua](lua/plugins/lsp/nvim_lspconfig.lua). It uses `vim.lsp.config()` and one explicit `vim.lsp.enable()` server list. Mason handles installation and does not automatically enable additional servers.
+
+For a CMake project, generate a compilation database and make it available at the checkout root. For example, with a Ninja or Makefiles generator:
+
 ```bash
-git clone https://github.com/tienshuoc/nvim.git
+cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+ln -s build/compile_commands.json compile_commands.json
 ```
-4. (WIP)
 
+See [clangd's project setup](https://clangd.llvm.org/installation.html#project-setup). The Bazel path adapter applies to clangd navigation replies in any detected Bazel workspace, including personal projects; it resolves execroot aliases only when they lead back into that workspace.
 
-# TODO 👀
+The MLIR server starts only when the owning checkout contains an executable `bazel-bin/compiler/shared/tools/unified-lsp-server`. It is a project build artifact, not a Mason-installed server.
+
+## Plugin versions and updates
+
+Lazy records installed plugin revisions in `lazy-lock.json`. **This repository currently ignores that file**, so each installation keeps its own local snapshot. `:Lazy restore` restores revisions from that local file; `:Lazy update` updates plugins and records their new revisions.
+
+The lockfile covers Lazy-managed plugin revisions. Neovim, Mason packages, parser builds, and themes installed separately by Themify have their own versioning. See [Lazy's lockfile guidance](https://lazy.folke.io/usage/lockfile).
+
+Use `:Mason` to manage external tools and `:TSManager` to manage parsers. The AsciiDoc grammar revisions are explicitly pinned in [tree_sitter_manager.lua](lua/plugins/tree_sitter_manager.lua) for compatibility with Markview's queries.
+
+## Maintaining this configuration
+
+Keep project guidance in this README so contributors and coding assistants use the same reference. When starting a coding-assistant session, ask it to read this file before making changes; automatic README loading depends on the tool.
+
+- Make focused changes and check the actual plugin/API contracts. Preserve upstream LSP hooks when changing server overrides.
+- Keep large-file management in faster.nvim's configuration and feature hooks.
+- Preserve the Git helpers' parallel queries and session remote cache.
+- Themify owns theme installation and persistence; theme-specific `before` hooks apply settings before loading their colorschemes.
+- There is no repository test suite or application build step. Use relevant syntax/formatting checks and isolated headless Neovim checks for behavior changes. For documentation edits, review sources and links and run `git diff --check`.
+- Restart Neovim for manual verification; re-sourcing a module can leave earlier callbacks or overrides active.
+- Use `:Lazy install` for missing plugins and `:Lazy update` for deliberate updates. Plugin installation can run build commands and still requires the system tools listed above.
+- Present each stage for review and obtain the repository owner's approval before committing.
+
+## TODO 👀
+
 * learn how to use `unimparied`
 * https://github.com/folke/trouble.nvim
 * https://github.com/folke/noice.nvim
@@ -44,13 +123,7 @@ git clone https://github.com/tienshuoc/nvim.git
 * https://github.com/folke/snacks.nvim : Collection of small quality of life plugins
 
 * don't care about commit if file isn't changed for github url yanks
-* neogit 
+* neogit
 * power of g (vimwiki)
 * treewalker + mini.clue (reddit)
 * linediff
-
-
-Clangd Generate compilation database:
-```bash
-cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
-```
