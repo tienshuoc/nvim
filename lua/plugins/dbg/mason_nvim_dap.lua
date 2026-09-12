@@ -6,16 +6,7 @@ return {
     "mfussenegger/nvim-dap",
   },
   opts = {
-    -- Makes a best effort to setup the various debuggers with
-    -- reasonable debug configurations
+    ensure_installed = { "codelldb" },
     automatic_installation = true,
   },
-  -- mason-nvim-dap is loaded when nvim-dap loads
-  config = function()
-    require("mason-nvim-dap").setup({
-      ensure_installed = {
-        "codelldb",
-      },
-    })
-  end,
 }

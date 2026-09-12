@@ -15,22 +15,20 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local spec
+local minimal_startup = not vim.g.vscode and vim.g.is_large_file_on_startup
+
 if vim.g.vscode then
-  require("lazy").setup({
-    spec = {
-      { import = "plugins.flash" },
-      { import = "plugins.neoscroll" },
-      { import = "plugins.mini_ai" },
-      { import = "plugins.treesitter_textobjects" },
-      { import = "plugins.treesitter" },
-      { import = "plugins.surround" },
-      { import = "plugins.yanky" },
-    },
-    { -- automatically check for plugin updates
-      checker = { enabled = true },
-    },
-  })
-elseif vim.g.is_large_file_on_startup then
+  spec = {
+    { import = "plugins.flash" },
+    { import = "plugins.neoscroll" },
+    { import = "plugins.mini_ai" },
+    { import = "plugins.treesitter_textobjects" },
+    { import = "plugins.tree_sitter_manager" },
+    { import = "plugins.surround" },
+    { import = "plugins.yanky" },
+  }
+elseif minimal_startup then
   local large_file = require("utils.handle_large_file")
   local threshold_mb = large_file.config.size_threshold / (1024 * 1024)
   vim.notify(
@@ -40,30 +38,30 @@ elseif vim.g.is_large_file_on_startup then
   -- Explicit allowlist: only these plugin specs load in large-file mode. A spec
   -- file's declared dependencies still load automatically. Add an import line
   -- here to make a plugin available when starting with a large file.
-  require("lazy").setup({
+  spec = {
     { import = "plugins.faster" }, -- per-buffer feature disabling for the large file
     { import = "plugins.fzf_lua" }, -- grepping/navigation
     { import = "plugins.marks" },
     { import = "plugins.wrapping_paper" },
     { import = "plugins.high_str" },
     { import = "plugins.mini_files" },
-  })
+  }
 else
-  require("lazy").setup({
+  spec = {
     { import = "plugins.git" },
     { import = "plugins.ftplugins" },
     { import = "plugins" },
-    -- Debugger plugins.
     { import = "plugins.dbg" },
-    -- Lsp plugins.
     { import = "plugins.lsp" },
-  }, {
-    checker = {
-      enabled = true,
-      notify = false,
-    },
-    change_detection = {
-      notify = false,
-    },
-  })
+  }
 end
+
+require("lazy").setup(spec, {
+  checker = {
+    enabled = not minimal_startup,
+    notify = false,
+  },
+  change_detection = {
+    notify = false,
+  },
+})
