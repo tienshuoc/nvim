@@ -1,12 +1,10 @@
+local git = require("utils.git")
+
 local M = {}
 
 -- Cache resolved remote URLs per repo root: cache[repo_root][remote] = https_url.
--- Remote URLs are stable for a repo, so skip re-spawning `git remote get-url`.
+-- Keep the session cache so repeated link requests avoid another Git process.
 local cache = {}
-
-local function strip(s)
-  return s and s:gsub("%s+$", "") or ""
-end
 
 -- Convert SSH URL to HTTPS and strip .git suffix.
 function M.to_https(remote_url)
@@ -21,12 +19,12 @@ function M.resolve(root, remote, cb)
     cb(hit)
     return
   end
-  vim.system({ "git", "remote", "get-url", remote }, { text = true }, function(r)
-    if r.code ~= 0 or not r.stdout then
+  git.run(root, { "remote", "get-url", remote }, function(r)
+    local url = r.code == 0 and M.to_https(git.strip(r.stdout))
+    if not url or url == "" then
       cb(nil)
       return
     end
-    local url = M.to_https(strip(r.stdout))
     cache[root] = cache[root] or {}
     cache[root][remote] = url
     cb(url)
