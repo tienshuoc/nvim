@@ -16,9 +16,6 @@ if vim.g.vscode then
 else
   require("options")
 
-  -- Set up large file detection for both startup and runtime
-  require("utils.handle_large_file").setup()
-
   require("lazy_manager")
   require("keymaps")
   require("utils.auto_hlsearch").setup() -- Auto-toggle hlsearch on search keys

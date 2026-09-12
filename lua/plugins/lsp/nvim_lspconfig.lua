@@ -75,7 +75,13 @@ return {
     })
 
     local function inlay_hints_ok(buf)
-      if not vim.api.nvim_buf_is_loaded(buf) or vim.b[buf].large_file or not vim.bo[buf].modifiable or in_diff(buf) then
+      if
+        not vim.api.nvim_buf_is_loaded(buf)
+        or vim.b[buf].faster_bigfile_triggered
+        or vim.b[buf].faster_longline_triggered
+        or not vim.bo[buf].modifiable
+        or in_diff(buf)
+      then
         return false
       end
       -- Reject any non-file URI scheme (diffview://, fugitive://); the server

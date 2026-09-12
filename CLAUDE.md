@@ -9,7 +9,7 @@ This is a comprehensive Neovim configuration that supports both standalone Neovi
 ## Architecture
 
 ### Core Bootstrap Process
-1. **init.lua**: Entry point that detects environment (VSCode vs standalone) and handles large file optimization
+1. **init.lua**: Entry point that detects environment (VSCode vs standalone)
 2. **lazy_manager.lua**: Configures Lazy.nvim plugin manager with different plugin sets based on environment
 3. **themify.nvim**: Colorscheme manager with persistence and FzfLua integration for fuzzy finding with live preview
 
@@ -23,31 +23,27 @@ This is a comprehensive Neovim configuration that supports both standalone Neovi
 ### Environment-Specific Loading
 The configuration uses conditional loading based on:
 - `vim.g.vscode`: Loads minimal plugins for VSCode extension
-- `vim.g.is_large_file_on_startup`: Disables heavy features for large files (>10MB)
-- Standard mode: Full plugin suite
+- Standard mode: Full plugin suite, including when opening large files
 
 ### Large File Optimization
-Files exceeding the threshold (default 10MB; single source of truth:
-`handle_large_file.config.size_threshold`) are handled by two cooperating pieces:
+**faster.nvim** (`lua/plugins/faster.lua`) owns large-file and long-line
+classification, feature toggles, and macro acceleration. The big-file threshold
+is configured there as 10 MiB; long-line detection uses the plugin's defaults.
+There is no separate startup scan, reduced large-file plugin profile, or custom
+classification/restoration utility.
 
-**faster.nvim** (`lua/plugins/faster.lua`) owns per-buffer feature disabling,
-with restore support: syntax, filetype, treesitter, LSP, matchparen, illuminate,
-indent_blankline, lualine, mini_clue, vimopts (swapfile, folds, undo, list,
-spell) plus custom gitsigns/colorizer/cmp features. Its `bigfile.filesize` is
-derived from the shared threshold. Re-enable a feature on demand with its
-`:FasterEnable*` command (e.g. `:FasterEnableLsp`).
+The big-file feature list uses faster's built-in syntax, filetype, Tree-sitter,
+matchparen, illuminate, indentation, and option handling, with custom hooks for
+native Neovim LSP, gitsigns, colorizer, and completion. The LSP hook detaches only
+the current buffer; enabling it re-enters native activation through FileType.
+Lualine and MiniClue suspension is limited to macro acceleration.
 
-**`lua/utils/handle_large_file.lua`** owns the complement:
-- Startup detection: scans all CLI args; any large file sets
-  `vim.g.is_large_file_on_startup`, which makes `lua/lazy_manager.lua` load an
-  explicit plugin allowlist instead of the full suite. Add an import line there
-  to make a plugin available in large-file mode.
-- A single `BufReadPre` autocmd (covers both startup args and mid-session opens)
-  applies the buffer-local options faster.nvim misses: wrap, synmaxcol,
-  cursorline/cursorcolumn, relativenumber, colorcolumn, conceallevel. File size
-  is re-checked on every (re)read.
-- Global `lazyredraw` is enabled on the first large file and restored when the
-  last large-file buffer is deleted.
+Use `:Faster status` to inspect state and `:Faster enable <feature>` to restore
+features manually. Restore `filetype` before `lsp` when enabling them individually.
+Automatic recovery after shrinking a file, `:read` classification, and unload
+cleanup follow the installed plugin's behavior; this configuration does not add
+its own lifecycle callbacks. Inlay hints consult the plugin's big-file and
+long-line trigger flags. Some built-in feature switches have global effects.
 
 Search options are deliberately left alone for grep-ability: `incsearch` stays
 on (its built-in half-second match timeout bounds the cost), and `hlsearch` is
@@ -62,7 +58,6 @@ off on the next normal-mode key, via `vim.on_key`).
   - `<leader>fc`: FzfLua fuzzy finder with live preview (as you navigate, colorschemes apply instantly)
   - `<leader>T`: Themify's built-in colorscheme switcher
 - Each colorscheme's `before` hooks ensure proper setup (vim.g settings, require().setup() calls)
-- Automatically disabled for large files to maintain performance
 
 ## Key Configuration Files
 
