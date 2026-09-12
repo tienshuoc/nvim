@@ -34,7 +34,7 @@ return {
   },
   config = function()
     local dap = require("dap")
-    require("mason-nvim-dap").setup()
+    require("mason-nvim-dap") -- Load the bridge; its Lazy spec owns setup.
     -- Adapter setup
     dap.adapters.codelldb = {
       type = "server",

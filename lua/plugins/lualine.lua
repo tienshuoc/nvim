@@ -32,22 +32,7 @@ return {
         },
         lualine_c = { "diff" },
         lualine_x = {
-          {
-            "lsp_status",
-            icon = "", -- f013
-            symbols = {
-              -- Standard unicode symbols to cycle through for LSP progress:
-              spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
-              -- Standard unicode symbol for when LSP is done:
-              done = "✓",
-              -- Delimiter inserted between LSP names:
-              separator = " ",
-            },
-            -- List of LSP names to ignore (e.g., `null-ls`):
-            ignore_lsp = {},
-            -- Display the LSP name
-            show_name = true,
-          },
+          "lsp_status",
           "filetype",
           "encoding",
         },
@@ -63,13 +48,6 @@ return {
         lualine_y = {},
         lualine_z = {},
       },
-    })
-    -- Listen lsp-progress event and refresh lualine.
-    vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
-    vim.api.nvim_create_autocmd("User", {
-      group = "lualine_augroup",
-      pattern = "LspProgressStatusUpdated",
-      callback = require("lualine").refresh,
     })
   end,
 }
