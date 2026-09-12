@@ -259,6 +259,8 @@ return {
       },
     })
 
+    local mlir_server = "bazel-bin/compiler/shared/tools/unified-lsp-server"
+
     -- Centralized server configurations
     local servers = {
       lua_ls = {
@@ -290,8 +292,24 @@ return {
       rust_analyzer = {
         -- Note: do not set init_options for this LS config, it will be automatically populated by the contents of settings["rust-analyzer"]
       },
+      -- The MLIR server is a build artifact of the software repo, and one
+      -- docker container may host several checkouts (software1..software8).
+      -- A fixed path would bind every buffer to whichever checkout the
+      -- container booted from, so resolve the binary from the checkout that
+      -- actually owns the buffer. Nothing starts when that checkout has not
+      -- been built yet.
       mlir_lsp_server = {
-        cmd = { "mlir-lsp-server" }, -- Replace with full path if not in PATH, e.g. "bazel-bin/.../mlir-lsp-server"
+        cmd = function(dispatchers, config)
+          local bin = vim.fs.joinpath(config.root_dir, mlir_server)
+          return vim.lsp.rpc.start({ bin }, dispatchers)
+        end,
+        root_dir = function(bufnr, on_dir)
+          local root = vim.fs.root(bufnr, { "WORKSPACE", "MODULE.bazel", ".git" })
+          -- Skip activation until this checkout has a runnable server.
+          if root and vim.fn.executable(vim.fs.joinpath(root, mlir_server)) == 1 then
+            on_dir(root)
+          end
+        end,
       },
     }
 
