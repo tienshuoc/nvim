@@ -84,6 +84,7 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
+    "williamboman/mason.nvim", -- Put installed server executables on PATH before activation.
     "p00f/clangd_extensions.nvim",
     "hrsh7th/cmp-nvim-lsp",
   },
@@ -235,10 +236,48 @@ return {
       },
     })
 
+    vim.lsp.config("*", {
+      capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    })
+
     local mlir_server = "bazel-bin/compiler/shared/tools/unified-lsp-server"
 
-    -- Centralized server configurations
+    -- Configure and enable only these servers; Mason handles installation.
     local servers = {
+      clangd = {
+        cmd = function(dispatchers, config)
+          local cmd = {
+            "clangd",
+            "--background-index=false", -- avoid persistent cross-file indexing
+            "-j=2",
+            "--pch-storage=disk",
+            "--clang-tidy",
+            "--header-insertion=iwyu",
+            "--completion-style=detailed",
+            "--function-arg-placeholders",
+            "--fallback-style=llvm",
+          }
+          -- Use the owning checkout's compilation database when present.
+          if config.root_dir and vim.uv.fs_stat(vim.fs.joinpath(config.root_dir, "compile_commands.json")) then
+            table.insert(cmd, "--compile-commands-dir=" .. config.root_dir)
+          end
+          return vim.lsp.rpc.start(cmd, dispatchers, {
+            cwd = config.cmd_cwd or config.root_dir,
+            env = config.cmd_env,
+            detached = config.detached,
+          })
+        end,
+        root_dir = function(bufnr, on_dir)
+          if not vim.bo[bufnr].modifiable or not vim.uri_from_bufnr(bufnr):match("^file://") then
+            return
+          end
+          -- Preserve the nearest checkout/build-database root used for Bazel.
+          local root = vim.fs.root(bufnr, { "compile_commands.json", ".clangd", ".git" })
+          if root then
+            on_dir(root)
+          end
+        end,
+      },
       lua_ls = {
         settings = {
           Lua = {
@@ -264,7 +303,7 @@ return {
         },
       },
       bashls = {},
-      -- ts_ls = {},  -- Uncomment to enable TypeScript language server
+      starpls = {},
       rust_analyzer = {
         -- Note: do not set init_options for this LS config, it will be automatically populated by the contents of settings["rust-analyzer"]
       },
@@ -289,39 +328,11 @@ return {
       },
     }
 
-    -- Setup all language servers with shared configuration
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
     for server, config in pairs(servers) do
-      local server_opts = vim.tbl_deep_extend("force", {
-        capabilities = capabilities,
-      }, config)
-      vim.lsp.config(server, server_opts)
+      vim.lsp.config(server, config)
     end
 
-    -- Servers not managed by mason-lspconfig must be explicitly enabled.
-    vim.lsp.enable("mlir_lsp_server")
-
-    -- clangd is started via a FileType autocmd rather than the generic
-    -- vim.lsp.config loop above. This lets us compute --compile-commands-dir
-    -- at runtime from the actual project root instead of hardcoding a path.
-    --
-    -- Background: Bazel's compile_commands.json records the Bazel execroot as
-    -- the compilation directory (e.g. /scratch/.../execroot/_main/). Without
-    -- --compile-commands-dir, clangd either fails to locate compile_commands.json
-    -- or builds its background index using those execroot paths. The editor
-    -- opens files at their real workspace paths, so the index entries never
-    -- match and cross-file "find references" only returns results from already-
-    -- open buffers. Passing --compile-commands-dir with the real workspace root
-    -- anchors clangd to the right compile_commands.json and ensures path
-    -- consistency between the index and what the editor reports.
-    --
-    -- Global clangd configuration (inlay hints, warnings, hover, etc.) lives in
-    -- lua/plugins/lsp/clangd_config.yaml. clangd only reads it from
-    -- ~/.config/clangd/config.yaml, so ensure that path symlinks to the repo
-    -- copy -- this keeps a single source of truth that also applies to other
-    -- clangd clients (e.g. VSCode). Only created when absent, so a hand-managed
-    -- file is never clobbered.
+    -- Share clangd's global settings with other clients through its standard path.
     local clangd_cfg_src = vim.fn.stdpath("config") .. "/lua/plugins/lsp/clangd_config.yaml"
     local clangd_cfg_dst = vim.fn.expand("~/.config/clangd/config.yaml")
     if vim.uv.fs_stat(clangd_cfg_src) and not vim.uv.fs_stat(clangd_cfg_dst) then
@@ -329,51 +340,6 @@ return {
       vim.uv.fs_symlink(clangd_cfg_src, clangd_cfg_dst)
     end
 
-    vim.api.nvim_create_autocmd("FileType", {
-      group = vim.api.nvim_create_augroup("clangd_start", { clear = true }),
-      pattern = { "c", "cpp", "objc", "objcpp", "cuda" },
-      callback = function()
-        -- Walk up from the current buffer's path to find the project root.
-        -- compile_commands.json is checked first so Bazel/CMake projects are
-        -- rooted at the build database, not at .git (which may be higher up).
-        local root = vim.fs.root(0, { "compile_commands.json", ".clangd", ".git" })
-        if not root then
-          return
-        end -- not a recognised C/C++ project, skip
-
-        if not vim.bo.modifiable then
-          return
-        end -- skip read-only buffers (e.g. diffview)
-
-        local cmd = {
-          "clangd",
-          "--background-index=false", -- stop persistent cross-file indexing (main CPU/RAM hog)
-          "-j=2", -- cap async worker threads to limit CPU spikes
-          "--pch-storage=disk", -- keep preamble PCH on disk instead of RAM
-          "--clang-tidy", -- surface clang-tidy diagnostics inline
-          "--header-insertion=iwyu",
-          "--completion-style=detailed",
-          "--function-arg-placeholders",
-          "--fallback-style=llvm",
-        }
-
-        -- Only add --compile-commands-dir when compile_commands.json is
-        -- present at the root. For projects that use .clangd or .git as their
-        -- only root marker this flag would be wrong, so we skip it there.
-        if vim.uv.fs_stat(root .. "/compile_commands.json") then
-          table.insert(cmd, "--compile-commands-dir=" .. root)
-        end
-
-        -- Buffers that resolve to the same root_dir will share a single clangd
-        -- process — vim.lsp.start reuses an existing client by default when
-        -- both name and root_dir match.
-        vim.lsp.start({
-          name = "clangd",
-          cmd = cmd,
-          root_dir = root,
-          capabilities = capabilities,
-        })
-      end,
-    })
+    vim.lsp.enable(vim.tbl_keys(servers))
   end, -- config function()
 }
