@@ -267,16 +267,10 @@ return {
       end,
     },
     {
-      "sonph/onehalf", -- onehalflight, onehalfdark
-      -- Has special rtp = "vim/" property, not sure if themify supports this
-      rtp = "vim/",
-    },
-    {
       "NLKNguyen/papercolor-theme", -- PaperColor (:set background=dark/light)
     },
     {
       "rose-pine/neovim", -- rose-pine-main, rose-pine-dark, rise-pine-moon, rose-pine-dawn, rose-pine
-      name = "rose-pine",
     },
     {
       "NTBBloodbath/sweetie.nvim",
