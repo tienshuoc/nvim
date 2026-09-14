@@ -83,6 +83,10 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 
 Git link helpers use the source file's repository and reject unsaved buffers. Their shared [Git utility](lua/utils/git.lua) captures the buffer and selection, runs queries from explicit directories, and checks the source buffer before copying. Permalinks also reject staged or on-disk changes to that file and check the file revision against local remote-tracking information.
 
+## Themes
+
+[Themify](lua/plugins/themify.lua) manages theme installation, per-theme settings, and the saved selection. Use `<leader>T` for its management UI or `<leader>fc` for fuzzy search with live preview. Selecting a theme saves it for the next startup; cancelling restores the colorscheme and background that were active when the picker opened, without changing the saved selection.
+
 ## C++ and MLIR
 
 The native LSP setup lives in [nvim_lspconfig.lua](lua/plugins/lsp/nvim_lspconfig.lua). It uses `vim.lsp.config()` and one explicit `vim.lsp.enable()` server list. Mason handles installation and does not automatically enable additional servers.
