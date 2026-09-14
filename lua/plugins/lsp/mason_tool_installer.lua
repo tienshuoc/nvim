@@ -12,7 +12,7 @@ return {
       "codelldb",
       -- "prettier", -- Prettier formatter.
       "clang-format",
-      "stylua", -- lua formatter (use v2.0.0 b/c of GLibc compatability issues), run `MasonInstall stylua@v2.0.0`
+      "stylua", -- Lua formatter.
       "isort", -- python formatter
       "black", -- python formatter
       "shfmt", -- bash formatter
