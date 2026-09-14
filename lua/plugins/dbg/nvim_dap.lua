@@ -34,7 +34,6 @@ return {
   },
   config = function()
     local dap = require("dap")
-    require("mason-nvim-dap") -- Load the bridge; its Lazy spec owns setup.
     -- Adapter setup
     dap.adapters.codelldb = {
       type = "server",
@@ -67,8 +66,7 @@ return {
       { text = "", texthl = "DapStoppedLine", linehl = "DapStoppedLine", numhl = "DapStoppedLine" }
     )
 
-    -- setup dap config by VsCode launch.json file
-    -- Default path is `~/.vscode/launch.json`
+    -- Additional C++ launch and attach configurations.
     dap.configurations.cpp = {
       {
         name = "Pick program and launch",

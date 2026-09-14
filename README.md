@@ -107,6 +107,8 @@ The MLIR server starts only when the owning checkout contains an executable `baz
 
 For C++ debugging, `<leader>dc` starts or continues a session. The `Pick program and launch` configuration prompts for the executable and program arguments. Quote arguments containing spaces, for example `--input "path with spaces.mlir"`. Leave the arguments prompt empty to pass no arguments.
 
+[The tool installer](lua/plugins/lsp/mason_tool_installer.lua) checks CodeLLDB, formatters, and linters during standalone startup and installs missing packages. The debugger loads on a debug mapping. Nvim-dap also reads `.vscode/launch.json` from the current working directory when starting a session. Use `:Mason` or `:MasonInstall codelldb` to manage the adapter installation.
+
 ## Plugin versions and updates
 
 Lazy records installed plugin revisions in `lazy-lock.json`. **This repository currently ignores that file**, so each installation keeps its own local snapshot. `:Lazy restore` restores revisions from that local file; `:Lazy update` updates plugins and records their new revisions.
