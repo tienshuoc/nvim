@@ -72,6 +72,8 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 
 | Mapping | Action |
 |---|---|
+| `<C-h>` / `<C-j>` / `<C-k>` / `<C-l>` | Move between panes (left/down/up/right), including LSP buffers |
+| `K` / `gK` | Hover documentation / signature help in LSP buffers |
 | `<leader>ff` / `<leader>fg` | Find files / search file contents with fzf-lua |
 | `<leader>fc` / `<leader>T` | Theme picker with preview / Themify UI; selection is persisted |
 | `<leader>ih` | Toggle inlay hints for the buffer; hints are opt-in and excluded from diff and flagged large buffers |

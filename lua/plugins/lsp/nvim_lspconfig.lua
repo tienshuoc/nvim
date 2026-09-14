@@ -154,7 +154,7 @@ return {
           vim.lsp.buf.implementation,
           vim.tbl_extend("force", opts, { desc = "Go to implementation" })
         )
-        vim.keymap.set("n", "<C-k>", function()
+        vim.keymap.set("n", "gK", function()
           vim.lsp.buf.signature_help({ border = "rounded" })
         end, vim.tbl_extend("force", opts, { desc = "Show signature information" }))
         vim.keymap.set(
