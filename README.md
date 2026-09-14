@@ -74,12 +74,15 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 |---|---|
 | `<C-h>` / `<C-j>` / `<C-k>` / `<C-l>` | Move between panes (left/down/up/right), including LSP buffers |
 | `K` / `gK` | Hover documentation / signature help in LSP buffers |
+| `gd` / `grr` | Go to definition / references; single results jump directly, multiple results open fzf-lua |
 | `<leader>ff` / `<leader>fg` | Find files / search file contents with fzf-lua |
 | `<leader>fc` / `<leader>T` | Theme picker with preview / Themify UI; selection is persisted |
 | `<leader>ih` | Toggle inlay hints for the buffer; hints are opt-in and excluded from diff and flagged large buffers |
 | `<leader>F` | Format the current buffer or selection |
 | `<leader>gU` | Copy a permalink for the current line or visual range |
 | `<leader>gB` | Copy the blamed commit URL or a PR URL inferred from its subject |
+
+`gd` and `grr` jump directly through Neovim's native LSP handler when there is one result, preserving position encodings and the tag stack. With multiple results, the installed fzf-lua version can still jump to the wrong column after non-ASCII text when choosing from the picker.
 
 Git link helpers use the source file's repository and reject unsaved buffers. Their shared [Git utility](lua/utils/git.lua) captures the buffer and selection, runs queries from explicit directories, and checks the source buffer before copying. Permalinks also reject staged or on-disk changes to that file and check the file revision against local remote-tracking information.
 

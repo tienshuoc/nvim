@@ -120,6 +120,10 @@ return {
         ["--layout"] = "reverse", -- Reverses the search bar to be on top.
       },
       cmd = "fd", -- Favour using `fd` first.
+      lsp = {
+        -- Use the original LSP location and encoding for automatic single-result jumps.
+        jump1_action = false,
+      },
       files = {
         -- Uses v2 version of filename_first.
         -- Issue with just doing "path.filename_first" is that it matches on how the string itself is presented to the user.
