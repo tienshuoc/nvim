@@ -15,29 +15,35 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local spec
+-- Use Lazy plugin names, including dependencies needed by the VS Code subset.
+local vscode_plugins = {
+  ["lazy.nvim"] = true,
+  ["flash.nvim"] = true,
+  ["neoscroll.nvim"] = true,
+  ["mini.ai"] = true,
+  ["nvim-treesitter-textobjects"] = true,
+  ["tree-sitter-manager.nvim"] = true,
+  ["nvim-surround"] = true,
+  ["yanky.nvim"] = true,
+  ["sqlite.lua"] = true, -- Yanky's history backend.
+}
 
-if vim.g.vscode then
-  spec = {
-    { import = "plugins.flash" },
-    { import = "plugins.neoscroll" },
-    { import = "plugins.mini_ai" },
-    { import = "plugins.treesitter_textobjects" },
-    { import = "plugins.tree_sitter_manager" },
-    { import = "plugins.surround" },
-    { import = "plugins.yanky" },
-  }
-else
-  spec = {
-    { import = "plugins.git" },
-    { import = "plugins.ftplugins" },
-    { import = "plugins" },
-    { import = "plugins.dbg" },
-    { import = "plugins.lsp" },
-  }
-end
+-- Always declare the full set so profile changes do not make plugins look unused.
+local spec = {
+  { import = "plugins.git" },
+  { import = "plugins.ftplugins" },
+  { import = "plugins" },
+  { import = "plugins.dbg" },
+  { import = "plugins.lsp" },
+}
 
 require("lazy").setup(spec, {
+  defaults = {
+    -- cond skips loading while retaining installed plugins and their lock entries.
+    cond = function(plugin)
+      return not vim.g.vscode or vscode_plugins[plugin.name] == true
+    end,
+  },
   checker = {
     enabled = true,
     notify = false,

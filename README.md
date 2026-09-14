@@ -33,16 +33,20 @@ Mason's configured installation lists include clangd, LuaLS, Pyright, BashLS, St
 ## Startup profiles
 
 - **Standalone:** `init.lua` loads options, Lazy, keymaps, search highlighting, and sessions. The ordinary plugin set loads for every file size.
-- **VS Code:** when the extension sets `vim.g.vscode`, `lua/vscode_config.lua` supplies its own options and mappings, then loads the explicit VS Code plugin subset in `lua/lazy_manager.lua`.
+- **VS Code:** when the extension sets `vim.g.vscode`, `lua/vscode_config.lua` supplies its own options and mappings. Lazy reads the same full specification but activates only the `vscode_plugins` allowlist in `lua/lazy_manager.lua`, including its required dependencies.
 
-The profiles do not configure separate plugin installation roots. If they share `stdpath("data")`, they share Lazy's plugin directory. Run `:Lazy clean` or `:Lazy sync` from standalone Neovim when sharing that directory, so the active specification includes the full plugin set. [Lazy's command reference](https://lazy.folke.io/usage) describes the install, clean, and update operations combined by `sync`.
+Both profiles share Lazy's plugin directory when they share `stdpath("data")`. Profile selection uses Lazy's native [`cond`](https://lazy.folke.io/spec#spec-loading), which skips loading standalone plugins in VS Code while keeping their installed directories and existing lockfile entries. `:Lazy clean` and the cleanup part of `:Lazy sync` can run from either profile; plugins removed from the full specification are still eligible for cleanup.
+
+Install/update operations act on the active profile's plugins. Updates to a plugin used by both profiles affect both, since its checkout is shared.
+
+When extending the VS Code subset, add the plugin's Lazy name and any required dependencies to `vscode_plugins`. A plugin's explicit `cond` overrides this default; use it deliberately for profile-specific exceptions.
 
 ## File layout
 
 | Path | Purpose |
 |---|---|
 | [init.lua](init.lua) | Entry point and profile selection |
-| [lua/lazy_manager.lua](lua/lazy_manager.lua) | Lazy bootstrap and plugin imports |
+| [lua/lazy_manager.lua](lua/lazy_manager.lua) | Lazy bootstrap, shared imports, and profile selection |
 | [lua/options.lua](lua/options.lua), [lua/keymaps.lua](lua/keymaps.lua) | Standalone options and mappings |
 | [lua/vscode_config.lua](lua/vscode_config.lua) | VS Code-specific options and mappings |
 | [lua/sessions.lua](lua/sessions.lua) | Session management |
