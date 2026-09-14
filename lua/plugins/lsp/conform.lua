@@ -12,7 +12,7 @@ return {
         require("conform").format({
           timeout_ms = 3000,
           -- LSP formatting is used when no other formatters are available.
-          lsp_fallback = true,
+          lsp_format = "fallback",
         })
       end,
       mode = { "n", "v" },
@@ -35,8 +35,8 @@ return {
       lua = { "stylua" },
       -- Conform will run multiple formatters sequentially
       python = { "isort", "black" },
-      -- Use a sub-list to run only the first available formatter
-      javascript = { "prettierd", "prettier" },
+      -- Run only the first available JavaScript formatter.
+      javascript = { "prettierd", "prettier", stop_after_first = true },
       json = { "prettier" },
       cpp = { "clang-format" },
       jsonnet = { "jsonnet_indent4" },
@@ -44,10 +44,11 @@ return {
       bzl = { "buildifier" },
     },
     format_on_save = function(bufnr)
-      if vim.bo.filetype ~= "lua" and vim.bo.filetype ~= "jsonnet" then
+      local filetype = vim.bo[bufnr].filetype
+      if filetype ~= "lua" and filetype ~= "jsonnet" then
         return
       end
-      return { timeout_ms = 500, lsp_format = "fallback" }
+      return { bufnr = bufnr, timeout_ms = 500, lsp_format = "fallback" }
     end,
   },
 }
