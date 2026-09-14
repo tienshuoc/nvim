@@ -105,6 +105,8 @@ See [clangd's project setup](https://clangd.llvm.org/installation.html#project-s
 
 The MLIR server starts only when the owning checkout contains an executable `bazel-bin/compiler/shared/tools/unified-lsp-server`. It is a project build artifact, not a Mason-installed server.
 
+For C++ debugging, `<leader>dc` starts or continues a session. The `Pick program and launch` configuration prompts for the executable and program arguments. Quote arguments containing spaces, for example `--input "path with spaces.mlir"`. Leave the arguments prompt empty to pass no arguments.
+
 ## Plugin versions and updates
 
 Lazy records installed plugin revisions in `lazy-lock.json`. **This repository currently ignores that file**, so each installation keeps its own local snapshot. `:Lazy restore` restores revisions from that local file; `:Lazy update` updates plugins and records their new revisions.

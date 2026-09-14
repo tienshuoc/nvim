@@ -78,10 +78,8 @@ return {
           return vim.fn.input("Path to program: ", vim.fn.getcwd() .. "/bazel-out/k8-dbg/bin/", "file")
         end,
         args = function()
-          -- return vim.fn.input("Args to executable: ")
-          -- Prompt the user for arguments to pass to the program
           local input = vim.fn.input("Program arguments: ")
-          return vim.split(input, " ") -- split the input string by spaces into a table
+          return require("dap.utils").splitstr(input)
         end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
