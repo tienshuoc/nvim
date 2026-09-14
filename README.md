@@ -81,6 +81,9 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 | `<leader>F` | Format the current buffer or selection |
 | `<leader>gU` | Copy a permalink for the current line or visual range |
 | `<leader>gB` | Copy the blamed commit URL or a PR URL inferred from its subject |
+| `<leader>mks1` … `<leader>mks9` / `<leader>mko1` … `<leader>mko9` | Save / load session slots 1–9 |
+
+Session slots live at `~/s1.vim` through `~/s9.vim` by default. Change their directory and naming in [sessions.lua](lua/sessions.lua).
 
 `gd` and `grr` jump directly through Neovim's native LSP handler when there is one result, preserving position encodings and the tag stack. With multiple results, the installed fzf-lua version can still jump to the wrong column after non-ASCII text when choosing from the picker.
 

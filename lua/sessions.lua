@@ -19,14 +19,14 @@ function M.setup()
 
     -- Save session keymap
     vim.keymap.set("n", "<leader>mks" .. i, function()
-      vim.cmd("mksession! " .. session_path)
+      vim.cmd("mksession! " .. vim.fn.fnameescape(session_path))
       vim.notify("Session saved to " .. session_path, vim.log.levels.INFO)
     end, { noremap = true, desc = "Save session " .. i })
 
     -- Load session keymap
     vim.keymap.set("n", "<leader>mko" .. i, function()
       if vim.fn.filereadable(session_path) == 1 then
-        vim.cmd("source " .. session_path)
+        vim.cmd("source " .. vim.fn.fnameescape(session_path))
         vim.notify("Session loaded from " .. session_path, vim.log.levels.INFO)
       else
         vim.notify("Session file not found: " .. session_path, vim.log.levels.WARN)
