@@ -19,7 +19,15 @@ return {
             key = "d",
           },
         },
-        project = { enable = true, limit = 8, icon = " ", label = " Projects", action = "FzfLua files cwd=" },
+        project = {
+          enable = true,
+          limit = 8,
+          icon = " ",
+          label = " Projects",
+          action = function(path)
+            require("fzf-lua").files({ cwd = path })
+          end,
+        },
       },
     })
   end,
