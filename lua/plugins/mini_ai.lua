@@ -11,7 +11,6 @@ return {
         f = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
         c = spec_treesitter({ a = "@class.outer", i = "@class.inner" }),
         p = spec_treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
-        m = spec_treesitter({ a = "@method.outer", i = "@method.inner" }),
         o = spec_treesitter({
           a = { "@conditional.outer", "@loop.outer" },
           i = { "@conditional.inner", "@loop.inner" },
