@@ -1,7 +1,10 @@
 local M = {}
 
 function M.yank_line_ref(opts)
-  local path = opts.realpath and vim.uv.fs_realpath(vim.fn.expand("%")) or vim.fn.expand("%")
+  local path = require("utils.buffer_path").get(opts)
+  if not path then
+    return
+  end
 
   -- Normal mode yanks the cursor line; visual mode yanks the live selection
   -- (line("v") is the selection's other end, line(".") the cursor).
@@ -30,4 +33,3 @@ function M.yank_line_ref(opts)
 end
 
 return M
-

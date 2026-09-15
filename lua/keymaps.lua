@@ -1,3 +1,5 @@
+local buffer_path = require("utils.buffer_path")
+
 local opts = {
   -- Define common options.
   noremap = true, -- non-recursive
@@ -64,14 +66,20 @@ vim.keymap.set("n", "<c-k>", ":wincmd k<CR>", vim.tbl_extend("force", opts, { de
 vim.keymap.set("n", "<c-l>", ":wincmd l<CR>", vim.tbl_extend("force", opts, { desc = "Switch panes right." }))
 
 vim.keymap.set("n", "<leader>rp", function()
-  vim.notify(vim.uv.fs_realpath(vim.fn.expand("%")))
+  local path = buffer_path.get({ realpath = true })
+  if path then
+    vim.notify(path)
+  end
 end, vim.tbl_extend("force", opts, { desc = "Show file fullpath." }))
 
 vim.keymap.set(
   "n",
   "<leader>yrp", -- "Yank Real Path"
   function()
-    local v = vim.uv.fs_realpath(vim.fn.expand("%"))
+    local v = buffer_path.get({ realpath = true })
+    if not v then
+      return
+    end
     vim.fn.setreg("+", v)
     vim.notify("Yanked realpath:\n" .. v)
   end,
@@ -82,7 +90,10 @@ vim.keymap.set(
   "n",
   "<leader>ywp", -- "Yank Workspace-relative Path"
   function()
-    local v = vim.fn.expand("%")
+    local v = buffer_path.get()
+    if not v then
+      return
+    end
     vim.fn.setreg("+", v)
     vim.notify("Yanked workspace-relative path:\n" .. v)
   end,
@@ -93,7 +104,11 @@ vim.keymap.set(
   "n",
   "<leader>yrd", -- "Yank Realpath Directory"
   function()
-    local v = vim.fn.fnamemodify(vim.uv.fs_realpath(vim.fn.expand("%")), ":h")
+    local path = buffer_path.get({ realpath = true })
+    if not path then
+      return
+    end
+    local v = vim.fn.fnamemodify(path, ":h")
     vim.fn.setreg("+", v)
     vim.notify("Yanked realpath directory:\n" .. v)
   end,
@@ -104,7 +119,11 @@ vim.keymap.set(
   "n",
   "<leader>yfn", -- "Yank File Name"
   function()
-    local v = vim.fn.expand("%:t")
+    local path = buffer_path.get()
+    if not path then
+      return
+    end
+    local v = vim.fn.fnamemodify(path, ":t")
     vim.fn.setreg("+", v)
     vim.notify("Yanked filename:\n" .. v)
   end,

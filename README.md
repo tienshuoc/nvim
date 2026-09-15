@@ -83,11 +83,16 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 | `<leader>F` | Format the current buffer or selection |
 | `<leader>gU` | Copy a permalink for the current line or visual range |
 | `<leader>gB` | Copy the blamed commit URL or a PR URL inferred from its subject |
+| `<leader>rp` / `<leader>yrp` / `<leader>yrd` | Show resolved file path / copy it / copy its directory |
+| `<leader>ywp` / `<leader>yfn` | Copy file path as shown by Neovim / filename |
+| `<leader>yln` / `<leader>yrln` | Copy file path / resolved path with the cursor line or selected line range |
 | `<leader>mks1` … `<leader>mks9` / `<leader>mko1` … `<leader>mko9` | Save / load session slots 1–9 |
 
 Session slots live at `~/s1.vim` through `~/s9.vim` by default. Change their directory and naming in [sessions.lua](lua/sessions.lua).
 
 [MiniFiles](lua/plugins/mini_files.lua) uses the parent directory for a new or deleted file when that directory exists. Unnamed and special buffers, or files whose parent is missing, open the current working directory.
+
+File-path shortcuts warn for unnamed, special, and non-file URI buffers and leave the clipboard intact. Resolved-path shortcuts require a file that can be resolved on disk; the other shortcuts also support named new files.
 
 `gd` and `grr` jump directly through Neovim's native LSP handler when there is one result, preserving position encodings and the tag stack. With multiple results, the installed fzf-lua version can still jump to the wrong column after non-ASCII text when choosing from the picker.
 
