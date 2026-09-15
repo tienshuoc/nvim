@@ -5,17 +5,6 @@ return {
     local neoscroll = require("neoscroll")
     neoscroll.setup({
       hide_cursor = false, -- Keep the cursor visible while scrolling.
-      -- Hide/show cursor line before/after scrolling.
-      pre_hook = function(info)
-        if info == "cursorline" then
-          vim.wo.cursorline = false
-        end
-      end,
-      post_hook = function(info)
-        if info == "cursorline" then
-          vim.wo.cursorline = true
-        end
-      end,
     })
     local keymap = {
       -- Use the "sine" easing function
