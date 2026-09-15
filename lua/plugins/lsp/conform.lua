@@ -21,14 +21,8 @@ return {
   },
   opts = {
     formatters = {
-      -- Self-defined formatters.
-      jsonnet_indent4 = {
-        command = "jsonnetfmt",
-        args = {
-          "--indent",
-          "4",
-          "-",
-        },
+      jsonnetfmt = {
+        prepend_args = { "--indent", "4" },
       },
     },
     formatters_by_ft = {
@@ -39,7 +33,7 @@ return {
       javascript = { "prettierd", "prettier", stop_after_first = true },
       json = { "prettier" },
       cpp = { "clang-format" },
-      jsonnet = { "jsonnet_indent4" },
+      jsonnet = { "jsonnetfmt" },
       sh = { "shfmt" },
       bzl = { "buildifier" },
     },
