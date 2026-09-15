@@ -1,9 +1,13 @@
 -- Native OSC52 clipboard support for SSH/tmux (Neovim 10.0+)
 local function paste()
-  return {
-    vim.fn.split(vim.fn.getreg(""), "\n"),
-    vim.fn.getregtype(""),
-  }
+  local lines = vim.fn.getreg("", 1, true)
+  -- Clipboard providers accept one type character, without a block width.
+  local regtype = vim.fn.getregtype(""):sub(1, 1)
+  if regtype == "V" or regtype == "\22" then
+    -- Match the trailing newline in Neovim's clipboard provider format.
+    lines[#lines + 1] = ""
+  end
+  return { lines, regtype }
 end
 
 vim.g.clipboard = {
