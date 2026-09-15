@@ -77,6 +77,7 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 | `K` / `gK` | Hover documentation / signature help in LSP buffers |
 | `gd` / `grr` | Go to definition / references; single results jump directly, multiple results open fzf-lua |
 | `<leader>ff` / `<leader>fg` | Find files / search file contents with fzf-lua |
+| `<leader>mf` | Browse files with MiniFiles, focused on the current file when it exists |
 | `<leader>fc` / `<leader>T` | Theme picker with preview / Themify UI; selection is persisted |
 | `<leader>ih` | Toggle inlay hints for the buffer; hints are opt-in and excluded from diff and flagged large buffers |
 | `<leader>F` | Format the current buffer or selection |
@@ -85,6 +86,8 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 | `<leader>mks1` … `<leader>mks9` / `<leader>mko1` … `<leader>mko9` | Save / load session slots 1–9 |
 
 Session slots live at `~/s1.vim` through `~/s9.vim` by default. Change their directory and naming in [sessions.lua](lua/sessions.lua).
+
+[MiniFiles](lua/plugins/mini_files.lua) uses the parent directory for a new or deleted file when that directory exists. Unnamed and special buffers, or files whose parent is missing, open the current working directory.
 
 `gd` and `grr` jump directly through Neovim's native LSP handler when there is one result, preserving position encodings and the tag stack. With multiple results, the installed fzf-lua version can still jump to the wrong column after non-ASCII text when choosing from the picker.
 

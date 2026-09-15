@@ -5,7 +5,14 @@ return {
     {
       "<leader>mf",
       function()
-        require("mini.files").open(vim.api.nvim_buf_get_name(0)) -- Open directory of current file (in last used state) focused on the file
+        local path = vim.api.nvim_buf_get_name(0)
+        if vim.bo.buftype ~= "" or path == "" then
+          path = nil
+        elseif not vim.uv.fs_stat(path) then
+          local parent = vim.fs.dirname(path)
+          path = parent and vim.fn.isdirectory(parent) == 1 and parent or nil
+        end
+        require("mini.files").open(path)
       end,
       desc = "Open MiniFiles",
     },
