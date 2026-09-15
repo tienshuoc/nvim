@@ -110,7 +110,7 @@ See [clangd's project setup](https://clangd.llvm.org/installation.html#project-s
 
 The MLIR server starts only when the owning checkout contains an executable `bazel-bin/compiler/shared/tools/unified-lsp-server`. It is a project build artifact, not a Mason-installed server.
 
-For C++ debugging, `<leader>dc` starts or continues a session. The `Pick program and launch` configuration prompts for the executable and program arguments. Quote arguments containing spaces, for example `--input "path with spaces.mlir"`. Leave the arguments prompt empty to pass no arguments.
+For C++ debugging, `<leader>dc` starts or continues a session. The `Pick program and launch` configuration prompts for the executable and program arguments. Quote arguments containing spaces, for example `--input "path with spaces.mlir"`. Leave the arguments prompt empty to pass no arguments. Use `<leader>dui` to toggle the debugger panels without starting a session.
 
 [The tool installer](lua/plugins/lsp/mason_tool_installer.lua) checks CodeLLDB, formatters, and linters during standalone startup and installs missing packages. The debugger loads on a debug mapping. Nvim-dap also reads `.vscode/launch.json` from the current working directory when starting a session. Use `:Mason` or `:MasonInstall codelldb` to manage the adapter installation.
 

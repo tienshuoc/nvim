@@ -1,13 +1,20 @@
 return {
   "rcarriga/nvim-dap-ui",
-  lazy = true,
-  dependencies = "mfussenegger/nvim-dap",
+  dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+  keys = {
+    {
+      "<leader>dui",
+      function()
+        require("dapui").toggle()
+      end,
+      desc = "Toggle DAP UI",
+    },
+  },
   config = function()
     local dap = require("dap")
     -- Use nvim-dap events to open/close dap-ui windows automatically.
     local dapui = require("dapui")
     dapui.setup()
-    vim.keymap.set("n", "<leader>dui", dapui.toggle, { desc = "Toggle DAP UI" })
     dap.listeners.after.event_initialized["dapui_config"] = function()
       dapui.open()
     end
