@@ -15,7 +15,7 @@ return {
           "filename",
           {
             "diagnostics",
-            sources = { "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic" }, -- Displays diagnostics for the defined severity types
+            sources = { "nvim_diagnostic" }, -- Count diagnostics for the current buffer once.
             sections = { "error", "warn", "info", "hint" },
 
             diagnostics_color = {

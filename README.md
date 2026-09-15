@@ -87,6 +87,8 @@ Session slots live at `~/s1.vim` through `~/s9.vim` by default. Change their dir
 
 `gd` and `grr` jump directly through Neovim's native LSP handler when there is one result, preserving position encodings and the tag stack. With multiple results, the installed fzf-lua version can still jump to the wrong column after non-ASCII text when choosing from the picker.
 
+The statusline diagnostic counts cover the current buffer, including both LSP and other Neovim diagnostic providers.
+
 Git link helpers use the source file's repository and reject unsaved buffers. Their shared [Git utility](lua/utils/git.lua) captures the buffer and selection, runs queries from explicit directories, and checks the source buffer before copying. Permalinks also reject staged or on-disk changes to that file and check the file revision against local remote-tracking information.
 
 ## Themes
