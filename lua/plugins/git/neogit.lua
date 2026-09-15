@@ -12,7 +12,7 @@ return {
       function()
         require("neogit").open({ kind = "tab" })
       end,
-      { desc = "Neogit." },
+      desc = "Neogit.",
     },
   },
   opts = {
