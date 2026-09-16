@@ -28,7 +28,7 @@ nvim
 
 Lazy.nvim bootstraps itself on first launch. Open `:Lazy` to inspect installation, or use `:Lazy install` to install missing plugins. Run `:checkhealth` after installation.
 
-Mason's configured installation lists include clangd, LuaLS, Pyright, BashLS, Starpls, rust-analyzer, and CodeLLDB. Other tools declared in [Conform's configuration](lua/plugins/lsp/conform.lua) must be installed through Mason or otherwise available on `PATH`; `:ConformInfo` shows their status. Feature-specific integrations also have their own prerequisites—for example, OpenCode uses its CLI and `lsof`.
+[Mason Tool Installer](lua/plugins/lsp/mason_tool_installer.lua) owns one package list for language servers, CodeLLDB, formatters, and linters. Its language servers include clangd, LuaLS, Pyright, BashLS, Starpls, and rust-analyzer. Other tools declared in [Conform's configuration](lua/plugins/lsp/conform.lua) must be installed through Mason or otherwise available on `PATH`; `:ConformInfo` shows their status. Feature-specific integrations also have their own prerequisites—for example, OpenCode uses its CLI and `lsof`.
 
 ## Startup profiles
 
@@ -124,7 +124,7 @@ The MLIR server starts only when the owning checkout contains an executable `baz
 
 For C++ debugging, `<leader>dc` starts or continues a session. The `Pick program and launch` configuration prompts for the executable and program arguments. Quote arguments containing spaces, for example `--input "path with spaces.mlir"`. Leave the arguments prompt empty to pass no arguments. Use `<leader>dui` to toggle the debugger panels without starting a session.
 
-[The tool installer](lua/plugins/lsp/mason_tool_installer.lua) checks CodeLLDB, formatters, and linters during standalone startup and installs missing packages. The debugger loads on a debug mapping. Nvim-dap also reads `.vscode/launch.json` from the current working directory when starting a session. Use `:Mason` or `:MasonInstall codelldb` to manage the adapter installation.
+[The tool installer](lua/plugins/lsp/mason_tool_installer.lua) checks the complete package list during standalone startup and installs missing packages. The debugger loads on a debug mapping. Nvim-dap also reads `.vscode/launch.json` from the current working directory when starting a session. Use `:Mason` or `:MasonInstall codelldb` to manage the adapter installation.
 
 ## Plugin versions and updates
 
@@ -132,7 +132,9 @@ Lazy records installed plugin revisions in `lazy-lock.json`. **This repository c
 
 The lockfile covers Lazy-managed plugin revisions. Neovim, Mason packages, parser builds, and themes installed separately by Themify have their own versioning. See [Lazy's lockfile guidance](https://lazy.folke.io/usage/lockfile).
 
-Use `:Mason` to manage external tools and `:TSManager` to manage parsers. The AsciiDoc grammar revisions are explicitly pinned in [tree_sitter_manager.lua](lua/plugins/tree_sitter_manager.lua) for compatibility with Markview's queries.
+Use `:Mason`, `:MasonInstall <package>`, and `:MasonUninstall <package>` to manage external tools. Commands use Mason package names such as `lua-language-server`, `bash-language-server`, and `rust-analyzer`. `:MasonToolsInstall` checks the complete configured list, `:MasonToolsUpdate` updates those packages, and `:MasonToolsClean` removes packages outside that list. The `:LspInstall` / `:LspUninstall` helpers and LSP-name aliases are not configured.
+
+Use `:TSManager` to manage parsers. The AsciiDoc grammar revisions are explicitly pinned in [tree_sitter_manager.lua](lua/plugins/tree_sitter_manager.lua) for compatibility with Markview's queries.
 
 ## Maintaining this configuration
 

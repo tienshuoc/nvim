@@ -6,9 +6,21 @@ return {
     "williamboman/mason.nvim",
   },
   opts = {
-    -- Use Mason package names without loading an optional DAP integration.
-    integrations = { ["mason-nvim-dap"] = false },
+    -- Use Mason package names; Neovim owns LSP activation.
+    integrations = {
+      ["mason-lspconfig"] = false,
+      ["mason-null-ls"] = false,
+      ["mason-nvim-dap"] = false,
+    },
     ensure_installed = {
+      -- Language servers.
+      "clangd",
+      "lua-language-server",
+      "pyright",
+      "bash-language-server",
+      "starpls",
+      "rust-analyzer",
+      -- Debugger, formatters, and linters.
       "codelldb",
       -- "prettier", -- Prettier formatter.
       "clang-format",
