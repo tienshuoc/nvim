@@ -108,6 +108,8 @@ Git link helpers use the source file's repository and reject unsaved buffers. Th
 
 [Themify](lua/plugins/themify.lua) manages theme installation, per-theme settings, and the saved selection. Use `<leader>T` for its management UI or `<leader>fc` for fuzzy search with live preview. Selecting a theme saves it for the next startup; cancelling restores the colorscheme and background that were active when the picker opened, without changing the saved selection.
 
+Inline Git blame uses the active theme's styling, falling back to `NonText` when the theme does not define `GitSignsCurrentLineBlame`.
+
 ## C++ and MLIR
 
 The native LSP setup lives in [nvim_lspconfig.lua](lua/plugins/lsp/nvim_lspconfig.lua). It uses `vim.lsp.config()` and one explicit `vim.lsp.enable()` server list. Mason handles installation and does not automatically enable additional servers.

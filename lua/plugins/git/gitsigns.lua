@@ -23,8 +23,4 @@ return {
     { "<leader>gsh", ":Gitsigns stage_hunk<CR>", desc = "Gitsigns stage hunk." },
     { "<leader>grh", ":Gitsigns reset_hunk<CR>", desc = "Gitsigns reset hunk." },
   },
-  config = function(_, opts)
-    vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { italic = true, fg = "#414550" })
-    require("gitsigns").setup(opts)
-  end,
 }
