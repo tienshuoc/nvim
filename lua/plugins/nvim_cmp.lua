@@ -23,7 +23,10 @@ return {
     },
     "saadparwaiz1/cmp_luasnip", -- Provides a completion source for LuaSnip within nvim-cmp.
     "onsails/lspkind.nvim", -- Adds VSCode-like icons to the completion menu.
-    "alexander-born/cmp-bazel", -- Provides completion for Bazel targets and package files.
+    {
+      "alexander-born/cmp-bazel", -- Provides completion for Bazel targets and package files.
+      dependencies = { "nvim-lua/plenary.nvim" },
+    },
   },
   config = function()
     -- =================================================================
