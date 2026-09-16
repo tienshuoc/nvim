@@ -1,7 +1,6 @@
 return {
   "hrsh7th/nvim-cmp",
   event = { "InsertEnter" },
-  lazy = true,
   dependencies = {
     "hrsh7th/cmp-nvim-lsp", -- Provides LSP (Language Server Protocol) completion sources.
     "hrsh7th/cmp-buffer", -- Provides completion sources from the text in your current buffer.
@@ -9,12 +8,8 @@ return {
     "hrsh7th/cmp-nvim-lsp-signature-help", -- Shows function signatures and highlights the current parameter.
     {
       "L3MON4D3/LuaSnip", -- The primary snippet engine.
-      lazy = true,
       dependencies = {
-        {
-          "rafamadriz/friendly-snippets", -- Snippet collection for a set of different programming languages.
-          lazy = true,
-        },
+        "rafamadriz/friendly-snippets", -- Snippet collection for a set of different programming languages.
       },
       -- follow latest release.
       version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)

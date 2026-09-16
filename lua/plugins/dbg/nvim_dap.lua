@@ -1,7 +1,6 @@
 return {
   -- Neovim DAP
   "mfussenegger/nvim-dap",
-  lazy = true,
   dependencies = {
     {
       -- Virtual text for the debugger.

@@ -1,7 +1,6 @@
 return {
   "kawre/leetcode.nvim",
   cmd = "Leet",
-  lazy = true,
   dependencies = {
     "ibhagwan/fzf-lua",
     "nvim-lua/plenary.nvim",

@@ -1,6 +1,5 @@
 return {
   "p00f/clangd_extensions.nvim",
-  lazy = true,
   keys = {
     { "<leader>cs", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
   },

@@ -1,7 +1,6 @@
 return {
   "benlubas/wrapping-paper.nvim",
-  -- UI component library; lazy = true keeps it from loading until gww triggers wrapping-paper
-  dependencies = { { "MunifTanjim/nui.nvim", lazy = true } },
+  dependencies = { "MunifTanjim/nui.nvim" },
   keys = {
     {
       "gww", -- overrides neovim default `gww` behavior which formats line to fit within `textwidth`

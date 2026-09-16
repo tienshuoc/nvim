@@ -51,7 +51,6 @@ return {
         "gitignore",
         "html",
         "jsonnet",
-        "lua",
         "llvm",
         "mlir",
         "markdown",
