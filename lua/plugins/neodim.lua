@@ -2,25 +2,23 @@ return {
   -- Dim unused functions, variables, parameters, and more. (Requires `-Wunused-variable` for clangd)
   "zbirenbaum/neodim",
   event = "LspAttach",
-  config = function()
-    require("neodim").setup({
-      refresh_delay = 75,
-      alpha = 0.75,
-      blend_color = "#000000",
-      hide = {
-        -- Renable all decorations for 'unused' diagnostics.
-        underline = false,
-        virtual_text = false,
-        signs = false,
-      },
-      regex = {
-        "[uU]nused",
-        "[nN]ever [rR]ead",
-        "[nN]ot [rR]ead",
-      },
-      priority = 128,
-    })
-  end,
+  opts = {
+    refresh_delay = 75,
+    alpha = 0.75,
+    blend_color = "#000000",
+    hide = {
+      -- Renable all decorations for 'unused' diagnostics.
+      underline = false,
+      virtual_text = false,
+      signs = false,
+    },
+    regex = {
+      "[uU]nused",
+      "[nN]ever [rR]ead",
+      "[nN]ot [rR]ead",
+    },
+    priority = 128,
+  },
 }
 
 -- For this to work with Clangd:

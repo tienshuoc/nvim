@@ -3,9 +3,9 @@ return {
   version = "*",
   event = "VeryLazy",
   dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
-  config = function()
+  opts = function()
     local spec_treesitter = require("mini.ai").gen_spec.treesitter
-    require("mini.ai").setup({
+    return {
       n_lines = 200, -- Number of lines within which textobject is searched
       custom_textobjects = {
         f = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
@@ -16,6 +16,6 @@ return {
           i = { "@conditional.inner", "@loop.inner" },
         }),
       },
-    })
+    }
   end,
 }

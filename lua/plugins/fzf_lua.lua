@@ -91,46 +91,44 @@ return {
       desc = "Fuzzy search registers.",
     },
   },
-  config = function()
-    require("fzf-lua").setup({
-      "fzf-vim", -- Give fzf-vim-like keymaps and feel.
-      keymap = {
-        fzf = {
-          ["ctrl-q"] = "select-all+accept",
-        },
+  opts = {
+    "fzf-vim", -- Give fzf-vim-like keymaps and feel.
+    keymap = {
+      fzf = {
+        ["ctrl-q"] = "select-all+accept",
       },
-      winopts = {
-        width = 0.7,
-        height = 0.5,
-        row = 0.85, -- window row position (0=top, 1=bottom)
-        col = 0.50, -- window col position (0=left, 1=right)
-        backdrop = 40, -- (what's outside the preview window) 0 is opaque, 100 is transparent
-        preview = {
-          hidden = "nohidden",
-          vertical = "up:45%",
-          horizontal = "right:50%",
-          layout = "flex",
-          flip_columns = 120,
-          delay = 0,
-          winopts = { number = true },
-        },
+    },
+    winopts = {
+      width = 0.7,
+      height = 0.5,
+      row = 0.85, -- window row position (0=top, 1=bottom)
+      col = 0.50, -- window col position (0=left, 1=right)
+      backdrop = 40, -- (what's outside the preview window) 0 is opaque, 100 is transparent
+      preview = {
+        hidden = "nohidden",
+        vertical = "up:45%",
+        horizontal = "right:50%",
+        layout = "flex",
+        flip_columns = 120,
+        delay = 0,
+        winopts = { number = true },
       },
-      fzf_opts = {
-        ["--cycle"] = "", -- Cycles back from last result to the first when scrolling.
-        ["--layout"] = "reverse", -- Reverses the search bar to be on top.
-      },
-      cmd = "fd", -- Favour using `fd` first.
-      lsp = {
-        -- Use the original LSP location and encoding for automatic single-result jumps.
-        jump1_action = false,
-      },
-      files = {
-        -- Uses v2 version of filename_first.
-        -- Issue with just doing "path.filename_first" is that it matches on how the string itself is presented to the user.
-        -- So instead of fuzzy finding `path` + `filename`, it fuzzy finds on `filename` + `path`.
-        -- See: https://www.reddit.com/r/neovim/comments/1dck9r3/fzflua_pathfilename_first_causing_issues_with/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-        formatter = { "path.filename_first", 2 },
-      },
-    })
-  end,
+    },
+    fzf_opts = {
+      ["--cycle"] = "", -- Cycles back from last result to the first when scrolling.
+      ["--layout"] = "reverse", -- Reverses the search bar to be on top.
+    },
+    cmd = "fd", -- Favour using `fd` first.
+    lsp = {
+      -- Use the original LSP location and encoding for automatic single-result jumps.
+      jump1_action = false,
+    },
+    files = {
+      -- Uses v2 version of filename_first.
+      -- Issue with just doing "path.filename_first" is that it matches on how the string itself is presented to the user.
+      -- So instead of fuzzy finding `path` + `filename`, it fuzzy finds on `filename` + `path`.
+      -- See: https://www.reddit.com/r/neovim/comments/1dck9r3/fzflua_pathfilename_first_causing_issues_with/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+      formatter = { "path.filename_first", 2 },
+    },
+  },
 }

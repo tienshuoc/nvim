@@ -4,13 +4,11 @@ return {
   keys = {
     { "<leader>gg", ":DiffviewOpen<CR>", mode = "n", silent = true, desc = "Diffview." },
   },
-  config = function()
-    require("diffview").setup({
-      view = {
-        merge_tool = {
-          layout = "diff3_mixed",
-        },
+  opts = {
+    view = {
+      merge_tool = {
+        layout = "diff3_mixed",
       },
-    })
-  end,
+    },
+  },
 }
