@@ -36,11 +36,17 @@ vim.opt.smarttab = true -- "Insert "tabstop" number of spaces when the "tab" key
 vim.opt.autoindent = true -- New lines inherit the indentation of previous lines.
 
 -------------------------------------- Editing --------------------------------------
--- Disable autocommenting on newline.
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*",
-  callback = function()
-    vim.opt.formatoptions:remove({ "c", "r", "o" })
+-- Disable automatic comment formatting and continuation.
+vim.opt.formatoptions:remove({ "c", "r", "o" })
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("no_auto_comment", { clear = true }),
+  callback = function(ev)
+    -- Apply after filetype plugins have set their buffer-local defaults.
+    vim.schedule(function()
+      if vim.api.nvim_buf_is_valid(ev.buf) then
+        vim.bo[ev.buf].formatoptions = vim.bo[ev.buf].formatoptions:gsub("[cro]", "")
+      end
+    end)
   end,
 })
 
