@@ -36,7 +36,7 @@ return {
       -- colorizer: scans the buffer for color codes and highlights them.
       colorizer = {
         on = true,
-        defer = true,
+        defer = false, -- Recheck after filetype changes in Faster's final disable pass.
         disable = function()
           pcall(vim.cmd, "ColorizerDetachFromBuffer")
         end,
@@ -85,6 +85,20 @@ return {
             "cmp",
           },
           extra_patterns = {},
+        },
+        longline = {
+          -- Keep the built-in feature list and disable colorizer here too.
+          features_disabled = {
+            "illuminate",
+            "matchparen",
+            "lsp",
+            "treesitter",
+            "indent_blankline",
+            "vimopts",
+            "syntax",
+            "filetype",
+            "colorizer",
+          },
         },
         fastmacro = {
           on = true,
