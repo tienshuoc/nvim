@@ -79,7 +79,6 @@ return {
   "lmantw/themify.nvim",
   lazy = false,
   priority = 999,
-  dependencies = { "ibhagwan/fzf-lua" },
   keys = {
     { "<leader>T", "<cmd>Themify<cr>", mode = "n", desc = "Toggle Themify." },
     {

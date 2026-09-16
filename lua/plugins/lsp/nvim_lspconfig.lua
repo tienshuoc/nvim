@@ -126,18 +126,12 @@ return {
           vim.lsp.buf.declaration,
           vim.tbl_extend("force", opts, { desc = "Go to declaration" })
         )
-        vim.keymap.set(
-          "n",
-          "gd",
-          require("fzf-lua").lsp_definitions,
-          vim.tbl_extend("force", opts, { desc = "Go to definition" })
-        )
-        vim.keymap.set(
-          "n",
-          "grr",
-          require("fzf-lua").lsp_references,
-          vim.tbl_extend("force", opts, { desc = "Go to references" })
-        ) -- Override default in Neovim 0.11
+        vim.keymap.set("n", "gd", function()
+          require("fzf-lua").lsp_definitions()
+        end, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
+        vim.keymap.set("n", "grr", function()
+          require("fzf-lua").lsp_references()
+        end, vim.tbl_extend("force", opts, { desc = "Go to references" })) -- Override default in Neovim 0.11
         vim.keymap.set("n", "K", function()
           vim.lsp.buf.hover({ border = "rounded" })
         end, vim.tbl_extend("force", opts, { desc = "Show documentation for under cursor" }))
