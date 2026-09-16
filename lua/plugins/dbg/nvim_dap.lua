@@ -42,12 +42,16 @@ return {
         args = { "--port", "${port}" },
       },
     }
-    -- Visually highlight the stop line if highlight group rules haven't been specified.
-    vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
-
-    vim.api.nvim_set_hl(0, "DapBreakpoint", { ctermbg = 0, fg = "#E06C75", bg = "#282C34", bold = true }) -- Warmer red for better visibility
-    vim.api.nvim_set_hl(0, "DapLogPoint", { ctermbg = 0, fg = "#61AFEF", bg = "#1E222A", italic = true }) -- Slightly darker background for contrast
-    vim.api.nvim_set_hl(0, "DapStopped", { ctermbg = 0, fg = "#56B6C2", bg = "#1E222A", bold = true }) -- Cyan pop-out for clarity
+    -- Preserve theme-defined highlights and fill in missing debugger groups.
+    local function set_highlights()
+      vim.api.nvim_set_hl(0, "DapBreakpoint", { default = true, link = "DiagnosticError" })
+      vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
+    end
+    set_highlights()
+    vim.api.nvim_create_autocmd("ColorScheme", {
+      group = vim.api.nvim_create_augroup("dap_highlights", { clear = true }),
+      callback = set_highlights,
+    })
     vim.fn.sign_define(
       "DapBreakpoint",
       { text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }

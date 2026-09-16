@@ -110,6 +110,8 @@ Git link helpers use the source file's repository and reject unsaved buffers. Th
 
 Inline Git blame uses the active theme's styling, falling back to `NonText` when the theme does not define `GitSignsCurrentLineBlame`.
 
+Breakpoint and stopped-line highlights also follow the theme, with `DiagnosticError` and `Visual` as their respective fallbacks.
+
 ## C++ and MLIR
 
 The native LSP setup lives in [nvim_lspconfig.lua](lua/plugins/lsp/nvim_lspconfig.lua). It uses `vim.lsp.config()` and one explicit `vim.lsp.enable()` server list. Mason handles installation and does not automatically enable additional servers.
