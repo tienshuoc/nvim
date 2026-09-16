@@ -30,7 +30,8 @@ vim.keymap.set(
 )
 
 vim.keymap.set("c", "<CR>", function()
-  return vim.fn.getcmdtype() == "/" and "<CR>zzzv" or "<CR>"
+  local cmdtype = vim.fn.getcmdtype()
+  return (cmdtype == "/" or cmdtype == "?") and "<CR>zzzv" or "<CR>"
 end, {
   noremap = true,
   expr = true,
