@@ -23,8 +23,5 @@ return {
       desc = "Buffer Pick + Vertical Split",
     },
   },
-  config = function()
-    vim.opt.termguicolors = true
-    require("bufferline").setup({})
-  end,
+  opts = {},
 }
