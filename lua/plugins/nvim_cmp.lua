@@ -73,12 +73,12 @@ return {
         -- Enter key mapping.
         ["<CR>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
-            -- If a snippet is expandable, expand it.
-            if luasnip.expandable() then
+            -- A selected completion takes priority over a matching snippet trigger.
+            if cmp.get_selected_entry() then
+              cmp.confirm({ select = false })
+            -- Otherwise, keep direct snippet expansion available.
+            elseif luasnip.expandable() then
               luasnip.expand()
-            -- If an item is selected in the completion menu, confirm it.
-            elseif cmp.get_selected_entry() then
-              cmp.confirm({ select = true })
             -- Otherwise, close the completion window and fallback to a new line.
             else
               cmp.close()
