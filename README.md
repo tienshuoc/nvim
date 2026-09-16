@@ -82,6 +82,7 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 | `<leader>fc` / `<leader>T` | Theme picker with preview / Themify UI; selection is persisted |
 | `<leader>ih` | Toggle inlay hints for the buffer; hints are opt-in and excluded from diff and flagged large buffers |
 | `<leader>F` | Format the current buffer or selection |
+| `[h` / `]h` | Previous / next Git hunk; supports counts such as `2]h` |
 | `<leader>gU` | Copy a permalink for the current line or visual range |
 | `<leader>gB` | Copy the blamed commit URL or a PR URL inferred from its subject |
 | `<leader>rp` / `<leader>yrp` / `<leader>yrd` | Show resolved file path / copy it / copy its directory |

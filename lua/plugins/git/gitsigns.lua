@@ -17,8 +17,8 @@ return {
   },
   keys = {
     { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Gitsigns blame line." },
-    { "[h", ":Gitsigns prev_hunk<CR>", desc = "Gitsigns prev hunk." },
-    { "]h", ":Gitsigns next_hunk<CR>", desc = "Gitsigns next hunk." },
+    { "[h", "<cmd>Gitsigns nav_hunk prev<CR>", desc = "Gitsigns prev hunk." },
+    { "]h", "<cmd>Gitsigns nav_hunk next<CR>", desc = "Gitsigns next hunk." },
     { "<leader>gph", ":Gitsigns preview_hunk<CR>", desc = "Gitsigns preview hunk." },
     { "<leader>gsh", ":Gitsigns stage_hunk<CR>", desc = "Gitsigns stage hunk." },
     { "<leader>grh", ":Gitsigns reset_hunk<CR>", desc = "Gitsigns reset hunk." },
