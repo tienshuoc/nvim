@@ -98,18 +98,6 @@ return {
       inlay_hint.enable(not enabled, { bufnr = buf })
     end, { desc = "Toggle inlay hints (buffer)" })
 
-    -- Setup language servers.
-    -- local lspconfig = vim.lsp.config("*")
-
-    -- Global mappings.
-    -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-    vim.keymap.set("n", "[d", function()
-      vim.diagnostic.jump({ count = -1, float = true })
-    end, { desc = "Go to previous diagnostic." }) -- This is native with NVIM0.10+
-    vim.keymap.set("n", "]d", function()
-      vim.diagnostic.jump({ count = 1, float = true })
-    end, { desc = "Go to next diagnostic." }) -- This is native with NVIM0.10+
-
     -- Use LspAttach autocommand to only map the following keys
     -- after the language server attaches to the current buffer
     vim.api.nvim_create_autocmd("LspAttach", {
@@ -153,8 +141,9 @@ return {
       end,
     }) -- LspAttach config.
 
-    -- Change the Diagnostic symbols in the sign column (gutter).
+    -- Show details for native diagnostic jumps and customize gutter symbols.
     vim.diagnostic.config({
+      jump = { float = true },
       signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = "",
