@@ -102,9 +102,6 @@ return {
     -- after the language server attaches to the current buffer
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
-        vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-
         -- Buffer local mappings with shared options
         local opts = { buffer = ev.buf, noremap = true, silent = true }
 
