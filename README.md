@@ -155,6 +155,7 @@ Keep project guidance in this README so contributors and coding assistants use t
 
 - Make focused changes and check the actual plugin/API contracts. Preserve upstream LSP hooks when changing server overrides.
 - Keep large-file management in faster.nvim's configuration and feature hooks.
+- Keep HighStr for manual text highlighting within the current session. Saved-highlight import/export is outside the maintained workflow.
 - Preserve the Git helpers' parallel queries and session remote cache.
 - Themify owns theme installation and persistence; theme-specific `before` hooks apply settings before loading their colorschemes.
 - There is no repository test suite or application build step. Use relevant syntax/formatting checks and isolated headless Neovim checks for behavior changes. For documentation edits, review sources and links and run `git diff --check`.
