@@ -1,5 +1,6 @@
 return {
   "andrewradev/linediff.vim",
+  lazy = false,
   keys = {
     {
       "<leader>ld",
