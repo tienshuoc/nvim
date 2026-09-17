@@ -3,21 +3,12 @@ return {
   "zbirenbaum/neodim",
   event = "LspAttach",
   opts = {
-    refresh_delay = 75,
-    alpha = 0.75,
-    blend_color = "#000000",
     hide = {
-      -- Renable all decorations for 'unused' diagnostics.
+      -- Keep all decorations for 'unused' diagnostics.
       underline = false,
       virtual_text = false,
       signs = false,
     },
-    regex = {
-      "[uU]nused",
-      "[nN]ever [rR]ead",
-      "[nN]ot [rR]ead",
-    },
-    priority = 128,
   },
 }
 
