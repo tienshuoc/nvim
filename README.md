@@ -53,8 +53,11 @@ When extending the VS Code subset, add the plugin's Lazy name and any required d
 | [lua/plugins/](lua/plugins/) | Plugin specs, including `lsp/`, `git/`, and `dbg/` |
 | [lua/plugins/themify.lua](lua/plugins/themify.lua) | Theme installation, persistence, and the preview picker |
 | [lua/plugins/ftplugins/](lua/plugins/ftplugins/) | Specs for filetype-support plugins |
+| [ftdetect/filetypes.lua](ftdetect/filetypes.lua) | Shared native filetype detection rules |
 | [after/ftplugin/](after/ftplugin/) | Local filetype overrides |
 | [lua/utils/](lua/utils/) | Shared helpers, including Git links and Bazel LSP paths |
+
+Local detection uses `vim.filetype.add()` in both profiles. `*_IR.log` files are MLIR; log suffixes and `.report` files use log highlighting, and ordinary `.list` files use the custom list syntax. Neovim's more specific filename/path rules retain precedence, such as its detection of APT source lists. Log highlighting comes from Neovim's bundled syntax; some token colors differ from the former plugin.
 
 ## Large files
 
