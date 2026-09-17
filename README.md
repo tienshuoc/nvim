@@ -63,9 +63,9 @@ Local detection uses `vim.filetype.add()` in both profiles. `*_IR.log` files are
 
 [faster.nvim's configuration](lua/plugins/faster.lua) owns the **10 MiB** big-file threshold, the plugin's default long-line detection, and macro acceleration. There is no separate large-file startup scan or reduced plugin profile; the theme manager loads normally too.
 
-Faster's feature hooks provide the local LSP, gitsigns, colorizer, and completion integrations. Faster detaches Colorizer from big-file and long-line buffers after reading; an initial color scan can still run. LSP detachment affects the current buffer; lualine and MiniClue suspension is limited to macro acceleration.
+Faster's feature hooks provide the local LSP, gitsigns, colorizer, rainbow delimiters, and completion integrations. Faster detaches Colorizer and rainbow delimiters from big-file and long-line buffers after reading; their initial scans can still run. LSP detachment affects the current buffer; lualine and MiniClue suspension is limited to macro acceleration.
 
-Use `:Faster status` to inspect state and `:Faster enable <feature>` to restore a feature manually. When restoring LSP individually, run `:Faster enable filetype` before `:Faster enable lsp`. Shrink recovery and cleanup follow the installed plugin's behavior; some built-in feature switches affect global state.
+Use `:Faster status` to inspect state and `:Faster enable <feature>` to restore a feature manually. When restoring LSP or rainbow delimiters individually, run `:Faster enable filetype` first, then `:Faster enable lsp` or `:Faster enable rainbow_delimiters`. Shrink recovery and cleanup follow the installed plugin's behavior; some built-in feature switches affect global state.
 
 Incremental search stays enabled. [auto_hlsearch.lua](lua/utils/auto_hlsearch.lua) enables search highlighting for search keys and clears it on the next normal-mode key.
 
@@ -117,6 +117,8 @@ Inline Git blame uses the active theme's styling, falling back to `NonText` when
 Breakpoint and stopped-line highlights also follow the theme, with `DiagnosticError` and `Visual` as their respective fallbacks.
 
 [Colorizer](lua/plugins/colorizer.lua) loads on `FileType`, including for the first file opened at startup. Buffers without a filetype can opt in with `:ColorizerAttachToBuffer` or `:ColorizerToggle`.
+
+[Rainbow delimiters](lua/plugins/rainbow_delimiters.lua) also loads on `FileType`, so bracket coloring works in the first file opened at startup.
 
 ## C++ and MLIR
 

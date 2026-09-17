@@ -1,6 +1,6 @@
 return {
   -- Color Brackets
   "HiPhish/rainbow-delimiters.nvim",
-  event = "VeryLazy",
+  event = "FileType",
   submodules = false, -- As specified on the plugin README, the submodules are not needed.
 }

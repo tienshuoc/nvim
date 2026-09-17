@@ -44,6 +44,17 @@ return {
           pcall(vim.cmd, "ColorizerAttachToBuffer")
         end,
       },
+      -- Rainbow delimiters has its own attachment beyond the native highlighter.
+      rainbow_delimiters = {
+        on = true,
+        defer = false,
+        disable = function()
+          require("rainbow-delimiters").disable()
+        end,
+        enable = function()
+          require("rainbow-delimiters").enable()
+        end,
+      },
       -- nvim-cmp: completion triggering while editing a large buffer.
       cmp = {
         on = true,
@@ -82,12 +93,13 @@ return {
             -- custom features defined below
             "gitsigns",
             "colorizer",
+            "rainbow_delimiters",
             "cmp",
           },
           extra_patterns = {},
         },
         longline = {
-          -- Keep the built-in feature list and disable colorizer here too.
+          -- Keep the built-in feature list and disable both color plugins here too.
           features_disabled = {
             "illuminate",
             "matchparen",
@@ -98,6 +110,7 @@ return {
             "syntax",
             "filetype",
             "colorizer",
+            "rainbow_delimiters",
           },
         },
         fastmacro = {
