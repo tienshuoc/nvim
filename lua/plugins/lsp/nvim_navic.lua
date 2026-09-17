@@ -1,6 +1,7 @@
 return {
   -- A simple statusline/winbar component that uses LSP to show current node context.
   "SmiteshP/nvim-navic",
+  event = { "BufReadPre", "BufNewFile" },
   dependencies = { "neovim/nvim-lspconfig" },
   opts = {
     lsp = {
