@@ -1,3 +1,5 @@
+require("keymaps_common")
+
 local buffer_path = require("utils.buffer_path")
 
 local opts = {
@@ -11,7 +13,6 @@ local opts = {
 ----------------------------------------------------------------------------------------------------------------------------------------
 vim.keymap.set("n", "<leader>nv", ":e ~/.config/nvim/<CR>", opts) -- Edit neovim settings.
 
-vim.keymap.set("n", "<leader>w", ":w<CR>", vim.tbl_extend("force", opts, { desc = "Write file." }))
 vim.keymap.set("n", "<leader>rf", ":edit<CR>", vim.tbl_extend("force", { noremap = true }, { desc = "Refresh file." }))
 vim.keymap.set({ "n", "v" }, "<leader>qq", ":<c-u>q<CR>", vim.tbl_extend("force", opts, { desc = "Quit file." }))
 vim.keymap.set({ "n", "v" }, "<leader>qa", ":<c-u>qa<CR>", vim.tbl_extend("force", opts, { desc = "Quit all." }))
@@ -21,36 +22,6 @@ vim.keymap.set({ "n" }, "<leader>tn", ":<c-u>tabn<CR>", vim.tbl_extend("force", 
 vim.keymap.set({ "n" }, "<leader>tp", ":<c-u>tabp<CR>", vim.tbl_extend("force", opts, { desc = "Previous tab." }))
 vim.keymap.set({ "n", "v" }, "<leader>tc", ":<c-u>tabc<CR>", vim.tbl_extend("force", opts, { desc = "Close tab." }))
 vim.keymap.set("n", "<leader>tt", "<C-^>", vim.tbl_extend("force", opts, { desc = "Switch to previous buffer." }))
-
-vim.keymap.set(
-  "n",
-  "zZ",
-  "zszH",
-  vim.tbl_extend("force", opts, { desc = "Center cursor on middle of screen horizontal." })
-)
-
-vim.keymap.set("c", "<CR>", function()
-  local cmdtype = vim.fn.getcmdtype()
-  return (cmdtype == "/" or cmdtype == "?") and "<CR>zzzv" or "<CR>"
-end, {
-  noremap = true,
-  expr = true,
-  desc = "Center first search result",
-})
-
-vim.keymap.set(
-  "n",
-  "n",
-  "nzzzv",
-  vim.tbl_extend("force", opts, { desc = "Keeps next search term in middle of screen." })
-)
-vim.keymap.set(
-  "n",
-  "N",
-  "Nzzzv",
-  vim.tbl_extend("force", opts, { desc = "Keeps previous search term in middle of screen." })
-)
-vim.keymap.set("n", "G", "Gzz", vim.tbl_extend("force", opts, { desc = "Keeps goto line in middle of screen." }))
 
 vim.keymap.set(
   "n",
@@ -188,8 +159,6 @@ vim.keymap.set("n", "<leader>dv", ":vertical diffsplit ", { desc = "Vertical Dif
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- ========================================================= Visual mode ===============================================================
 ----------------------------------------------------------------------------------------------------------------------------------------
-vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv", opts)
-vim.keymap.set("x", "K", ":m '<-2<CR>gv=gv", opts)
 vim.keymap.set("x", "/", "<Esc>/\\%V", opts) -- Search in visual range.
 
 ----------------------------------------------------------------------------------------------------------------------------------------

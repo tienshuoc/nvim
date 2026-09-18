@@ -33,7 +33,7 @@ Lazy.nvim bootstraps itself on first launch. Open `:Lazy` to inspect installatio
 ## Startup profiles
 
 - **Standalone:** `init.lua` loads options, Lazy, keymaps, search highlighting, and sessions. The ordinary plugin set loads for every file size.
-- **VS Code:** when the extension sets `vim.g.vscode`, `lua/vscode_config.lua` supplies its own options and mappings. Lazy reads the same full specification but activates only the `vscode_plugins` allowlist in `lua/lazy_manager.lua`, including its required dependencies.
+- **VS Code:** when the extension sets `vim.g.vscode`, `lua/vscode_config.lua` supplies VS Code options and actions, alongside shared mappings from `lua/keymaps_common.lua`. Lazy reads the same full specification but activates only the `vscode_plugins` allowlist in `lua/lazy_manager.lua`, including its required dependencies.
 
 Both profiles share Lazy's plugin directory when they share `stdpath("data")`. Profile selection uses Lazy's native [`cond`](https://lazy.folke.io/spec#spec-loading), which skips loading standalone plugins in VS Code while keeping their installed directories and existing lockfile entries. `:Lazy clean` and the cleanup part of `:Lazy sync` can run from either profile; plugins removed from the full specification are still eligible for cleanup.
 
@@ -49,6 +49,7 @@ When extending the VS Code subset, add the plugin's Lazy name and any required d
 | [lua/lazy_manager.lua](lua/lazy_manager.lua) | Lazy bootstrap, shared imports, and profile selection |
 | [lua/options.lua](lua/options.lua), [lua/keymaps.lua](lua/keymaps.lua) | Standalone options and mappings |
 | [lua/vscode_config.lua](lua/vscode_config.lua) | VS Code-specific options and mappings |
+| [lua/keymaps_common.lua](lua/keymaps_common.lua) | Save, visual-line movement, and centering mappings shared by both profiles |
 | [lua/sessions.lua](lua/sessions.lua) | Session management |
 | [lua/plugins/](lua/plugins/) | Plugin specs, including `lsp/`, `git/`, and `dbg/` |
 | [lua/plugins/themify.lua](lua/plugins/themify.lua) | Theme installation, persistence, and the preview picker |
