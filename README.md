@@ -105,6 +105,8 @@ File-path shortcuts warn for unnamed, special, and non-file URI buffers and leav
 
 The statusline diagnostic counts cover the current buffer, including both LSP and other Neovim diagnostic providers.
 
+Git diff counts reuse Gitsigns' current-buffer statistics, including unsaved edits. They are hidden when Gitsigns has no counts, such as after Faster detaches it.
+
 [Noice](lua/plugins/noice.lua) handles LSP progress notifications.
 
 Git link helpers use the source file's repository and reject unsaved buffers. Their shared [Git utility](lua/utils/git.lua) captures the buffer and selection, runs queries from explicit directories, and checks the source buffer before copying. Permalinks also reject staged or on-disk changes to that file and check the file revision against local remote-tracking information.

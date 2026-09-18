@@ -29,7 +29,22 @@ return {
           always_visible = true, -- Show diagnostics even if there are none.
         },
       },
-      lualine_c = { "diff" },
+      lualine_c = {
+        {
+          "diff",
+          -- Reuse Gitsigns' buffer diff, including unsaved edits.
+          source = function()
+            local status = vim.b.gitsigns_status_dict
+            if status and status.added ~= nil then
+              return {
+                added = status.added,
+                modified = status.changed,
+                removed = status.removed,
+              }
+            end
+          end,
+        },
+      },
       lualine_x = {
         "lsp_status",
         "filetype",
