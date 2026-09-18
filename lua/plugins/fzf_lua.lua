@@ -105,20 +105,16 @@ return {
       col = 0.50, -- window col position (0=left, 1=right)
       backdrop = 40, -- (what's outside the preview window) 0 is opaque, 100 is transparent
       preview = {
-        hidden = "nohidden",
-        vertical = "up:45%",
+        hidden = false,
         horizontal = "right:50%",
-        layout = "flex",
         flip_columns = 120,
         delay = 0,
-        winopts = { number = true },
       },
     },
     fzf_opts = {
       ["--cycle"] = "", -- Cycles back from last result to the first when scrolling.
       ["--layout"] = "reverse", -- Reverses the search bar to be on top.
     },
-    cmd = "fd", -- Favour using `fd` first.
     lsp = {
       -- Use the original LSP location and encoding for automatic single-result jumps.
       jump1_action = false,
