@@ -62,13 +62,19 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   end,
 })
 
--- Don't create swapfiles for *.log, *.mlir files.
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+-- Disable swap before Neovim checks for existing swaps on these files.
+local no_swap_group = vim.api.nvim_create_augroup("no_swap_files", { clear = true })
+vim.api.nvim_create_autocmd({ "BufNew", "BufReadPre", "BufNewFile" }, {
+  group = no_swap_group,
   pattern = { "*.log", "*.mlir", "*.log.gz" },
-  callback = function()
-    vim.opt_local.swapfile = false
+  callback = function(ev)
+    vim.bo[ev.buf].swapfile = false
   end,
 })
+-- Command-line buffers can exist before this module loads.
+for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+  vim.api.nvim_exec_autocmds("BufNew", { group = no_swap_group, buffer = buf, modeline = false })
+end
 
 -- Allow backspacing over indentation, line breaks, and insertion start.
 vim.opt.backspace = "indent,eol,start"
