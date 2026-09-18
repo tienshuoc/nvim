@@ -20,7 +20,7 @@ return {
       "bash-language-server",
       "starpls",
       "rust-analyzer",
-      -- Debugger, formatters, and linters.
+      -- Debugger and formatters.
       "codelldb",
       -- "prettier", -- Prettier formatter.
       "clang-format",
@@ -28,8 +28,6 @@ return {
       "isort", -- python formatter
       "black", -- python formatter
       "shfmt", -- bash formatter
-      "pylint",
-      "eslint_d",
       "buildifier", -- bazel formatter
     },
   },
