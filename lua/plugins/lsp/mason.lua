@@ -1,7 +1,7 @@
 -- Package manager for LSP servers, DAP servers, linters, and formatters.
 return {
   "williamboman/mason.nvim",
-  lazy = true,
+  lazy = false, -- Initialize commands and tool PATH during startup.
   build = ":MasonUpdate",
   opts = {
     ui = {

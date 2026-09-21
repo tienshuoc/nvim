@@ -30,6 +30,8 @@ Lazy.nvim bootstraps itself on first launch. Open `:Lazy` to inspect installatio
 
 [Mason Tool Installer](lua/plugins/lsp/mason_tool_installer.lua) owns one package list for language servers, CodeLLDB, and formatters. Its language servers include clangd, LuaLS, Pyright, BashLS, Starpls, and rust-analyzer. Other tools declared in [Conform's configuration](lua/plugins/lsp/conform.lua) must be installed through Mason or otherwise available on `PATH`; `:ConformInfo` shows their status. Feature-specific integrations also have their own prerequisites—for example, OpenCode uses its CLI and `lsof`.
 
+Mason initializes during standalone startup, following [upstream guidance](https://github.com/mason-org/mason.nvim#installation--usage). Its commands and installed tool paths are ready for `nvim +MasonLog` and other startup commands.
+
 ## Startup profiles
 
 - **Standalone:** `init.lua` loads options, Lazy, keymaps, search highlighting, and sessions. The ordinary plugin set loads for every file size.
