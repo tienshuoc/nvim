@@ -105,6 +105,8 @@ File-path shortcuts warn for unnamed, special, and non-file URI buffers and leav
 
 `gd` and `grr` jump directly through Neovim's native LSP handler when there is one result, preserving position encodings and the tag stack. With multiple results, the installed fzf-lua version can still jump to the wrong column after non-ASCII text when choosing from the picker.
 
+Lua module-name completion uses [LazyDev](lua/plugins/lazydev.lua), including installed plugins that are not loaded yet. This applies to `require(...)` and `---@module` annotations in buffers attached to LuaLS.
+
 The statusline diagnostic counts cover the current buffer, including both LSP and other Neovim diagnostic providers.
 
 Git diff counts reuse Gitsigns' current-buffer statistics, including unsaved edits. They are hidden when Gitsigns has no counts, such as after Faster detaches it.

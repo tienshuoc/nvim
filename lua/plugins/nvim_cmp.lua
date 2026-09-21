@@ -119,16 +119,16 @@ return {
       -- =================================================================
       --  4. COMPLETION SOURCES
       -- =================================================================
-      -- These are the different sources nvim-cmp will use for suggestions.
-      -- The order matters, as it determines the priority of the suggestions.
-      sources = cmp.config.sources({
-        { name = "nvim_lsp" }, -- Highest priority: Language Server.
+      -- Prefer LazyDev for Lua module names; other sources use the default group.
+      sources = {
+        { name = "lazydev", group_index = 0 }, -- require() and @module annotations.
+        { name = "nvim_lsp" }, -- Language Server.
         { name = "luasnip" }, -- Snippets.
         { name = "buffer" }, -- Words from the current file.
         { name = "path" }, -- File system paths.
         { name = "bazel" }, -- Bazel targets.
         { name = "nvim_lsp_signature_help" }, -- Function signatures.
-      }),
+      },
 
       -- =================================================================
       --  5. FORMATTING & INTEGRATIONS
