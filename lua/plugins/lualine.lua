@@ -15,7 +15,6 @@ return {
         {
           "diagnostics",
           sources = { "nvim_diagnostic" }, -- Count diagnostics for the current buffer once.
-          sections = { "error", "warn", "info", "hint" },
 
           diagnostics_color = {
             -- Same values as the general color option can be used here.
@@ -24,8 +23,6 @@ return {
             info = "DiagnosticInfo", -- Changes diagnostics' info color.
             hint = "DiagnosticHint", -- Changes diagnostics' hint color.
           },
-          colored = true, -- Displays diagnostics status in color if set to true.
-          update_in_insert = false, -- Update diagnostics in insert mode.
           always_visible = true, -- Show diagnostics even if there are none.
         },
       },

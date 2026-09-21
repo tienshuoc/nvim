@@ -7,13 +7,8 @@ return {
     indent = {
       char = "│",
     },
-    scope = {
-      -- This is the indentation level where variables or functions are accessible, NOT the current indentation level.
-      enabled = true,
-    },
     exclude = {
       filetypes = {
-        "help",
         "alpha",
         "dashboard",
         "neo-tree",
