@@ -111,6 +111,8 @@ Git diff counts reuse Gitsigns' current-buffer statistics, including unsaved edi
 
 Git link helpers use the source file's repository and reject unsaved buffers. Their shared [Git utility](lua/utils/git.lua) captures the buffer and selection, runs queries from explicit directories, and checks the source buffer before copying. Permalinks also reject staged or on-disk changes to that file and check the file revision against local remote-tracking information.
 
+The [remote URL resolver](lua/utils/git_remote_url.lua) accepts HTTP(S), scp-style SSH, and `ssh://` clone URLs, removing embedded credentials and clone suffixes. SSH remotes map to HTTPS on the same host; GitHub's `ssh.github.com` endpoint maps to `github.com`. Local and unsupported remote forms produce no link. Custom SSH aliases or separate web hosts/ports are not inferred automatically.
+
 ## Themes
 
 [Themify](lua/plugins/themify.lua) manages theme installation, per-theme settings, and the saved selection. Use `<leader>T` for its management UI or `<leader>fc` for fuzzy search with live preview. Selecting a theme saves it for the next startup; cancelling restores the colorscheme and background that were active when the picker opened, without changing the saved selection.
