@@ -50,15 +50,12 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Highlight the cursor line while in insert mode.
-vim.api.nvim_create_autocmd("InsertEnter", {
+-- Highlight the cursor line in Insert/Replace modes; Ctrl-C skips InsertLeave.
+vim.api.nvim_create_autocmd("ModeChanged", {
+  group = vim.api.nvim_create_augroup("insert_cursorline", { clear = true }),
+  pattern = { "*:[iR]*", "[iR]*:*" },
   callback = function()
-    vim.opt_local.cursorline = true
-  end,
-})
-vim.api.nvim_create_autocmd("InsertLeave", {
-  callback = function()
-    vim.opt_local.cursorline = false
+    vim.opt_local.cursorline = vim.v.event.new_mode:match("^[iR]") ~= nil
   end,
 })
 
