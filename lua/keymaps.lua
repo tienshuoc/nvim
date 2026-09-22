@@ -11,8 +11,6 @@ local opts = {
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- ========================================================= Normal mode ===============================================================
 ----------------------------------------------------------------------------------------------------------------------------------------
-vim.keymap.set("n", "<leader>nv", ":e ~/.config/nvim/<CR>", opts) -- Edit neovim settings.
-
 vim.keymap.set("n", "<leader>rf", ":edit<CR>", vim.tbl_extend("force", { noremap = true }, { desc = "Refresh file." }))
 vim.keymap.set({ "n", "v" }, "<leader>qq", ":<c-u>q<CR>", vim.tbl_extend("force", opts, { desc = "Quit file." }))
 vim.keymap.set({ "n", "v" }, "<leader>qa", ":<c-u>qa<CR>", vim.tbl_extend("force", opts, { desc = "Quit all." }))

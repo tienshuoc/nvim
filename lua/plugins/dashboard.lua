@@ -14,7 +14,11 @@ return {
         {
           desc = " NeoVim dotfiles",
           group = "Files",
-          action = ":cd ~/.config/nvim | :e ~/.config/nvim",
+          action = function()
+            local path = vim.fn.fnameescape(vim.fn.stdpath("config"))
+            vim.cmd("cd " .. path)
+            vim.cmd("edit " .. path)
+          end,
           key = "d",
         },
       },

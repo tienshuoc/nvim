@@ -99,6 +99,8 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 
 Session slots live at `~/s1.vim` through `~/s9.vim` by default. Change their directory and naming in [sessions.lua](lua/sessions.lua).
 
+Dashboard's dotfiles shortcut opens Neovim's active configuration directory and changes the working directory there, respecting `XDG_CONFIG_HOME` and `NVIM_APPNAME`.
+
 [MiniFiles](lua/plugins/mini_files.lua) uses the parent directory for a new or deleted file when that directory exists. Unnamed and special buffers, or files whose parent is missing, open the current working directory.
 
 File-path shortcuts warn for unnamed, special, and non-file URI buffers and leave the clipboard intact. Resolved-path shortcuts require a file that can be resolved on disk; the other shortcuts also support named new files.
