@@ -3,7 +3,7 @@ return {
   -- Lazy replays VimEnter after loading, so the installer's startup check runs.
   event = "VimEnter",
   dependencies = {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
   },
   opts = {
     -- Use Mason package names; Neovim owns LSP activation.

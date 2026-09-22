@@ -3,7 +3,7 @@ return {
   event = { "BufWritePre" }, -- When saving file s/t can trigger format on save.
   cmd = { "ConformInfo" },
   dependencies = {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
   },
   keys = {
     {

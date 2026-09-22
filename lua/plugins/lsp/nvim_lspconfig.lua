@@ -2,7 +2,7 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    "williamboman/mason.nvim", -- Put installed server executables on PATH before activation.
+    "mason-org/mason.nvim", -- Put installed server executables on PATH before activation.
     "p00f/clangd_extensions.nvim",
     "hrsh7th/cmp-nvim-lsp",
   },
