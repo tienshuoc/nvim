@@ -33,14 +33,10 @@ return {
   },
   config = function()
     local dap = require("dap")
-    -- Adapter setup
+    -- CodeLLDB 1.11+ supports stdio; Mason provides its command on PATH.
     dap.adapters.codelldb = {
-      type = "server",
-      port = "${port}",
-      executable = {
-        command = vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/adapter/codelldb",
-        args = { "--port", "${port}" },
-      },
+      type = "executable",
+      command = "codelldb",
     }
     -- Preserve theme-defined highlights and fill in missing debugger groups.
     local function set_highlights()

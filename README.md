@@ -150,6 +150,8 @@ The MLIR server starts only when the owning checkout contains an executable `baz
 
 For C++ debugging, `<leader>dc` starts or continues a session. The `Pick program and launch` configuration prompts for the executable and program arguments. Quote arguments containing spaces, for example `--input "path with spaces.mlir"`. Leave the arguments prompt empty to pass no arguments. Use `<leader>dui` to toggle the debugger panels without starting a session.
 
+The CodeLLDB adapter uses [upstream's stdio configuration](https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-%28via--codelldb%29#1110-and-later) and requires **CodeLLDB 1.11+**. It runs the `codelldb` command exposed on Neovim's `PATH` by Mason.
+
 [The tool installer](lua/plugins/lsp/mason_tool_installer.lua) checks the complete package list during standalone startup and installs missing packages. The debugger loads on a debug mapping. Nvim-dap also reads `.vscode/launch.json` from the current working directory when starting a session. Use `:Mason` or `:MasonInstall codelldb` to manage the adapter installation.
 
 ## Plugin versions and updates
