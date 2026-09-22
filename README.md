@@ -144,6 +144,8 @@ ln -s build/compile_commands.json compile_commands.json
 
 See [clangd's project setup](https://clangd.llvm.org/installation.html#project-setup). The Bazel path adapter applies to clangd navigation replies in any detected Bazel workspace, including personal projects; it resolves execroot aliases only when they lead back into that workspace.
 
+On Linux, the LSP setup links [clangd_config.yaml](lua/plugins/lsp/clangd_config.yaml) into clangd's [user configuration directory](https://clangd.llvm.org/config.html#files) when the destination is absent: `$XDG_CONFIG_HOME/clangd/config.yaml`, falling back to `~/.config/clangd/config.yaml` when the variable is unset or empty. This location is shared across editors and `NVIM_APPNAME` profiles; existing configuration files or links are left in place.
+
 The MLIR server starts only when the owning checkout contains an executable `bazel-bin/compiler/shared/tools/unified-lsp-server`. It is a project build artifact, not a Mason-installed server.
 
 For C++ debugging, `<leader>dc` starts or continues a session. The `Pick program and launch` configuration prompts for the executable and program arguments. Quote arguments containing spaces, for example `--input "path with spaces.mlir"`. Leave the arguments prompt empty to pass no arguments. Use `<leader>dui` to toggle the debugger panels without starting a session.

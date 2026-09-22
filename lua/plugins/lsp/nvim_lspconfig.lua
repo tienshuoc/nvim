@@ -252,9 +252,13 @@ return {
       vim.lsp.config(server, config)
     end
 
-    -- Share clangd's global settings with other clients through its standard path.
+    -- clangd's Linux user config is shared across editors and NVIM_APPNAME profiles.
+    local config_home = vim.env.XDG_CONFIG_HOME
+    if not config_home or config_home == "" then
+      config_home = vim.fn.expand("~/.config")
+    end
     local clangd_cfg_src = vim.fn.stdpath("config") .. "/lua/plugins/lsp/clangd_config.yaml"
-    local clangd_cfg_dst = vim.fn.expand("~/.config/clangd/config.yaml")
+    local clangd_cfg_dst = vim.fs.joinpath(config_home, "clangd", "config.yaml")
     if vim.uv.fs_stat(clangd_cfg_src) and not vim.uv.fs_stat(clangd_cfg_dst) then
       vim.fn.mkdir(vim.fs.dirname(clangd_cfg_dst), "p")
       vim.uv.fs_symlink(clangd_cfg_src, clangd_cfg_dst)
