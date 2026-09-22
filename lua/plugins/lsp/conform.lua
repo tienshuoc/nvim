@@ -9,14 +9,23 @@ return {
     {
       "<leader>F",
       function()
+        local range
+        local mode = vim.fn.mode()
+        if mode == "V" or mode == "\22" then
+          -- Format complete lines, including the final selected character.
+          local first, last = vim.fn.line("v"), vim.fn.line(".")
+          first, last = math.min(first, last), math.max(first, last)
+          range = { start = { first, 0 }, ["end"] = { last, #vim.fn.getline(last) } }
+        end
         require("conform").format({
+          range = range,
           timeout_ms = 3000,
           -- LSP formatting is used when no other formatters are available.
           lsp_format = "fallback",
         })
       end,
       mode = { "n", "v" },
-      desc = "Format current buffer.",
+      desc = "Format buffer or selection.",
     },
   },
   opts = {
