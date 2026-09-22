@@ -7,9 +7,8 @@ endif
 syn region  listString    start=+"+  skip=+\\\\\|\\"+  end=+"+  contains=listEscape
 syn region  listString    start=+'+  skip=+\\\\\|\\'+  end=+'+  contains=listEscape
 
-" Syntax: JSON Keywords {{{1
-" Separated into a match and region because a region by itself is always greedy
-syn match  listKeywordMatch /"\([^"]\|\\\"\)\+"[[:blank:]\r\n]*\:/ contains=jsonKeyword
+" Syntax: Quoted keys {{{1
+syn match  listKeywordMatch /"\([^"]\|\\\"\)\+"[[:blank:]\r\n]*\:/
 
 " Syntax: Escape sequences
 syn match   listEscape    "\\["\\/bfnrt]" contained
