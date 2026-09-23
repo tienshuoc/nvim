@@ -1,7 +1,7 @@
 local M = {}
 
 function M.yank_line_ref(opts)
-  local path = require("utils.buffer_path").get(opts)
+  local path = require("utils.buffer_path").get({ realpath = opts.realpath, line_ref = true })
   if not path then
     return
   end

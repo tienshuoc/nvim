@@ -101,7 +101,7 @@ Session slots live at `~/s1.vim` through `~/s9.vim` by default. Change their dir
 
 Dashboard's dotfiles shortcut opens Neovim's active configuration directory and changes the working directory there, respecting `XDG_CONFIG_HOME` and `NVIM_APPNAME`.
 
-[MiniFiles](lua/plugins/mini_files.lua) uses the parent directory for a new or deleted file when that directory exists. Unnamed and special buffers, or files whose parent is missing, open the current working directory.
+[MiniFiles](lua/plugins/mini_files.lua) uses the parent directory for a new or deleted file when that directory exists. Unnamed and special buffers, or files whose parent is missing, open the current working directory. Path shortcuts target the entry under the cursor; `<leader>ywp` is relative to Neovim’s working directory. Line-reference shortcuts are unavailable in MiniFiles.
 
 File-path shortcuts also resolve Diffview revision panes to the corresponding file paths. Unnamed buffers and other special or non-file URI buffers warn and leave the clipboard intact. Resolved-path shortcuts require a file that can be resolved on disk; the other shortcuts also support named new files. Line references use the displayed buffer’s line numbers.
 

@@ -1,10 +1,22 @@
 local M = {}
+local providers = {}
+
+-- Resolve cursor-based paths when requested, without coupling this utility to plugins.
+function M.register(filetype, provider)
+  providers[filetype] = provider
+end
 
 function M.get(opts)
   local buf = vim.api.nvim_get_current_buf()
   local name = vim.api.nvim_buf_get_name(buf)
   local source_path
-  if name == "" or vim.bo.buftype ~= "" or not vim.uri_from_bufnr(buf):match("^file://") then
+  local provider = providers[vim.bo.filetype]
+  if provider then
+    source_path = provider(opts)
+    if not source_path then
+      return
+    end
+  elseif name == "" or vim.bo.buftype ~= "" or not vim.uri_from_bufnr(buf):match("^file://") then
     -- Virtual-buffer integrations may provide an absolute filesystem path.
     source_path = vim.b[buf].source_path
     if type(source_path) ~= "string" or source_path == "" then

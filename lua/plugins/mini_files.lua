@@ -17,6 +17,22 @@ return {
       desc = "Open MiniFiles",
     },
   },
+  config = function(_, opts)
+    local files = require("mini.files")
+    files.setup(opts)
+    require("utils.buffer_path").register("minifiles", function(path_opts)
+      if path_opts and path_opts.line_ref then
+        vim.notify("Line references are unavailable in MiniFiles", vim.log.levels.WARN)
+        return
+      end
+      local entry = files.get_fs_entry()
+      if not entry then
+        vim.notify("Cursor is not on a filesystem entry", vim.log.levels.WARN)
+        return
+      end
+      return entry.path
+    end)
+  end,
   opts = {
     mappings = {
       go_in = "<Right>",
