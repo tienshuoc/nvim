@@ -82,6 +82,7 @@ The leader key is **Space**. These mappings apply to standalone Neovim:
 | `jj` / `yy` (Insert mode) | Leave Insert mode when the two keys are typed within 200 ms |
 | `K` / `gK` | Hover documentation / signature help in LSP buffers |
 | `af` / `if` (textobjects) | Select a function or method / its body using Tree-sitter |
+| `gc{motion}` / `gcc` / `gc` (Visual mode) | Toggle comments with [Neovim’s native commenting](https://neovim.io/doc/user/various/#commenting) |
 | `gd` / `grr` | Go to definition / references; single results jump directly, multiple results open fzf-lua |
 | `<leader>ff` / `<leader>fg` | Find files / search file contents with fzf-lua |
 | `<leader>mf` | Browse files with MiniFiles, focused on the current file when it exists |
