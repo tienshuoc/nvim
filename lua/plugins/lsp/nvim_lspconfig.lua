@@ -167,8 +167,9 @@ return {
         cmd = function(dispatchers, config)
           local cmd = {
             "clangd",
-            "--background-index=false", -- avoid persistent cross-file indexing
-            "-j=2",
+            "--background-index",
+            "--background-index-priority=background", -- Prefer idle CPU time for indexing.
+            "-j=1", -- Limit both background and foreground workers.
             "--pch-storage=disk",
             "--clang-tidy",
             "--header-insertion=iwyu",
