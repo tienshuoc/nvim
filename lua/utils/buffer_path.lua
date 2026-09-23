@@ -1,19 +1,25 @@
 local M = {}
 
 function M.get(opts)
-  local name = vim.api.nvim_buf_get_name(0)
-  if name == "" or vim.bo.buftype ~= "" or not vim.uri_from_bufnr(0):match("^file://") then
-    vim.notify("Path shortcuts require a named local file buffer", vim.log.levels.WARN)
-    return
+  local buf = vim.api.nvim_get_current_buf()
+  local name = vim.api.nvim_buf_get_name(buf)
+  local source_path
+  if name == "" or vim.bo.buftype ~= "" or not vim.uri_from_bufnr(buf):match("^file://") then
+    -- Virtual-buffer integrations may provide an absolute filesystem path.
+    source_path = vim.b[buf].source_path
+    if type(source_path) ~= "string" or source_path == "" then
+      vim.notify("Path shortcuts require a named local file buffer", vim.log.levels.WARN)
+      return
+    end
   end
 
   if not (opts and opts.realpath) then
-    return vim.fn.expand("%")
+    return source_path and vim.fn.fnamemodify(source_path, ":.") or vim.fn.expand("%")
   end
 
-  local path = vim.uv.fs_realpath(name)
+  local path = vim.uv.fs_realpath(source_path or name)
   if not path then
-    vim.notify("Cannot resolve file path on disk: " .. name, vim.log.levels.WARN)
+    vim.notify("Cannot resolve file path on disk: " .. (source_path or name), vim.log.levels.WARN)
   end
   return path
 end

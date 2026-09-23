@@ -103,7 +103,9 @@ Dashboard's dotfiles shortcut opens Neovim's active configuration directory and 
 
 [MiniFiles](lua/plugins/mini_files.lua) uses the parent directory for a new or deleted file when that directory exists. Unnamed and special buffers, or files whose parent is missing, open the current working directory.
 
-File-path shortcuts warn for unnamed, special, and non-file URI buffers and leave the clipboard intact. Resolved-path shortcuts require a file that can be resolved on disk; the other shortcuts also support named new files.
+File-path shortcuts also resolve Diffview revision panes to the corresponding file paths. Unnamed buffers and other special or non-file URI buffers warn and leave the clipboard intact. Resolved-path shortcuts require a file that can be resolved on disk; the other shortcuts also support named new files. Line references use the displayed buffer’s line numbers.
+
+Diffview keeps one view per Neovim instance. A new diff or file-history request replaces the old view. Save or discard edits to Diffview’s index buffers before replacing it.
 
 `gd` and `grr` jump directly through Neovim's native LSP handler when there is one result, preserving position encodings and the tag stack. With multiple results, the installed fzf-lua version can still jump to the wrong column after non-ASCII text when choosing from the picker.
 
@@ -146,7 +148,7 @@ See [clangd's project setup](https://clangd.llvm.org/installation.html#project-s
 
 On Linux, the LSP setup links [clangd_config.yaml](lua/plugins/lsp/clangd_config.yaml) into clangd's [user configuration directory](https://clangd.llvm.org/config.html#files) when the destination is absent: `$XDG_CONFIG_HOME/clangd/config.yaml`, falling back to `~/.config/clangd/config.yaml` when the variable is unset or empty. This location is shared across editors and `NVIM_APPNAME` profiles; existing configuration files or links are left in place.
 
-MLIR highlighting uses Neovim's built-in Tree-sitter highlighter with the [`mlir` parser](https://github.com/artagnon/tree-sitter-mlir) installed by [tree-sitter-manager](lua/plugins/tree_sitter_manager.lua). This covers `.mlir` files and `*_IR.log` dumps. Install a missing parser with `:TSInstall mlir`.
+MLIR highlighting uses Neovim's built-in Tree-sitter highlighter with the [`mlir` parser](https://github.com/artagnon/tree-sitter-mlir) installed by [tree-sitter-manager](lua/plugins/tree_sitter_manager.lua). This covers `.mlir` files and `*_IR.log` dumps. Install a missing parser with `:TSInstall mlir`. Local textobject queries provide `af`/`if` for `func.func` and `llvm.func`, including their generic assembly forms.
 
 The MLIR server starts only when the owning checkout contains an executable `bazel-bin/compiler/shared/tools/unified-lsp-server`. It is a project build artifact, not a Mason-installed server.
 
