@@ -73,7 +73,7 @@ function M.yank_github_permalink()
         git.copy(context, url, "GitHub permalink")
       end
 
-      -- Keep the single-ref push check, honoring an upstream with a different name.
+      -- Use the upstream's local tracking ref; checking a link must not trigger a fetch.
       git.run(root, { "merge-base", "--is-ancestor", sha, remote_ref }, function(ar)
         is_on_remote = ar.code == 0
         finish()

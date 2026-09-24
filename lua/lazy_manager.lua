@@ -28,7 +28,8 @@ local vscode_plugins = {
   ["sqlite.lua"] = true, -- Yanky's history backend.
 }
 
--- Always declare the full set so profile changes do not make plugins look unused.
+-- Profiles share plugin checkouts. Declare the full set so VS Code cleanup
+-- keeps standalone plugins; use cond below to control loading.
 local spec = {
   { import = "plugins.git" },
   { import = "plugins.ftplugins" },
@@ -39,7 +40,7 @@ local spec = {
 
 require("lazy").setup(spec, {
   defaults = {
-    -- cond skips loading while retaining installed plugins and their lock entries.
+    -- A plugin-specific cond overrides this profile default.
     cond = function(plugin)
       return not vim.g.vscode or vscode_plugins[plugin.name] == true
     end,

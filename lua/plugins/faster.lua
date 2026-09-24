@@ -1,5 +1,6 @@
 -- faster.nvim owns large-file and long-line detection, feature toggles, and
--- macro acceleration. Keep config-specific integrations in its feature hooks.
+-- macro acceleration. Keep integrations in its hooks; manually restoring LSP
+-- or rainbow delimiters requires restoring filetype first.
 return {
   "pteroctopus/faster.nvim",
   lazy = false, -- Register faster.nvim before the first file is read.

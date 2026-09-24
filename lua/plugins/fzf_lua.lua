@@ -116,14 +116,12 @@ return {
       ["--layout"] = "reverse", -- Reverses the search bar to be on top.
     },
     lsp = {
-      -- Use the original LSP location and encoding for automatic single-result jumps.
+      -- Native single-result jumps preserve LSP position encodings.
+      -- Upstream multi-result picker jumps can still misplace Unicode columns.
       jump1_action = false,
     },
     files = {
-      -- Uses v2 version of filename_first.
-      -- Issue with just doing "path.filename_first" is that it matches on how the string itself is presented to the user.
-      -- So instead of fuzzy finding `path` + `filename`, it fuzzy finds on `filename` + `path`.
-      -- See: https://www.reddit.com/r/neovim/comments/1dck9r3/fzflua_pathfilename_first_causing_issues_with/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+      -- v2 retains a hidden original path for matching behind the filename-first display.
       formatter = { "path.filename_first", 2 },
     },
   },

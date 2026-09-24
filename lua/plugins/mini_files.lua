@@ -5,6 +5,7 @@ return {
     {
       "<leader>mf",
       function()
+        -- Use an existing parent for new/deleted files; virtual buffers start in cwd.
         local path = vim.api.nvim_buf_get_name(0)
         if vim.bo.buftype ~= "" or path == "" then
           path = nil
@@ -21,6 +22,7 @@ return {
     local files = require("mini.files")
     files.setup(opts)
     require("utils.buffer_path").register("minifiles", function(path_opts)
+      -- Directory listing rows are not source-file line numbers.
       if path_opts and path_opts.line_ref then
         vim.notify("Line references are unavailable in MiniFiles", vim.log.levels.WARN)
         return

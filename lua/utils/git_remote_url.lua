@@ -2,11 +2,11 @@ local git = require("utils.git")
 
 local M = {}
 
--- Cache resolved remote URLs per repo root: cache[repo_root][remote] = browser_url.
--- Keep the session cache so repeated link requests avoid another Git process.
+-- Cache browser URLs per (repo, remote) for the session to avoid repeated Git calls.
 local cache = {}
 
 -- Convert GitHub-style clone URLs to browser URLs without embedded credentials.
+-- SSH aliases and separate web hosts/ports cannot be inferred from the clone URL.
 function M.to_https(remote_url)
   if remote_url:find("[%s?#]") then
     return

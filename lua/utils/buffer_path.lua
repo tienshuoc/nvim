@@ -1,7 +1,7 @@
 local M = {}
 local providers = {}
 
--- Resolve cursor-based paths when requested, without coupling this utility to plugins.
+-- Providers resolve cursor-based entries on demand.
 function M.register(filetype, provider)
   providers[filetype] = provider
 end
@@ -25,6 +25,7 @@ function M.get(opts)
     end
   end
 
+  -- Keep new/deleted paths and symlink spelling usable; only realpath needs a disk entry.
   if not (opts and opts.realpath) then
     return source_path and vim.fn.fnamemodify(source_path, ":.") or vim.fn.expand("%")
   end

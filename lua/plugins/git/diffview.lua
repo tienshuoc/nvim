@@ -16,7 +16,8 @@ return {
   },
   opts = {
     hooks = {
-      -- Enforce replacement outside Diffview's asynchronous initialization.
+      -- New diff/history requests replace the current view; unsaved index edits block replacement.
+      -- SafeState keeps closing views outside Diffview's asynchronous initialization.
       view_opened = function(opened)
         local lib = require("diffview.lib")
         local previous

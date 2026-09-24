@@ -15,6 +15,7 @@ function M.run(cwd, args, callback)
   vim.system(cmd, { cwd = cwd, text = true }, vim.schedule_wrap(callback))
 end
 
+-- Parallel independent reads keep link shortcuts responsive.
 function M.run_all(cwd, commands, callback)
   local results = {}
   local remaining = #commands

@@ -1,3 +1,4 @@
+-- Manual highlights only; saved-highlight persistence is intentionally unused.
 return {
   "Pocco81/HighStr.nvim",
   cmd = { "HSHighlight", "HSRmHighlight" },
