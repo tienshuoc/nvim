@@ -46,7 +46,7 @@ require("lazy").setup(spec, {
     end,
   },
   checker = {
-    enabled = true,
+    enabled = false, -- Avoid an update-check deadlock during Neovim shutdown.
     notify = false,
   },
   change_detection = {
